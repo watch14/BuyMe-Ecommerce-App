@@ -1,42 +1,46 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
-const UserSchema = mongoose.Schema(
+const { Schema } = mongoose;
+
+const UserSchema = new Schema(
   {
     firstName: {
       type: String,
-      require: true,
+      required: true,
     },
     lastName: {
       type: String,
-      require: true,
+      required: true,
     },
     email: {
       type: String,
-      require: true,
+      required: true,
+      unique: true,
     },
     password: {
       type: String,
-      require: true,
+      required: true,
     },
     profilePic: {
       type: String,
-      require: false,
       default:
         "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg",
     },
     isAdmin: {
-      typeof: Boolean,
+      type: Boolean,
       default: false,
     },
-    //roles
-    roles: {
-      typeof: [Schema.Types.ObjectId],
-      require: true,
-      ref: "Role",
-    },
+    roles: [
+      {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "Role",
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
+
 export default mongoose.model("User", UserSchema);

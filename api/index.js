@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import roleRoute from "./routes/role.js";
+import authRouter from "./routes/auth.js";
 
 const app = express();
 const port = 3000;
@@ -12,6 +13,7 @@ dotenv.config();
 app.use(express.json());
 
 app.use("/api/role", roleRoute);
+app.use("/api/auth", authRouter);
 
 //DB connection
 const connectMongoDB = async () => {
