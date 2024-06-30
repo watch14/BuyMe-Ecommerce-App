@@ -1,5 +1,11 @@
 import express from "express";
-import { login, register } from "../controllers/auth.controller.js";
+import {
+  deleteUser,
+  getAllUsers,
+  login,
+  register,
+  updateUser,
+} from "../controllers/auth.controller.js";
 
 const router = express.Router();
 
@@ -8,5 +14,14 @@ router.post("/register", register);
 
 //login
 router.post("/login", login);
+
+//update user
+router.put("/update/:id", updateUser);
+
+// Get all users
+router.get("/users", getAllUsers);
+
+// Delete a user by ID
+router.delete("/delete/:id", deleteUser);
 
 export default router;
