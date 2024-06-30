@@ -32,7 +32,7 @@ export const login = async (req, res, next) => {
     if (!isPasswordCorrect) {
       return res.status(400).send("Wrong Password!");
     }
-    return res.status(200).send("loged in Successfuly!");
+    return res.status(200).send("login Success!");
   } catch (error) {
     return res.status(400).send("Login Went Wrong!");
   }
