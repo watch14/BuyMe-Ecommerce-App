@@ -1,12 +1,17 @@
 import express from "express";
 import mongoose from "mongoose";
-
-//dotenv secure mongodb link
 import dotenv from "dotenv";
-dotenv.config();
+import roleRoute from "./routes/role.js";
 
 const app = express();
 const port = 3000;
+//dotenv secure mongodb link
+dotenv.config();
+
+//to accept JSON format
+app.use(express.json());
+
+app.use("/api/role", roleRoute);
 
 //DB connection
 const connectMongoDB = async () => {
