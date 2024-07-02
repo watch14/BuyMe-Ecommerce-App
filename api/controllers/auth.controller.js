@@ -1,7 +1,9 @@
 import Role from "../models/Role.js";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { CreateSuccess } from "../utils/success.js";
+import { CreateError } from "../utils/error.js";
 
 //register user / create an account
 export const register = async (req, res, next) => {
@@ -39,7 +41,11 @@ export const register = async (req, res, next) => {
 //login
 export const login = async (req, res, next) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email: req.body.email }).populate(
+      "roles",
+      "role"
+    );
+    const { roles } = user;
     if (!user) {
       return next(CreateError(404, "User Email Not found!"));
     }
@@ -50,8 +56,24 @@ export const login = async (req, res, next) => {
     if (!isPasswordCorrect) {
       return next(CreateError(400, "Wrong Password!"));
     }
-    return next(CreateSuccess(200, "login Success!"));
+    const token = jwt.sign(
+      {
+        id: user._id,
+        isAdmin: user.isAdmin,
+        roles: roles,
+      },
+      process.env.JWT_SECRET
+    );
+    console.log("Login successful for email:", req.body.email);
+    res.cookie("access_token", token, { httpOnly: true }).status(200).json({
+      status: 200,
+      message: "login Success!",
+      data: user,
+    });
+
+    // return next(CreateSuccess(200, "login Success!"));
   } catch (error) {
+    console.error("Login Went Wrong:", error);
     return next(CreateError(400, "Login Went Wrong!"));
   }
 };
