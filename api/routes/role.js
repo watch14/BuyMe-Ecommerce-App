@@ -5,6 +5,7 @@ import {
   getAllRoles,
   updateRole,
 } from "../controllers/role.controller.js";
+import { verifyAdmin } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
@@ -32,7 +33,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.post("/create", createRole);
+router.post("/create", verifyAdmin, createRole);
 
 /**
  * @swagger
@@ -62,7 +63,7 @@ router.post("/create", createRole);
  *       500:
  *         description: Internal server error
  */
-router.put("/update/:id", updateRole);
+router.put("/update/:id", verifyAdmin, updateRole);
 
 /**
  * @swagger
@@ -96,6 +97,6 @@ router.get("/roles", getAllRoles);
  *       500:
  *         description: Internal server error
  */
-router.delete("/delete/:id", deleteRole);
+router.delete("/delete/:id", verifyAdmin, deleteRole);
 
 export default router;

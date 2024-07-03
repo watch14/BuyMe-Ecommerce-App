@@ -6,6 +6,7 @@ import authRouter from "./routes/auth.js";
 import userRouter from "./routes/user.js";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const port = 3000;
@@ -25,7 +26,7 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ["./routes/*.js"], // Adjust the path as needed
+  apis: ["./routes/*.js"],
 };
 
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
@@ -37,6 +38,9 @@ dotenv.config();
 
 //to accept JSON format
 app.use(express.json());
+
+//Cookei parser
+app.use(cookieParser());
 
 app.use("/api/role", roleRoute);
 app.use("/api/auth", authRouter);

@@ -5,7 +5,7 @@ import {
   getUserById,
   updateUser,
 } from "../controllers/user.controller.js";
-import { verifyToken, verifyUser } from "../utils/verifyToken.js";
+import { verifyAdmin, verifyToken, verifyUser } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.get("/", verifyToken, getAllUsers);
+router.get("/", verifyAdmin, getAllUsers);
 
 /**
  * @swagger
