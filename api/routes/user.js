@@ -81,7 +81,7 @@ router.get("/:id", verifyUser, getUserById);
  *       500:
  *         description: Internal server error
  */
-router.put("/update/:id", updateUser);
+router.put("/update/:id", verifyUser, updateUser);
 
 /**
  * @swagger
@@ -102,6 +102,6 @@ router.put("/update/:id", updateUser);
  *       500:
  *         description: Internal server error
  */
-router.delete("/delete/:id", deleteUser);
+router.delete("/delete/:id", verifyUser, deleteUser);
 
 export default router;
