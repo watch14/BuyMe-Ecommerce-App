@@ -38,6 +38,42 @@ export const register = async (req, res, next) => {
   }
 };
 
+//register Admin / create an account as Admin
+export const registerAdmin = async (req, res, next) => {
+  try {
+    // Find role "User" in the roles collection
+    const role = await Role.find({});
+
+    if (!role) {
+      return next(CreateError(404, "There is no role"));
+    }
+
+    // Generate salt and hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(req.body.password, salt);
+
+    // Create new user instance
+    const newUser = new User({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: hashPassword,
+      isAdmin: true,
+      roles: role,
+    });
+
+    // Save new user to the database
+    await newUser.save();
+
+    return next(CreateSuccess(200, "Admin Registered Successfully!"));
+    //
+  } catch (error) {
+    return next(
+      CreateError(500, "Internal server error for creating an Admin")
+    );
+  }
+};
+
 //login
 export const login = async (req, res, next) => {
   try {
@@ -56,6 +92,7 @@ export const login = async (req, res, next) => {
     if (!isPasswordCorrect) {
       return next(CreateError(400, "Wrong Password!"));
     }
+    // Session TOKEN //////////////////////////////////////////////////////
     const token = jwt.sign(
       {
         id: user._id,
@@ -75,54 +112,5 @@ export const login = async (req, res, next) => {
   } catch (error) {
     console.error("Login Went Wrong:", error);
     return next(CreateError(400, "Login Went Wrong!"));
-  }
-};
-
-//update user by ID
-export const updateUser = async (req, res, next) => {
-  try {
-    const user = await User.findById({ _id: req.params.id });
-    if (user) {
-      const newData = await User.findByIdAndUpdate(
-        req.params.id,
-        { $set: req.body },
-        { new: true }
-      );
-      return next(CreateSuccess(200, "User Updated!"));
-    } else {
-      return next(CreateError(404, "User Not Found!"));
-    }
-  } catch (error) {
-    return next(CreateError(500, "Internal Server Error for Updating a User!"));
-  }
-};
-
-// Get all users
-export const getAllUsers = async (req, res, next) => {
-  try {
-    const users = await User.find();
-    return next(CreateSuccess(200, "Users Retrieved Successfully!", users));
-  } catch (error) {
-    return next(CreateError(500, "Internal Server Error for fetching users"));
-  }
-};
-
-//delete user by ID
-export const deleteUser = async (req, res, next) => {
-  try {
-    const userId = req.params.id;
-
-    // Check if the user exists
-    const user = await User.findById(userId);
-    if (!user) {
-      return next(CreateError(404, "User not found"));
-    }
-
-    // If user exists, delete it
-    await User.findByIdAndDelete(userId);
-
-    return next(CreateSuccess(200, "User deleted successfully"));
-  } catch (error) {
-    return next(CreateError(500, "Internal server error for deleting a user"));
   }
 };

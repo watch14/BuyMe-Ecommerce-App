@@ -1,27 +1,107 @@
 import express from "express";
 import {
-  deleteUser,
-  getAllUsers,
   login,
   register,
-  updateUser,
+  registerAdmin,
 } from "../controllers/auth.controller.js";
 
 const router = express.Router();
 
-//register
+/**
+ * @swagger
+ * /api/auth/register:
+ *   post:
+ *     summary: Register a new user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - firstName
+ *               - lastName
+ *               - email
+ *               - password
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User registered successfully
+ *       500:
+ *         description: Internal server error
+ */
 router.post("/register", register);
 
-//login
+// registre as admin
+/**
+ * @swagger
+ * /api/auth/register-admin:
+ *   post:
+ *     summary: Register a new admin user
+ *     description: Register a new user with admin privileges.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - firstName
+ *               - lastName
+ *               - email
+ *               - password
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Admin registered successfully
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/register-admin", registerAdmin);
+
+/**
+ * @swagger
+ * /api/auth/login:
+ *   post:
+ *     summary: Login a user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *       400:
+ *         description: Bad request
+ *       404:
+ *         description: User not found
+ */
 router.post("/login", login);
-
-//update user
-router.put("/update/:id", updateUser);
-
-// Get all users
-router.get("/users", getAllUsers);
-
-// Delete a user by ID
-router.delete("/delete/:id", deleteUser);
 
 export default router;

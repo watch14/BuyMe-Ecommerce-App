@@ -1,11 +1,37 @@
 import express from "express";
-import mongoose from "mongoose";
+import mongoose, { version } from "mongoose";
 import dotenv from "dotenv";
 import roleRoute from "./routes/role.js";
 import authRouter from "./routes/auth.js";
+import userRouter from "./routes/user.js";
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 const app = express();
 const port = 3000;
+
+//swager options
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Auth",
+      version: "1.0.0",
+      description: "User Authentification",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000",
+      },
+    ],
+  },
+  apis: ["./routes/*.js"], // Adjust the path as needed
+};
+
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+console.log(swaggerDocs);
+
 //dotenv secure mongodb link
 dotenv.config();
 
@@ -14,6 +40,7 @@ app.use(express.json());
 
 app.use("/api/role", roleRoute);
 app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 
 //response handler
 app.use((obj, req, res, next) => {

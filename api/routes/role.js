@@ -1,5 +1,4 @@
 import express from "express";
-import Role from "../models/Role.js";
 import {
   createRole,
   deleteRole,
@@ -9,16 +8,94 @@ import {
 
 const router = express.Router();
 
-//Create Role in DB
+/**
+ * @swagger
+ * /api/role/create:
+ *   post:
+ *     summary: Create a new role
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - role
+ *             properties:
+ *               role:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Role created successfully
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Internal server error
+ */
 router.post("/create", createRole);
 
-//Update a Role by ID
+/**
+ * @swagger
+ * /api/role/update/{id}:
+ *   put:
+ *     summary: Update a role by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               role:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Role updated successfully
+ *       404:
+ *         description: Role not found
+ *       500:
+ *         description: Internal server error
+ */
 router.put("/update/:id", updateRole);
 
-//Get All Roles
+/**
+ * @swagger
+ * /api/role/roles:
+ *   get:
+ *     summary: Get all roles
+ *     responses:
+ *       200:
+ *         description: A list of roles
+ *       500:
+ *         description: Internal server error
+ */
 router.get("/roles", getAllRoles);
 
-//Delet role By ID
+/**
+ * @swagger
+ * /api/role/delete/{id}:
+ *   delete:
+ *     summary: Delete a role by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Role deleted successfully
+ *       404:
+ *         description: Role not found
+ *       500:
+ *         description: Internal server error
+ */
 router.delete("/delete/:id", deleteRole);
 
 export default router;
