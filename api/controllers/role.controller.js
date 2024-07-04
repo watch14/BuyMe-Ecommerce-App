@@ -5,11 +5,11 @@ import { CreateSuccess } from "../utils/success.js";
 //Create New Role in db
 export const createRole = async (req, res, next) => {
   try {
-    if (req.body.role && req.body.rode !== "") {
+    if (req.body.role && req.body.role !== "") {
       const newRole = new Role(req.body);
       await newRole.save();
 
-      return next(CreateSuccess(200, "Role Created!"));
+      return next(CreateSuccess(200, "Role Created Successfully!"));
     } else {
       return next(CreateError(400, "Bad Request for Creating a Role!"));
     }

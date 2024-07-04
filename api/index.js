@@ -4,9 +4,12 @@ import dotenv from "dotenv";
 import roleRoute from "./routes/role.js";
 import authRouter from "./routes/auth.js";
 import userRouter from "./routes/user.js";
+import CategoryRouter from "./routes/category.js";
+
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import cookieParser from "cookie-parser";
+import Category from "./models/Category.js";
 
 const app = express();
 const port = 3000;
@@ -45,6 +48,7 @@ app.use(cookieParser());
 app.use("/api/role", roleRoute);
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+app.use("/api/category", CategoryRouter);
 
 //response handler
 app.use((obj, req, res, next) => {

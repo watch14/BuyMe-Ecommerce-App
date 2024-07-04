@@ -29,7 +29,7 @@ export const getUserById = async (req, res, next) => {
 
     return next(CreateSuccess(200, "User Retrieved Successfully!", user));
   } catch (error) {
-    console.error("Error fetching user:", error);
+    console.error("Error :", error);
     return next(CreateError(500, "Internal Server Error for fetching user"));
   }
 };
@@ -62,13 +62,11 @@ export const deleteUser = async (req, res, next) => {
   try {
     const userId = req.params.id;
 
-    // Check if the user exists
     const user = await User.findById(userId);
     if (!user) {
       return next(CreateError(404, "User not found"));
     }
 
-    // If user exists, delete it
     await User.findByIdAndDelete(userId);
 
     return next(CreateSuccess(200, "User deleted successfully"));
