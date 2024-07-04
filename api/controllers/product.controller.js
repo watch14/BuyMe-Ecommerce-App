@@ -1,72 +1,109 @@
-const Product = require('../models/Product');
+import Product from "../models/Product.js";
+import { CreateSuccess } from "../utils/success.js";
+import { CreateError } from "../utils/error.js";
 
-// Get all products
-exports.getAllProducts = async (req, res) => {
+// Create Product
+export const createProduct = async (req, res, next) => {
   try {
-    const products = await Product.find().populate('categoryId');
-    res.status(200).json(products);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    const productData = {
+      productName: req.body.productName,
+      categoryId: req.body.categoryId,
+      productPrice: req.body.productPrice,
+      productPicture: req.body.productPicture,
+      productDescription: req.body.productDescription,
+      productRate: req.body.productRate,
+      productStock: req.body.productStock,
+    };
+
+    // Add optional fields if provided
+    if (req.body.productColor) {
+      productData.productColor = req.body.productColor;
+    }
+    if (req.body.productDiscount !== undefined) {
+      productData.productDiscount = req.body.productDiscount;
+    }
+
+    const newProduct = new Product(productData);
+    await newProduct.save();
+
+    return next(
+      CreateSuccess(200, "Product Created Successfully!", newProduct)
+    );
+  } catch (error) {
+    console.error(error);
+    return next(
+      CreateError(500, "Internal Server Error for Creating a Product!")
+    );
   }
 };
 
-// Get product by ID
-exports.getProductById = async (req, res) => {
+// Update Product by ID
+export const updateProduct = async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.id).populate('categoryId');
-    res.status(200).json(product);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    const product = await Product.findById({ _id: req.params.id });
+    if (product) {
+      const updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        { new: true }
+      );
+      return next(
+        CreateSuccess(200, "Product Updated Successfully!", updatedProduct)
+      );
+    } else {
+      return next(CreateError(404, "Product Not Found!"));
+    }
+  } catch (error) {
+    return next(
+      CreateError(500, "Internal Server Error for Updating a Product!")
+    );
   }
 };
 
-// Create a new product
-exports.createProduct = async (req, res) => {
-  const productData = {
-    productName: req.body.productName,
-    categoryId: req.body.categoryId,
-    productPrice: req.body.productPrice,
-    productPicture: req.body.productPicture,
-    productDescription: req.body.productDescription,
-    productRate: req.body.productRate,
-    productStock: req.body.productStock,
-  };
-
-  // Add optional fields if provided
-  if (req.body.productColor) {
-    productData.productColor = req.body.productColor;
-  }
-  if (req.body.productDiscount !== undefined) {
-    productData.productDiscount = req.body.productDiscount;
-  }
-
-  const product = new Product(productData);
-
+// Get All Products
+export const getAllProducts = async (req, res, next) => {
   try {
-    const newProduct = await product.save();
-    res.status(201).json(newProduct);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+    const products = await Product.find();
+    return next(
+      CreateSuccess(200, "Products Retrieved Successfully!", products)
+    );
+  } catch (error) {
+    return next(
+      CreateError(500, "Internal Server Error for fetching all products")
+    );
   }
 };
 
-
-// Update a product
-exports.updateProduct = async (req, res) => {
+// Get Product by ID
+export const getProductById = async (req, res, next) => {
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('categoryId');
-    res.status(200).json(updatedProduct);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+    const productId = req.params.id;
+    const product = await Product.findById(productId);
+    if (!product) {
+      return next(CreateError(404, "Product Not Found!"));
+    }
+    return next(CreateSuccess(200, "Product Retrieved Successfully!", product));
+  } catch (error) {
+    return next(
+      CreateError(500, "Internal Server Error for fetching product by ID")
+    );
   }
 };
 
-// Delete a product
-exports.deleteProduct = async (req, res) => {
+// Delete Product by ID
+export const deleteProduct = async (req, res, next) => {
   try {
-    await Product.findByIdAndDelete(req.params.id);
-    res.status(200).json({ message: 'Product deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    const productId = req.params.id;
+    const product = await Product.findById(productId);
+    if (!product) {
+      return next(CreateError(404, "Product Not Found!"));
+    }
+    await Product.findByIdAndDelete(productId);
+
+    return next(CreateSuccess(200, "Product Deleted Successfully!"));
+  } catch (error) {
+    return next(
+      CreateError(500, "Internal Server Error for deleting product!")
+    );
   }
 };

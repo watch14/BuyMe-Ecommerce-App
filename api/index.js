@@ -1,11 +1,16 @@
 import express from "express";
 import mongoose, { version } from "mongoose";
 import dotenv from "dotenv";
+
 import roleRoute from "./routes/role.js";
 import authRouter from "./routes/auth.js";
 import userRouter from "./routes/user.js";
 import CategoryRouter from "./routes/category.js";
 import PromocodeRouter from "./routes/promocode.js";
+
+import ProductRouter from "./routes/products.js";
+import favoriteRoutes from "./routes/favorites.js";
+import sortRoutes from "./routes/sort.js";
 
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
@@ -52,9 +57,9 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/category", CategoryRouter);
 app.use("/api/promo-code", PromocodeRouter);
-app.use('/api/products', productRoutes);
-app.use('/api/favorites', favoriteRoutes);
-app.use('/api/sort', sortRoutes);
+app.use("/api/products", ProductRouter);
+app.use("/api/favorites", favoriteRoutes);
+app.use("/api/sort", sortRoutes);
 
 //response handler
 app.use((obj, req, res, next) => {
