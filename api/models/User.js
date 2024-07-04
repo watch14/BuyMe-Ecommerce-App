@@ -37,6 +37,12 @@ const UserSchema = new Schema(
         ref: "Role",
       },
     ],
+    favorites: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
   },
   {
     timestamps: true,

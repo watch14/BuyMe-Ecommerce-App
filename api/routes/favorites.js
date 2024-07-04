@@ -2,6 +2,7 @@ import express from "express";
 import {
   addToFavorite,
   removeFromFavorite,
+  getUserFavorites,
 } from "../controllers/favorite.controller.js";
 
 const router = express.Router();
@@ -63,5 +64,28 @@ router.post("/", addToFavorite);
  *         description: Internal server error
  */
 router.delete("/delete/:id", removeFromFavorite);
+
+/**
+ * @swagger
+ * /api/favorite/user/{id}:
+ *   get:
+ *     summary: Get user's favorite products
+ *     tags: [Favorites]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: ObjectId of the user
+ *     responses:
+ *       200:
+ *         description: Favorites retrieved successfully
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get("/user/:id", getUserFavorites);
 
 export default router;
