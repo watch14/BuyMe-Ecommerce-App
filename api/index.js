@@ -57,8 +57,9 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/category", CategoryRouter);
 app.use("/api/promo-code", PromocodeRouter);
-app.use("/api/products", ProductRouter);
-app.use("/api/favorites", favoriteRoutes);
+
+app.use("/api/product", ProductRouter);
+app.use("/api/favorite", favoriteRoutes);
 app.use("/api/sort", sortRoutes);
 
 //response handler
