@@ -10,7 +10,6 @@ import PromocodeRouter from "./routes/promocode.js";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import cookieParser from "cookie-parser";
-import Category from "./models/Category.js";
 
 const app = express();
 const port = 3000;
@@ -26,7 +25,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: `http://localhost:${port}`,
       },
     ],
   },
@@ -35,7 +34,9 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-console.log(swaggerDocs);
+
+// console.log(swaggerDocs);
+/////////////////////////////
 
 //dotenv secure mongodb link
 dotenv.config();
