@@ -41,7 +41,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.post("/create", verifyAdmin, createRole);
+router.post("/create", createRole);
 
 /**
  * @swagger
@@ -72,7 +72,7 @@ router.post("/create", verifyAdmin, createRole);
  *       500:
  *         description: Internal server error
  */
-router.put("/update/:id", verifyAdmin, updateRole);
+router.put("/update/:id", updateRole);
 
 /**
  * @swagger
@@ -108,6 +108,6 @@ router.get("/roles", getAllRoles);
  *       500:
  *         description: Internal server error
  */
-router.delete("/delete/:id", verifyAdmin, deleteRole);
+router.delete("/delete/:id", deleteRole);
 
 export default router;

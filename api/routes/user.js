@@ -27,7 +27,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error
  */
-router.get("/", verifyAdmin, getAllUsers);
+router.get("/", getAllUsers);
 
 /**
  * @swagger
@@ -49,7 +49,7 @@ router.get("/", verifyAdmin, getAllUsers);
  *       500:
  *         description: Internal server error
  */
-router.get("/:id", verifyUser, getUserById);
+router.get("/:id", getUserById);
 
 /**
  * @swagger
@@ -90,7 +90,7 @@ router.get("/:id", verifyUser, getUserById);
  *       500:
  *         description: Internal server error
  */
-router.put("/update/:id", verifyUser, updateUser);
+router.put("/update/:id", updateUser);
 
 /**
  * @swagger
@@ -112,6 +112,6 @@ router.put("/update/:id", verifyUser, updateUser);
  *       500:
  *         description: Internal server error
  */
-router.delete("/delete/:id", verifyUser, deleteUser);
+router.delete("/delete/:id", deleteUser);
 
 export default router;
