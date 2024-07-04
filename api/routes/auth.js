@@ -9,9 +9,17 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Auth
+ *   description: Operations related to products
+ */
+
+/**
+ * @swagger
  * /api/auth/register:
  *   post:
  *     summary: Register a new user
+ *     tags: [Auth]
  *     requestBody:
  *       required: true
  *       content:
@@ -46,6 +54,7 @@ router.post("/register", register);
  * /api/auth/register-admin:
  *   post:
  *     summary: Register a new admin user
+ *     tags: [Auth]
  *     description: Register a new user with admin privileges.
  *     requestBody:
  *       required: true
@@ -80,6 +89,7 @@ router.post("/register-admin", registerAdmin);
  * /api/auth/login:
  *   post:
  *     summary: Login a user
+ *     tags: [Auth]
  *     requestBody:
  *       required: true
  *       content:

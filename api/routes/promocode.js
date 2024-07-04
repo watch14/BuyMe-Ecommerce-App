@@ -10,9 +10,17 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Promo Code
+ *   description: Operations related to products
+ */
+
+/**
+ * @swagger
  * /api/promo-code/create:
  *   post:
  *     summary: Create a new promo code
+ *     tags: [Promo Code]
  *     requestBody:
  *       required: true
  *       content:
@@ -39,6 +47,7 @@ router.post("/create", createPromoCode);
  * /api/promo-code:
  *   get:
  *     summary: Get all promo codes
+ *     tags: [Promo Code]
  *     responses:
  *       200:
  *         description: List of all promo codes
@@ -52,6 +61,7 @@ router.get("/", getAllPromoCodes);
  * /api/promo-code/{id}:
  *   get:
  *     summary: Get a promo code by ID
+ *     tags: [Promo Code]
  *     parameters:
  *       - in: path
  *         name: id
@@ -74,6 +84,7 @@ router.get("/:id", getPromoCodeById);
  * /api/promo-code/delete/{id}:
  *   delete:
  *     summary: Delete a promo code by ID
+ *     tags: [Promo Code]
  *     parameters:
  *       - in: path
  *         name: id

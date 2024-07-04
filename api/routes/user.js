@@ -8,12 +8,19 @@ import {
 import { verifyAdmin, verifyUser } from "../utils/verifyToken.js";
 
 const router = express.Router();
+/**
+ * @swagger
+ * tags:
+ *   name: User
+ *   description: Operations related to products
+ */
 
 /**
  * @swagger
  * /api/user/:
  *   get:
  *     summary: Get all users
+ *     tags: [User]
  *     responses:
  *       200:
  *         description: A list of users
@@ -27,6 +34,7 @@ router.get("/", verifyAdmin, getAllUsers);
  * /api/user/{id}:
  *   get:
  *     summary: Get user by ID
+ *     tags: [User]
  *     parameters:
  *       - in: path
  *         name: id
@@ -48,6 +56,7 @@ router.get("/:id", verifyUser, getUserById);
  * /api/user/update/{id}:
  *   put:
  *     summary: Update a user by ID
+ *     tags: [User]
  *     parameters:
  *       - in: path
  *         name: id
@@ -88,6 +97,7 @@ router.put("/update/:id", verifyUser, updateUser);
  * /api/user/delete/{id}:
  *   delete:
  *     summary: Delete a user by ID
+ *     tags: [User]
  *     parameters:
  *       - in: path
  *         name: id

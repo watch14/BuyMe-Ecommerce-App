@@ -11,9 +11,17 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Roles
+ *   description: Operations related to products
+ */
+
+/**
+ * @swagger
  * /api/role/create:
  *   post:
  *     summary: Create a new role
+ *     tags: [Roles]
  *     requestBody:
  *       required: true
  *       content:
@@ -40,6 +48,7 @@ router.post("/create", verifyAdmin, createRole);
  * /api/role/update/{id}:
  *   put:
  *     summary: Update a role by ID
+ *     tags: [Roles]
  *     parameters:
  *       - in: path
  *         name: id
@@ -70,6 +79,7 @@ router.put("/update/:id", verifyAdmin, updateRole);
  * /api/role/roles:
  *   get:
  *     summary: Get all roles
+ *     tags: [Roles]
  *     responses:
  *       200:
  *         description: A list of roles
@@ -83,6 +93,7 @@ router.get("/roles", getAllRoles);
  * /api/role/delete/{id}:
  *   delete:
  *     summary: Delete a role by ID
+ *     tags: [Roles]
  *     parameters:
  *       - in: path
  *         name: id

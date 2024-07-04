@@ -6,7 +6,7 @@ const router = express.Router();
 /**
  * @swagger
  * tags:
- *   name: Products
+ *   name: Sort
  *   description: Operations related to products
  */
 
@@ -15,7 +15,7 @@ const router = express.Router();
  * /api/sort:
  *   get:
  *     summary: Get all products with optional sorting and filtering
- *     tags: [Products]
+ *     tags: [Sort]
  *     parameters:
  *       - in: query
  *         name: sortBy

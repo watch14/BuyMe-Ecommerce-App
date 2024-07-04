@@ -11,9 +11,17 @@ const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Products
+ *   description: Operations related to products
+ */
+
+/**
+ * @swagger
  * /api/product/create:
  *   post:
  *     summary: Create a new product
+ *     tags: [Products]
  *     requestBody:
  *       required: true
  *       content:
@@ -64,6 +72,7 @@ router.post("/create", createProduct);
  * /api/product:
  *   get:
  *     summary: Get all products
+ *     tags: [Products]
  *     responses:
  *       200:
  *         description: Products retrieved successfully
@@ -77,6 +86,7 @@ router.get("/", getAllProducts);
  * /api/product/{id}:
  *   get:
  *     summary: Get a product by ID
+ *     tags: [Products]
  *     parameters:
  *       - in: path
  *         name: id
@@ -100,6 +110,7 @@ router.get("/:id", getProductById);
  * /api/product/{id}:
  *   put:
  *     summary: Update a product by ID
+ *     tags: [Products]
  *     parameters:
  *       - in: path
  *         name: id
@@ -150,6 +161,7 @@ router.put("/:id", updateProduct);
  * /api/product/{id}:
  *   delete:
  *     summary: Delete a product by ID
+ *     tags: [Products]
  *     parameters:
  *       - in: path
  *         name: id
