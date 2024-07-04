@@ -5,6 +5,7 @@ import roleRoute from "./routes/role.js";
 import authRouter from "./routes/auth.js";
 import userRouter from "./routes/user.js";
 import CategoryRouter from "./routes/category.js";
+import PromocodeRouter from "./routes/promocode.js";
 
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
@@ -49,6 +50,7 @@ app.use("/api/role", roleRoute);
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/category", CategoryRouter);
+app.use("/api/promo-code", PromocodeRouter);
 
 //response handler
 app.use((obj, req, res, next) => {

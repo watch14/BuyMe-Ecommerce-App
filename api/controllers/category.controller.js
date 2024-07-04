@@ -76,7 +76,7 @@ export const getCategoryById = async (req, res, next) => {
   }
 };
 
-//delete user by ID
+//delete category  by ID
 export const deleteCategory = async (req, res, next) => {
   try {
     const categoryId = req.params.id;
