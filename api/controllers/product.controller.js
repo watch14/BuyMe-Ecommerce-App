@@ -60,14 +60,60 @@ export const updateProduct = async (req, res, next) => {
   }
 };
 
-// Get All Products
+// Controller function to get all products with optional search, price range, category filters, stock filter, and pagination
 export const getAllProducts = async (req, res, next) => {
   try {
-    const products = await Product.find();
+    const { q, minPrice, maxPrice, category, filterByStock, skip, take } =
+      req.query; // Extract query parameters
+
+    let query = {}; // Initialize query object
+
+    // If 'q' parameter is present, add search criteria to the query
+    if (q) {
+      query.$or = [
+        { productName: { $regex: q, $options: "i" } }, // Case-insensitive search on productName
+        { productDescription: { $regex: q, $options: "i" } }, // Case-insensitive search on productDescription
+      ];
+    }
+
+    // Add price range filter if minPrice or maxPrice are provided
+    if (minPrice || maxPrice) {
+      query.productPrice = {}; // Initialize productPrice filter object
+
+      if (minPrice) {
+        query.productPrice.$gte = parseFloat(minPrice); // Greater than or equal to minPrice
+      }
+
+      if (maxPrice) {
+        query.productPrice.$lte = parseFloat(maxPrice); // Less than or equal to maxPrice
+      }
+    }
+
+    // Add category filter if category is provided
+    if (category) {
+      query.categoryId = category; // Filter by categoryId
+    }
+
+    // Add stock filter based on filterByStock parameter
+    if (filterByStock === "false") {
+      query.productStock = { $gt: 0 }; // Filter where productStock is greater than 0
+    }
+    // No stock filter applied if filterByStock is not 'false' or not provided
+
+    // Parse skip and take parameters for pagination
+    const skipCount = skip ? parseInt(skip, 10) : 0; // Default to 0 if skip is not provided
+    const takeCount = take ? parseInt(take, 10) : 10; // Default to 10 if take is not provided
+
+    // Find products based on constructed query with pagination
+    const products = await Product.find(query).skip(skipCount).limit(takeCount);
+
+    // Respond with success message and products
     return next(
       CreateSuccess(200, "Products Retrieved Successfully!", products)
     );
   } catch (error) {
+    // Handle errors
+    console.error(error);
     return next(
       CreateError(500, "Internal Server Error for fetching all products")
     );

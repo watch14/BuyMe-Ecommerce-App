@@ -69,17 +69,59 @@ router.post("/create", createProduct);
 
 /**
  * @swagger
- * /api/product:
+ * /api/product/search:
  *   get:
- *     summary: Get all products
+ *     summary: Search products by name or description with optional filters and pagination
  *     tags: [Products]
+ *     parameters:
+ *       - in: query
+ *         name: q
+ *         schema:
+ *           type: string
+ *         description: Search query to find products by name or description (can be partial)
+ *       - in: query
+ *         name: minPrice
+ *         schema:
+ *           type: number
+ *         description: Minimum product price to filter products
+ *       - in: query
+ *         name: maxPrice
+ *         schema:
+ *           type: number
+ *         description: Maximum product price to filter products
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *         description: Category ID to filter products by a specific category
+ *       - in: query
+ *         name: filterByStock
+ *         schema:
+ *           type: boolean
+ *         description: If false, filter products with stock greater than 0; otherwise, do not filter by stock.
+ *           Default behavior is not to filter by stock.
+ *       - in: query
+ *         name: skip
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *           default: 0
+ *         description: Number of records to skip for pagination
+ *       - in: query
+ *         name: take
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *           default: 10
+ *         description: Number of records to return for pagination (max 100)
  *     responses:
  *       200:
  *         description: Products retrieved successfully
  *       500:
  *         description: Internal server error
  */
-router.get("/", getAllProducts);
+router.get("/search", getAllProducts);
 
 /**
  * @swagger

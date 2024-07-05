@@ -12,7 +12,7 @@ const router = express.Router();
  * @swagger
  * tags:
  *   name: Promo Code
- *   description: Operations related to products
+ *   description: Operations related to promo codes
  */
 
 /**
@@ -29,9 +29,16 @@ const router = express.Router();
  *             type: object
  *             required:
  *               - promoCode
+ *               - discountType
+ *               - discountValue
  *             properties:
  *               promoCode:
  *                 type: string
+ *               discountType:
+ *                 type: string
+ *                 enum: [percentage, exact]
+ *               discountValue:
+ *                 type: number
  *     responses:
  *       200:
  *         description: Promo code created successfully
