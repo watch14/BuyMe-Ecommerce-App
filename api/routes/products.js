@@ -69,17 +69,23 @@ router.post("/create", createProduct);
 
 /**
  * @swagger
- * /api/product:
+ * /api/product/search:
  *   get:
- *     summary: Get all products
+ *     summary: Search products by name or description
  *     tags: [Products]
+ *     parameters:
+ *       - in: query
+ *         name: q
+ *         schema:
+ *           type: string
+ *         description: Search query (can be partial)
  *     responses:
  *       200:
  *         description: Products retrieved successfully
  *       500:
  *         description: Internal server error
  */
-router.get("/", getAllProducts);
+router.get("/search", getAllProducts);
 
 /**
  * @swagger

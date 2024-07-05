@@ -60,14 +60,31 @@ export const updateProduct = async (req, res, next) => {
   }
 };
 
-// Get All Products
+// Get All Products with optional search functionality
 export const getAllProducts = async (req, res, next) => {
   try {
-    const products = await Product.find();
+    const { q } = req.query; // Extract the 'q' query parameter for search
+
+    let query = {}; // Default query to fetch all products
+
+    // If 'q' parameter is present, add search criteria to the query
+    if (q) {
+      query = {
+        $or: [
+          { productName: { $regex: q, $options: "i" } }, // Case-insensitive search on productName
+          { productDescription: { $regex: q, $options: "i" } }, // Case-insensitive search on productDescription
+          // Add more fields as needed for search
+        ],
+      };
+    }
+
+    const products = await Product.find(query);
+
     return next(
       CreateSuccess(200, "Products Retrieved Successfully!", products)
     );
   } catch (error) {
+    console.error(error);
     return next(
       CreateError(500, "Internal Server Error for fetching all products")
     );
