@@ -2,45 +2,111 @@ import Receipt from "../models/Receipt.js";
 import { CreateSuccess } from "../utils/success.js";
 import { CreateError } from "../utils/error.js";
 
-// Generate a unique receipt number
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS,
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
+});
+
 const generateReceiptNumber = () => {
   return `RCPT-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 };
 
-// Create a new receipt
 export const createReceipt = async (req, res, next) => {
   try {
     const { userId, productList } = req.body;
 
-    // Calculate total price
-    const totalPrice = productList.reduce((total, product) => {
-      return total + product.price * product.quantity;
-    }, 0);
+    // Calculate total price and prepare product details for email
+    let emailBody = `Dear Customer,\n\n`;
+    emailBody += `Your receipt with number ${generateReceiptNumber()} has been created successfully.\n\n`;
+    emailBody += `Details:\n`;
+    emailBody += `----------------------------------\n`;
+
+    let totalPrice = 0;
+
+    productList.forEach((product, index) => {
+      const itemPrice = product.price * product.quantity;
+      totalPrice += itemPrice;
+      emailBody += `${index + 1}. ${product.name} - Quantity: ${
+        product.quantity
+      }, Price: $${product.price.toFixed(2)}, Total: $${itemPrice.toFixed(
+        2
+      )}\n`;
+    });
+
+    const tax = totalPrice * 0.18;
+    totalPrice += tax;
+
+    emailBody += `----------------------------------\n\n`;
+    emailBody += `Total Price (including tax): $${totalPrice.toFixed(2)}\n\n`;
+    emailBody += `Thank you for your purchase!\n\n`;
+
+    const mailOptions = {
+      from: process.env.GMAIL_USER,
+      to: "maamounchebbi@gmail.com", // Replace with a dynamic recipient email address
+      subject: "Receipt Created Successfully",
+      text: emailBody,
+    };
 
     const receipt = new Receipt({
       userId,
       productList,
       totalPrice,
-      tax: totalPrice * 0.18,
+      tax,
       receiptNumber: generateReceiptNumber(),
     });
 
     const newReceipt = await receipt.save();
-    return next(CreateSuccess(201, "Receipt Created Successfully!", newReceipt));
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log("Error:", error);
+      } else {
+        console.log("Email sent:", info.response);
+      }
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Receipt Created Successfully!",
+      receipt: newReceipt,
+    });
   } catch (error) {
     console.error(error);
-    return next(CreateError(400, "Bad Request for Creating Receipt!"));
+    return res.status(400).json({
+      success: false,
+      status: 400,
+      message: "Bad Request for Creating Receipt!",
+    });
   }
 };
 
 // Get all receipts
 export const getAllReceipts = async (req, res, next) => {
   try {
-    const receipts = await Receipt.find().populate("userId").populate("productList.productId");
-    return next(CreateSuccess(200, "Receipts Retrieved Successfully!", receipts));
+    const receipts = await Receipt.find()
+      .populate("userId")
+      .populate("productList.productId");
+    return next(
+      CreateSuccess(200, "Receipts Retrieved Successfully!", receipts)
+    );
   } catch (error) {
     console.error(error);
-    return next(CreateError(500, "Internal Server Error for fetching receipts"));
+    return next(
+      CreateError(500, "Internal Server Error for fetching receipts")
+    );
   }
 };
 
@@ -48,7 +114,9 @@ export const getAllReceipts = async (req, res, next) => {
 export const getReceiptById = async (req, res, next) => {
   try {
     const receiptId = req.params.id;
-    const receipt = await Receipt.findById(receiptId).populate("userId").populate("productList.productId");
+    const receipt = await Receipt.findById(receiptId)
+      .populate("userId")
+      .populate("productList.productId");
 
     if (!receipt) {
       return next(CreateError(404, "Receipt not found"));
@@ -81,7 +149,9 @@ export const updateReceipt = async (req, res, next) => {
       return next(CreateError(404, "Receipt not found"));
     }
 
-    return next(CreateSuccess(200, "Receipt Updated Successfully!", updatedReceipt));
+    return next(
+      CreateSuccess(200, "Receipt Updated Successfully!", updatedReceipt)
+    );
   } catch (error) {
     console.error(error);
     return next(CreateError(500, "Internal Server Error for updating receipt"));
