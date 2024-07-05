@@ -8,21 +8,20 @@ export const addToFavorite = async (req, res, next) => {
   const { userId, productId } = req.body;
 
   try {
-    const user = await User.findById(userId);
-    if (!user) {
-      return next(CreateError(404, "User not found!"));
+    let favorite = await Favorite.findOne({ userId });
+
+    if (!favorite) {
+      favorite = new Favorite({ userId, productIds: [productId] });
+    } else {
+      if (favorite.productIds.includes(productId)) {
+        return next(CreateError(400, "Product already in favorites!"));
+      }
+      favorite.productIds.push(productId);
     }
 
-    if (user.favorites.includes(productId)) {
-      return next(CreateError(400, "Product already in favorites!"));
-    }
+    await favorite.save();
 
-    user.favorites.push(productId);
-    await user.save();
-
-    return next(
-      CreateSuccess(201, "Added to Favorites Successfully!", user.favorites)
-    );
+    return next(CreateSuccess(201, "Added to Favorites Successfully!", favorite));
   } catch (error) {
     console.error(error);
     return next(CreateError(400, "Bad Request for Adding to Favorites!"));
@@ -34,42 +33,39 @@ export const removeFromFavorite = async (req, res, next) => {
   const { userId, productId } = req.body;
 
   try {
-    const user = await User.findById(userId);
-    if (!user) {
-      return next(CreateError(404, "User not found!"));
+    const favorite = await Favorite.findOne({ userId });
+
+    if (!favorite || !favorite.productIds.includes(productId)) {
+      return next(CreateError(404, "Product not found in favorites!"));
     }
 
-    user.favorites = user.favorites.filter(
-      (favoriteId) => favoriteId.toString() !== productId
-    );
-    await user.save();
+    favorite.productIds = favorite.productIds.filter(id => id.toString() !== productId);
+    await favorite.save();
 
-    return next(
-      CreateSuccess(200, "Removed from Favorites Successfully!", user.favorites)
-    );
+    return next(CreateSuccess(200, "Removed from Favorites Successfully!", favorite.productIds));
   } catch (error) {
     console.error(error);
-    return next(
-      CreateError(500, "Internal Server Error for Removing from Favorites!")
-    );
+    return next(CreateError(500, "Internal Server Error for Removing from Favorites!"));
   }
 };
 
 // Get User Favorites
 export const getUserFavorites = async (req, res, next) => {
-  const userId = req.params.id;
+  const { userId } = req.params;
 
   try {
-    const user = await User.findById(userId).populate("favorites");
-    if (!user) {
-      return next(CreateError(404, "User not found!"));
+    // Logging the userId for debugging
+    const favorites = await Favorite.findOne({ userId }).populate("productIds");
+
+    // Check if favorites is null and log the result
+    if (!favorites) {
+      return next(CreateSuccess(200, "Favorites Retrieved Successfully!", null));
     }
 
-    return next(
-      CreateSuccess(200, "Favorites Retrieved Successfully!", user.favorites)
-    );
+    return next(CreateSuccess(200, "Favorites Retrieved Successfully!", favorites));
   } catch (error) {
     console.error(error);
     return next(CreateError(500, "Internal Server Error for fetching favorites"));
   }
 };
+
