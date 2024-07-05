@@ -29,7 +29,3 @@ export const sendEmail = (to, subject, text, html) => {
 
   return transporter.sendMail(mailOptions);
 };
-
-// Clear the cart after creating the receipt
-// cart.products = [];
-// await cart.save();   maamounchebbi@gmail.com

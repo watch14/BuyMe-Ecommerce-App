@@ -89,13 +89,33 @@ export const createReceipt = async (req, res, next) => {
       user.lastName
     },\n\nYour receipt with number ${
       newReceipt.receiptNumber
-    } has been created successfully.\n\n
-    Below are the details:\n\n${formatProductList(cart.products)}
-    \nTotal Price: ${totalPrice.toFixed(2)}\n
-    \n\nThank you for choosing our services.\n\nRegards,\nBuyMe`;
+    } has been created successfully.\n\nBelow are the details:\n\n${formatProductList(
+      cart.products
+    )}\nTotal Price: ${totalPrice.toFixed(
+      2
+    )}\n\nThank you for choosing our services.\n\nRegards,\nBuyMe`;
 
-    // Send email
+    // Send email to user
     await sendEmail(user.email, emailSubject, emailText);
+
+    // Prepare email content for seller notification
+    const sellerEmailSubject = `New Purchase: Receipt Number ${newReceipt.receiptNumber}`;
+    const sellerEmailText = `Dear BuyMe,\n\n${user.firstName} ${
+      user.lastName
+    } has made a purchase.\n\nReceipt Number: ${
+      newReceipt.receiptNumber
+    }\n\nBelow are the details:\n\n${formatProductList(
+      cart.products
+    )}\n\nTotal Price: ${totalPrice.toFixed(
+      2
+    )}\n\nThank you for your prompt attention.\n\nRegards,\nBuyMe`;
+
+    // Send email to seller
+    await sendEmail(
+      process.env.GMAIL_USER,
+      sellerEmailSubject,
+      sellerEmailText
+    );
 
     // Clear the cart after creating the receipt
     // cart.products = [];
