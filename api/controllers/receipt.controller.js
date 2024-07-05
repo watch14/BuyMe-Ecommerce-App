@@ -20,76 +20,59 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Generate a unique receipt number
 const generateReceiptNumber = () => {
   return `RCPT-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 };
 
+// Create a new receipt based on cartId
 export const createReceipt = async (req, res, next) => {
   try {
-    const { userId, productList } = req.body;
+    const { cartId } = req.body;
 
-    // Calculate total price and prepare product details for email
-    let emailBody = `Dear Customer,\n\n`;
-    emailBody += `Your receipt with number ${generateReceiptNumber()} has been created successfully.\n\n`;
-    emailBody += `Details:\n`;
-    emailBody += `----------------------------------\n`;
-
-    let totalPrice = 0;
-
-    productList.forEach((product, index) => {
-      const itemPrice = product.price * product.quantity;
-      totalPrice += itemPrice;
-      emailBody += `${index + 1}. ${product.name} - Quantity: ${
-        product.quantity
-      }, Price: $${product.price.toFixed(2)}, Total: $${itemPrice.toFixed(
-        2
-      )}\n`;
+    // Find the cart based on cartId
+    const cart = await Cart.findById(cartId).populate({
+      path: "products.productId",
+      select: "productName productPrice",
     });
 
-    const tax = totalPrice * 0.18;
-    totalPrice += tax;
+    if (!cart) {
+      return next(CreateError(404, "Cart not found"));
+    }
 
-    emailBody += `----------------------------------\n\n`;
-    emailBody += `Total Price (including tax): $${totalPrice.toFixed(2)}\n\n`;
-    emailBody += `Thank you for your purchase!\n\n`;
+    // Calculate total price and tax
+    const totalPrice = cart.products.reduce((total, product) => {
+      return total + product.quantity * product.productId.productPrice;
+    }, 0);
 
-    const mailOptions = {
-      from: process.env.GMAIL_USER,
-      to: "maamounchebbi@gmail.com", // Replace with a dynamic recipient email address
-      subject: "Receipt Created Successfully",
-      text: emailBody,
-    };
+    const tax = totalPrice * 0.18; // Assuming tax calculation based on totalPrice
 
-    const receipt = new Receipt({
-      userId,
-      productList,
+    // Create a new receipt
+    const newReceipt = new Receipt({
+      userId: cart.userId,
+      productList: cart.products.map((item) => ({
+        productId: item.productId._id,
+        quantity: item.quantity,
+        price: item.productId.productPrice,
+      })),
       totalPrice,
       tax,
       receiptNumber: generateReceiptNumber(),
     });
 
-    const newReceipt = await receipt.save();
+    // Save the receipt
+    await newReceipt.save();
 
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log("Error:", error);
-      } else {
-        console.log("Email sent:", info.response);
-      }
-    });
+    // Clear the cart after creating the receipt
+    //cart.products = [];
+    //await cart.save();
 
-    return res.status(201).json({
-      success: true,
-      message: "Receipt Created Successfully!",
-      receipt: newReceipt,
-    });
+    return next(
+      CreateSuccess(200, "Receipt Created Successfully!", newReceipt)
+    );
   } catch (error) {
     console.error(error);
-    return res.status(400).json({
-      success: false,
-      status: 400,
-      message: "Bad Request for Creating Receipt!",
-    });
+    return next(CreateError(500, "Internal Server Error for creating receipt"));
   }
 };
 
