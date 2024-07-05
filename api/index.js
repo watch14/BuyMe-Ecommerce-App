@@ -79,7 +79,7 @@ app.use((obj, req, res, next) => {
 //DB connection
 const connectMongoDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URL);
+    await mongoose.connect(process.env.MONGO_URL_ONLINE);
     console.log("Conncted to MongoDB!");
   } catch (error) {
     throw error;

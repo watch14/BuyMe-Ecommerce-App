@@ -1,74 +1,80 @@
-import Promocode from "../models/Promocode.js";
+import PromoCode from "../models/Promocode.js";
 import { CreateSuccess } from "../utils/success.js";
 import { CreateError } from "../utils/error.js";
 
-//create promocode
+// Create Promo Code
 export const createPromoCode = async (req, res, next) => {
   try {
-    if (req.body.promoCode && req.body.promoCode !== "") {
-      const newPromoCode = new Promocode(req.body);
-      await newPromoCode.save();
+    const { promoCode, discountType, discountValue } = req.body;
 
-      return next(CreateSuccess(200, "Promo Code Created Successfully!"));
-    } else {
-      return next(CreateError(400, "Bad Request for Creating a Promo Code!"));
-    }
+    const newPromoCode = new PromoCode({
+      promoCode,
+      discountType,
+      discountValue,
+    });
+
+    await newPromoCode.save();
+
+    return next(CreateSuccess(200, "Promo Code Created Successfully!"));
   } catch (error) {
+    console.error(error);
     return next(
       CreateError(500, "Internal Server Error for Creating a Promo Code!")
     );
   }
 };
 
-//get all Promo Codes
+// Get All Promo Codes
 export const getAllPromoCodes = async (req, res, next) => {
   try {
-    const promoCodes = await Promocode.find();
+    const promoCodes = await PromoCode.find();
     return next(
-      CreateSuccess(200, "Categorys Retrieved Successfully!", promoCodes)
+      CreateSuccess(200, "Promo Codes Retrieved Successfully!", promoCodes)
     );
   } catch (error) {
+    console.error(error);
     return next(
-      CreateError(500, "Internal Server Error for fetching all categorys")
+      CreateError(500, "Internal Server Error for fetching all promo codes")
     );
   }
 };
 
-//get Promo Code by ID
+// Get Promo Code by ID
 export const getPromoCodeById = async (req, res, next) => {
   try {
     const promoCodeId = req.params.id;
-    const promoCode = await Promocode.findById(promoCodeId);
+    const promoCode = await PromoCode.findById(promoCodeId);
+
     if (!promoCode) {
-      return next(CreateError(404, "category not found"));
+      return next(CreateError(404, "Promo Code not found"));
     }
+
     return next(
-      CreateSuccess(200, "Category Retrieved Successfully!", promoCode)
+      CreateSuccess(200, "Promo Code Retrieved Successfully!", promoCode)
     );
   } catch (error) {
     console.error(error);
-
     return next(
-      CreateError(500, "Internal Server Error for fetching category by ID")
+      CreateError(500, "Internal Server Error for fetching promo code by ID")
     );
   }
 };
 
-//delete Promo Coed by ID
+// Delete Promo Code by ID
 export const deletePromoCode = async (req, res, next) => {
   try {
     const promoCodeId = req.params.id;
-    const promoCode = await Promocode.findById(promoCodeId);
-    if (!promoCode) {
-      return next(CreateError(404, "Category not found!"));
-    }
-    await Promocode.findByIdAndDelete(promoCode);
+    const promoCode = await PromoCode.findByIdAndDelete(promoCodeId);
 
-    return next(CreateSuccess(200, "Category Deleted Successfully!"));
+    if (!promoCode) {
+      return next(CreateError(404, "Promo Code not found!"));
+    }
+
+    return next(CreateSuccess(200, "Promo Code Deleted Successfully!"));
   } catch (error) {
     console.error(error);
     return next(
-      CreateError(500, "Internal Server Error for deleting category!")
+      CreateError(500, "Internal Server Error for deleting promo code!")
     );
   }
 };

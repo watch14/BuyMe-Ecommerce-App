@@ -1,9 +1,19 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
-const CategorySchema = mongoose.Schema(
+const PromoCodeSchema = new mongoose.Schema(
   {
     promoCode: {
       type: String,
+      required: true,
+      unique: true,
+    },
+    discountType: {
+      type: String,
+      enum: ["percentage", "exact"],
+      required: true,
+    },
+    discountValue: {
+      type: Number,
       required: true,
     },
   },
@@ -12,4 +22,4 @@ const CategorySchema = mongoose.Schema(
   }
 );
 
-export default mongoose.model("PromoCode", CategorySchema);
+export default mongoose.model("PromoCode", PromoCodeSchema);
