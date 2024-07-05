@@ -12,7 +12,7 @@ import CartartRouter from "./routes/cart.js";
 import ProductRouter from "./routes/products.js";
 import favoriteRoutes from "./routes/favorites.js";
 import sortRoutes from "./routes/sort.js";
-import receiptRoutes from "./routes/receipts.js";
+import receiptRoutes from "./routes/receipt.js";
 
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
