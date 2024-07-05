@@ -1,6 +1,7 @@
 import express from "express";
 import {
   addToCart,
+  decrementProductQuantity,
   deleteFromCart,
   emptyCart,
   getCart,
@@ -105,6 +106,38 @@ router.post("/add-to-cart", addToCart);
  *         description: Internal server error
  */
 router.get("/get-cart", getCart);
+
+/**
+ * @swagger
+ * /api/cart/decrement-product:
+ *   post:
+ *     summary: Decrement quantity of a product in the cart
+ *     tags: [Cart]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userId
+ *               - productId
+ *             properties:
+ *               userId:
+ *                 type: string
+ *                 description: ID of the user whose cart will be decremented
+ *               productId:
+ *                 type: string
+ *                 description: ID of the product to decrement quantity
+ *     responses:
+ *       200:
+ *         description: Product quantity decremented in cart successfully
+ *       404:
+ *         description: Product not found in the cart or cart not found
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/decrement-product", decrementProductQuantity);
 
 /**
  * @swagger

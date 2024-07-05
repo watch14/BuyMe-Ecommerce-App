@@ -105,6 +105,50 @@ export const emptyCart = async (req, res, next) => {
   }
 };
 
+// Decrement Product Quantity in Cart
+export const decrementProductQuantity = async (req, res, next) => {
+  try {
+    const { userId, productId } = req.body;
+
+    // Find the user's cart
+    let cart = await Cart.findOne({ userId });
+
+    if (!cart || !cart.products || cart.products.length === 0) {
+      return next(CreateError(404, "Cart is empty or not found"));
+    }
+
+    // Check if the product exists in the cart
+    const productIndex = cart.products.findIndex(
+      (product) => product.productId.toString() === productId
+    );
+
+    if (productIndex === -1) {
+      return next(CreateError(404, "Product not found in the cart"));
+    }
+
+    // Decrement the quantity of the product by 1 if greater than 1
+    if (cart.products[productIndex].quantity > 1) {
+      cart.products[productIndex].quantity--;
+    } else {
+      // Optionally remove the product if quantity is 1
+      cart.products.splice(productIndex, 1);
+    }
+
+    // Save the updated cart
+    await cart.save();
+    return res.json(
+      CreateSuccess(200, "Product quantity decremented in cart successfully!")
+    );
+  } catch (error) {
+    return next(
+      CreateError(
+        500,
+        "Internal server error for decrementing product quantity in the cart"
+      )
+    );
+  }
+};
+
 // Delete Product from Cart
 export const deleteFromCart = async (req, res, next) => {
   try {
