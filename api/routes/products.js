@@ -71,7 +71,7 @@ router.post("/create", createProduct);
  * @swagger
  * /api/product/search:
  *   get:
- *     summary: Search products by name or description with optional filters
+ *     summary: Search products by name or description with optional filters and pagination
  *     tags: [Products]
  *     parameters:
  *       - in: query
@@ -100,6 +100,21 @@ router.post("/create", createProduct);
  *           type: boolean
  *         description: If false, filter products with stock greater than 0; otherwise, do not filter by stock.
  *           Default behavior is not to filter by stock.
+ *       - in: query
+ *         name: skip
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *           default: 0
+ *         description: Number of records to skip for pagination
+ *       - in: query
+ *         name: take
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 100
+ *           default: 10
+ *         description: Number of records to return for pagination (max 100)
  *     responses:
  *       200:
  *         description: Products retrieved successfully

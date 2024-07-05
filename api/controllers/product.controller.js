@@ -60,10 +60,11 @@ export const updateProduct = async (req, res, next) => {
   }
 };
 
-// Controller function to get all products with optional search, price range, category filters, and stock filter
+// Controller function to get all products with optional search, price range, category filters, stock filter, and pagination
 export const getAllProducts = async (req, res, next) => {
   try {
-    const { q, minPrice, maxPrice, category, filterByStock } = req.query; // Extract query parameters
+    const { q, minPrice, maxPrice, category, filterByStock, skip, take } =
+      req.query; // Extract query parameters
 
     let query = {}; // Initialize query object
 
@@ -99,8 +100,12 @@ export const getAllProducts = async (req, res, next) => {
     }
     // No stock filter applied if filterByStock is not 'false' or not provided
 
-    // Find products based on constructed query
-    const products = await Product.find(query);
+    // Parse skip and take parameters for pagination
+    const skipCount = skip ? parseInt(skip, 10) : 0; // Default to 0 if skip is not provided
+    const takeCount = take ? parseInt(take, 10) : 10; // Default to 10 if take is not provided
+
+    // Find products based on constructed query with pagination
+    const products = await Product.find(query).skip(skipCount).limit(takeCount);
 
     // Respond with success message and products
     return next(
