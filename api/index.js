@@ -7,6 +7,7 @@ import authRouter from "./routes/auth.js";
 import userRouter from "./routes/user.js";
 import CategoryRouter from "./routes/category.js";
 import PromocodeRouter from "./routes/promocode.js";
+import CartartRouter from "./routes/cart.js";
 
 import ProductRouter from "./routes/products.js";
 import favoriteRoutes from "./routes/favorites.js";
@@ -57,6 +58,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/category", CategoryRouter);
 app.use("/api/promo-code", PromocodeRouter);
+app.use("/api/cart", CartartRouter);
 
 app.use("/api/product", ProductRouter);
 app.use("/api/favorite", favoriteRoutes);

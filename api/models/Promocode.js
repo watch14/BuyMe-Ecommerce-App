@@ -4,7 +4,7 @@ const CategorySchema = mongoose.Schema(
   {
     promoCode: {
       type: String,
-      require: true,
+      required: true,
     },
   },
   {
