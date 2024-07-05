@@ -60,30 +60,54 @@ export const updateProduct = async (req, res, next) => {
   }
 };
 
-// Get All Products with optional search functionality
+// Controller function to get all products with optional search, price range, category filters, and stock filter
 export const getAllProducts = async (req, res, next) => {
   try {
-    const { q } = req.query; // Extract the 'q' query parameter for search
+    const { q, minPrice, maxPrice, category, filterByStock } = req.query; // Extract query parameters
 
-    let query = {}; // Default query to fetch all products
+    let query = {}; // Initialize query object
 
     // If 'q' parameter is present, add search criteria to the query
     if (q) {
-      query = {
-        $or: [
-          { productName: { $regex: q, $options: "i" } }, // Case-insensitive search on productName
-          { productDescription: { $regex: q, $options: "i" } }, // Case-insensitive search on productDescription
-          // Add more fields as needed for search
-        ],
-      };
+      query.$or = [
+        { productName: { $regex: q, $options: "i" } }, // Case-insensitive search on productName
+        { productDescription: { $regex: q, $options: "i" } }, // Case-insensitive search on productDescription
+      ];
     }
 
+    // Add price range filter if minPrice or maxPrice are provided
+    if (minPrice || maxPrice) {
+      query.productPrice = {}; // Initialize productPrice filter object
+
+      if (minPrice) {
+        query.productPrice.$gte = parseFloat(minPrice); // Greater than or equal to minPrice
+      }
+
+      if (maxPrice) {
+        query.productPrice.$lte = parseFloat(maxPrice); // Less than or equal to maxPrice
+      }
+    }
+
+    // Add category filter if category is provided
+    if (category) {
+      query.categoryId = category; // Filter by categoryId
+    }
+
+    // Add stock filter based on filterByStock parameter
+    if (filterByStock === "false") {
+      query.productStock = { $gt: 0 }; // Filter where productStock is greater than 0
+    }
+    // No stock filter applied if filterByStock is not 'false' or not provided
+
+    // Find products based on constructed query
     const products = await Product.find(query);
 
+    // Respond with success message and products
     return next(
       CreateSuccess(200, "Products Retrieved Successfully!", products)
     );
   } catch (error) {
+    // Handle errors
     console.error(error);
     return next(
       CreateError(500, "Internal Server Error for fetching all products")

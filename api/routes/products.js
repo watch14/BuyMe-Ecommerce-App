@@ -71,14 +71,35 @@ router.post("/create", createProduct);
  * @swagger
  * /api/product/search:
  *   get:
- *     summary: Search products by name or description
+ *     summary: Search products by name or description with optional filters
  *     tags: [Products]
  *     parameters:
  *       - in: query
  *         name: q
  *         schema:
  *           type: string
- *         description: Search query (can be partial)
+ *         description: Search query to find products by name or description (can be partial)
+ *       - in: query
+ *         name: minPrice
+ *         schema:
+ *           type: number
+ *         description: Minimum product price to filter products
+ *       - in: query
+ *         name: maxPrice
+ *         schema:
+ *           type: number
+ *         description: Maximum product price to filter products
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *         description: Category ID to filter products by a specific category
+ *       - in: query
+ *         name: filterByStock
+ *         schema:
+ *           type: boolean
+ *         description: If false, filter products with stock greater than 0; otherwise, do not filter by stock.
+ *           Default behavior is not to filter by stock.
  *     responses:
  *       200:
  *         description: Products retrieved successfully
