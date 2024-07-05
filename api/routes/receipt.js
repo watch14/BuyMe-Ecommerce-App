@@ -88,36 +88,6 @@ router.get("/:id", getReceiptById);
 
 /**
  * @swagger
- * /api/receipts:
- *   post:
- *     summary: Create a new receipt based on cartId
- *     tags: [Receipts]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - cartId
- *             properties:
- *               cartId:
- *                 type: string
- *                 description: ID of the cart from which receipt will be created
- *     responses:
- *       200:
- *         description: Receipt created successfully
- *       400:
- *         description: Bad request, missing or invalid parameters
- *       404:
- *         description: Cart not found
- *       500:
- *         description: Internal server error
- */
-router.post("/", createReceipt);
-
-/**
- * @swagger
  * /api/receipts/{id}:
  *   put:
  *     summary: Update a receipt by ID
