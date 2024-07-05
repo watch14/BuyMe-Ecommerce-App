@@ -10,6 +10,10 @@ import Receipt from "../models/Receipt.js";
 import Cart from "../models/Cart.js";
 import { CreateSuccess } from "../utils/success.js";
 import { CreateError } from "../utils/error.js";
+import Receipt from "../models/Receipt.js";
+import Cart from "../models/Cart.js";
+import { CreateSuccess } from "../utils/success.js";
+import { CreateError } from "../utils/error.js";
 
 const router = express.Router();
 
@@ -19,6 +23,47 @@ const router = express.Router();
  *   name: Receipts
  *   description: Operations related to receipts
  */
+
+/**
+ * @swagger
+ * /api/receipts:
+ *   post:
+ *     summary: Create a new receipt
+ *     tags: [Receipts]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userId
+ *               - productList
+ *             properties:
+ *               userId:
+ *                 type: string
+ *               productList:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   required:
+ *                     - productId
+ *                     - quantity
+ *                     - price
+ *                   properties:
+ *                     productId:
+ *                       type: string
+ *                     quantity:
+ *                       type: number
+ *                     price:
+ *                       type: number
+ *     responses:
+ *       201:
+ *         description: Receipt created successfully
+ *       400:
+ *         description: Bad request
+ */
+router.post("/", createReceipt);
 
 /**
  * @swagger
