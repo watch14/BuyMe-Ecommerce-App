@@ -10,7 +10,7 @@ import PromocodeRouter from "./routes/promocode.js";
 import ProductRouter from "./routes/products.js";
 import favoriteRoutes from "./routes/favorites.js";
 import sortRoutes from "./routes/sort.js";
-import receiptRoutes from "./routes/receipt.js";
+import receiptRoutes from "./routes/receipts.js";
 
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
@@ -19,7 +19,7 @@ import cookieParser from "cookie-parser";
 const app = express();
 const port = 3000;
 
-//swager options
+// Swagger options
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: "3.0.0",
@@ -40,16 +40,13 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-// console.log(swaggerDocs);
-/////////////////////////////
-
-//dotenv secure mongodb link
+// dotenv secure mongodb link
 dotenv.config();
 
-//to accept JSON format
+// to accept JSON format
 app.use(express.json());
 
-//Cookei parser
+// Cookie parser
 app.use(cookieParser());
 
 app.use("/api/role", roleRoute);
@@ -62,7 +59,7 @@ app.use("/api/favorite", favoriteRoutes);
 app.use("/api/sort", sortRoutes);
 app.use("/api/receipts", receiptRoutes);
 
-//response handler
+// Response handler
 app.use((obj, req, res, next) => {
   const statusCode = obj.status || 500;
   const message = obj.message || "Somethong went wrong!";
@@ -74,7 +71,7 @@ app.use((obj, req, res, next) => {
   });
 });
 
-//DB connection
+// DB connection
 const connectMongoDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URL);

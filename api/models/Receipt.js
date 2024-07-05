@@ -6,7 +6,7 @@ const receiptSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  products: [
+  productList: [
     {
       productId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -30,6 +30,11 @@ const receiptSchema = new mongoose.Schema({
   tax: {
     type: Number,
     required: true,
+  },
+  receiptNumber: {
+    type: String,
+    required: true,
+    unique: true,
   },
 });
 

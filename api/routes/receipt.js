@@ -30,11 +30,11 @@ const router = express.Router();
  *             type: object
  *             required:
  *               - userId
- *               - products
+ *               - productList
  *             properties:
  *               userId:
  *                 type: string
- *               products:
+ *               productList:
  *                 type: array
  *                 items:
  *                   type: object
@@ -112,9 +112,9 @@ router.get("/:id", getReceiptById);
  *           schema:
  *             type: object
  *             required:
- *               - products
+ *               - productList
  *             properties:
- *               products:
+ *               productList:
  *                 type: array
  *                 items:
  *                   type: object
