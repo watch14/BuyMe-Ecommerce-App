@@ -10,10 +10,6 @@ import Receipt from "../models/Receipt.js";
 import Cart from "../models/Cart.js";
 import { CreateSuccess } from "../utils/success.js";
 import { CreateError } from "../utils/error.js";
-import Receipt from "../models/Receipt.js";
-import Cart from "../models/Cart.js";
-import { CreateSuccess } from "../utils/success.js";
-import { CreateError } from "../utils/error.js";
 
 const router = express.Router();
 
@@ -28,7 +24,7 @@ const router = express.Router();
  * @swagger
  * /api/receipts:
  *   post:
- *     summary: Create a new receipt
+ *     summary: Create a new receipt based on cartId
  *     tags: [Receipts]
  *     requestBody:
  *       required: true
@@ -37,31 +33,20 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             required:
- *               - userId
- *               - productList
+ *               - cartId
  *             properties:
- *               userId:
+ *               cartId:
  *                 type: string
- *               productList:
- *                 type: array
- *                 items:
- *                   type: object
- *                   required:
- *                     - productId
- *                     - quantity
- *                     - price
- *                   properties:
- *                     productId:
- *                       type: string
- *                     quantity:
- *                       type: number
- *                     price:
- *                       type: number
+ *                 description: ID of the cart from which receipt will be created
  *     responses:
- *       201:
+ *       200:
  *         description: Receipt created successfully
  *       400:
- *         description: Bad request
+ *         description: Bad request, missing or invalid parameters
+ *       404:
+ *         description: Cart not found
+ *       500:
+ *         description: Internal server error
  */
 router.post("/", createReceipt);
 
