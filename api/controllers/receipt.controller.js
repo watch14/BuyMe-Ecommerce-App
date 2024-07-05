@@ -1,4 +1,5 @@
 import Receipt from "../models/Receipt.js";
+import Cart from "../models/Cart.js";
 import { CreateSuccess } from "../utils/success.js";
 import { CreateError } from "../utils/error.js";
 
@@ -7,36 +8,61 @@ const generateReceiptNumber = () => {
   return `RCPT-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 };
 
-// Create a new receipt
+// Create a new receipt based on cartId
 export const createReceipt = async (req, res, next) => {
   try {
-    const { userId, productList } = req.body;
+    const { cartId } = req.body;
 
-    // Calculate total price
-    const totalPrice = productList.reduce((total, product) => {
-      return total + product.price * product.quantity;
+    // Find the cart based on cartId
+    const cart = await Cart.findById(cartId).populate({
+      path: "products.productId",
+      select: "productName productPrice",
+    });
+
+    if (!cart) {
+      return next(CreateError(404, "Cart not found"));
+    }
+
+    // Calculate total price and tax
+    const totalPrice = cart.products.reduce((total, product) => {
+      return total + product.quantity * product.productId.productPrice;
     }, 0);
 
-    const receipt = new Receipt({
-      userId,
-      productList,
+    const tax = totalPrice * 0.18; // Assuming tax calculation based on totalPrice
+
+    // Create a new receipt
+    const newReceipt = new Receipt({
+      userId: cart.userId,
+      productList: cart.products.map((item) => ({
+        productId: item.productId._id,
+        quantity: item.quantity,
+        price: item.productId.productPrice,
+      })),
       totalPrice,
-      tax: totalPrice * 0.18,
+      tax,
       receiptNumber: generateReceiptNumber(),
     });
 
-    const newReceipt = await receipt.save();
-    return next(CreateSuccess(201, "Receipt Created Successfully!", newReceipt));
+    // Save the receipt
+    await newReceipt.save();
+
+    // Clear the cart after creating the receipt
+    cart.products = [];
+    await cart.save();
+
+    return next(CreateSuccess(200, "Receipt Created Successfully!", newReceipt));
   } catch (error) {
     console.error(error);
-    return next(CreateError(400, "Bad Request for Creating Receipt!"));
+    return next(CreateError(500, "Internal Server Error for creating receipt"));
   }
 };
 
 // Get all receipts
 export const getAllReceipts = async (req, res, next) => {
   try {
-    const receipts = await Receipt.find().populate("userId").populate("productList.productId");
+    const receipts = await Receipt.find()
+      .populate("userId")
+      .populate("productList.productId");
     return next(CreateSuccess(200, "Receipts Retrieved Successfully!", receipts));
   } catch (error) {
     console.error(error);
@@ -48,7 +74,9 @@ export const getAllReceipts = async (req, res, next) => {
 export const getReceiptById = async (req, res, next) => {
   try {
     const receiptId = req.params.id;
-    const receipt = await Receipt.findById(receiptId).populate("userId").populate("productList.productId");
+    const receipt = await Receipt.findById(receiptId)
+      .populate("userId")
+      .populate("productList.productId");
 
     if (!receipt) {
       return next(CreateError(404, "Receipt not found"));

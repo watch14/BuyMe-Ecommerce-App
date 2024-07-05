@@ -6,6 +6,10 @@ import {
   updateReceipt,
   deleteReceipt,
 } from "../controllers/receipt.controller.js";
+import Receipt from "../models/Receipt.js";
+import Cart from "../models/Cart.js";
+import { CreateSuccess } from "../utils/success.js";
+import { CreateError } from "../utils/error.js";
 
 const router = express.Router();
 
@@ -15,47 +19,6 @@ const router = express.Router();
  *   name: Receipts
  *   description: Operations related to receipts
  */
-
-/**
- * @swagger
- * /api/receipts:
- *   post:
- *     summary: Create a new receipt
- *     tags: [Receipts]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - userId
- *               - productList
- *             properties:
- *               userId:
- *                 type: string
- *               productList:
- *                 type: array
- *                 items:
- *                   type: object
- *                   required:
- *                     - productId
- *                     - quantity
- *                     - price
- *                   properties:
- *                     productId:
- *                       type: string
- *                     quantity:
- *                       type: number
- *                     price:
- *                       type: number
- *     responses:
- *       201:
- *         description: Receipt created successfully
- *       400:
- *         description: Bad request
- */
-router.post("/", createReceipt);
 
 /**
  * @swagger
@@ -92,6 +55,36 @@ router.get("/", getAllReceipts);
  *         description: Internal server error
  */
 router.get("/:id", getReceiptById);
+
+/**
+ * @swagger
+ * /api/receipts:
+ *   post:
+ *     summary: Create a new receipt based on cartId
+ *     tags: [Receipts]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - cartId
+ *             properties:
+ *               cartId:
+ *                 type: string
+ *                 description: ID of the cart from which receipt will be created
+ *     responses:
+ *       200:
+ *         description: Receipt created successfully
+ *       400:
+ *         description: Bad request, missing or invalid parameters
+ *       404:
+ *         description: Cart not found
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/", createReceipt);
 
 /**
  * @swagger
@@ -132,6 +125,8 @@ router.get("/:id", getReceiptById);
  *     responses:
  *       200:
  *         description: Receipt updated successfully
+ *       400:
+ *         description: Bad request, missing or invalid parameters
  *       404:
  *         description: Receipt not found
  *       500:
