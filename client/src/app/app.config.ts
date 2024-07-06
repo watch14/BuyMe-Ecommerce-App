@@ -39,8 +39,6 @@ const firebaseConfig2 = {
 
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), importProvidersFrom([
-    provideFirebaseApp(() => initializeApp(firebaseConfig)),
-    provideStorage(() => getStorage())
-  ])]
+  providers: [provideRouter(routes),
+     importProvidersFrom(provideFirebaseApp(() => initializeApp(firebaseConfig))), importProvidersFrom(provideStorage(() => getStorage()))]
 };

@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "buyme-3fd57": {
+      "hosting": {
+        "client": [
+          "buyme-3fd57"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "buyme-3fd57"
+  }
+}
