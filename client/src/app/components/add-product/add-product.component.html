@@ -1,6 +1,3 @@
-<!-- add-product.component.html -->
-
-<!-- Button to trigger the modal -->
 <button (click)="openAddProductModal()">Add New Product</button>
 
 <!-- Modal HTML -->
@@ -8,7 +5,7 @@
   <div class="modal-content">
     <span class="close" (click)="closeModal()">&times;</span>
 
-    <form #productForm="ngForm" (ngSubmit)="addProduct()">
+    <form #productForm="ngForm" (ngSubmit)="uploadFiles()">
       <h2>Add Product</h2>
 
       <div>
@@ -21,6 +18,7 @@
           required
         />
       </div>
+
       <div>
         <label for="categoryId">Category ID:</label>
         <input
@@ -31,6 +29,7 @@
           required
         />
       </div>
+
       <div>
         <label for="productPrice">Price:</label>
         <input
@@ -41,6 +40,7 @@
           required
         />
       </div>
+
       <div>
         <label for="productColor">Color:</label>
         <input
@@ -51,6 +51,7 @@
           required
         />
       </div>
+
       <div>
         <label for="productDescription">Description:</label>
         <textarea
@@ -60,6 +61,7 @@
           required
         ></textarea>
       </div>
+
       <div>
         <label for="productRate">Rate:</label>
         <input
@@ -70,6 +72,7 @@
           required
         />
       </div>
+
       <div>
         <label for="productStock">Stock:</label>
         <input
@@ -80,6 +83,7 @@
           required
         />
       </div>
+
       <div>
         <label for="fileInput">Product Images:</label>
         <input
@@ -108,12 +112,6 @@
       >
         Add Product
       </button>
-
-      <div *ngIf="uploadedImageUrls.length > 0">
-        <h4>Images Uploaded Successfully!</h4>
-      </div>
     </form>
-
-    <!-- Additional success message or confirmation can be added here -->
   </div>
 </div>

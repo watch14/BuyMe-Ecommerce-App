@@ -4,7 +4,8 @@ import { Storage, UploadTask, getDownloadURL, ref, uploadBytesResumable, UploadT
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 interface Product {
   productName: string;
@@ -29,10 +30,13 @@ interface Product {
 export class AddProductComponent {
   readonly APIUrl = "http://localhost:3000/api/product/create";
 
-  // Inject storage and HTTP client
-  constructor(private storage: Storage, private http: HttpClient) {}
-  uploadedImageUrls: string[] = [];
-  // Product data model
+  constructor(
+    private storage: Storage,
+    private http: HttpClient,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar // Inject MatSnackBar service
+  ) {}
+
   product: Product = {
     productName: '',
     categoryId: '',
@@ -54,6 +58,26 @@ export class AddProductComponent {
 
   closeModal() {
     this.showModal = false;
+  }
+
+  showSuccessMessage(message: string) {
+    const config: MatSnackBarConfig = {
+      duration: 6000,
+      panelClass: ['snackbar-success', 'larger-snack-bar'], // Custom CSS classes for success message
+      horizontalPosition: 'center', // Positioning the snack bar
+      verticalPosition: 'top', // Positioning the snack bar
+    };
+    this.snackBar.open(message, 'Close', config);
+  }
+
+  showErrorMessage(message: string) {
+    const config: MatSnackBarConfig = {
+      duration: 6000,
+      panelClass: ['snackbar-error', 'larger-snack-bar'], // Custom CSS classes for error message
+      horizontalPosition: 'center', // Positioning the snack bar
+      verticalPosition: 'top', // Positioning the snack bar
+    };
+    this.snackBar.open(message, 'Close', config);
   }
 
   handleFileInput(event: Event) {
@@ -86,7 +110,7 @@ export class AddProductComponent {
   
     const uploadTasks: Promise<void>[] = [];
   
-    for (let preview of this.imagePreviews) {console
+    for (let preview of this.imagePreviews) {
       const file = preview.file;
       const storageRef = ref(this.storage, file.name);
       const uploadTask = uploadBytesResumable(storageRef, file);
@@ -103,7 +127,7 @@ export class AddProductComponent {
             },
             async () => {
               const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-              this.product.productPicture.push(downloadURL); // Store the download URL in product model
+              this.product.productPicture.push(downloadURL);
               resolve();
             }
           );
@@ -119,22 +143,21 @@ export class AddProductComponent {
       this.addProduct();
     } catch (error) {
       console.error('Error uploading files:', error);
-      // Handle error appropriately (e.g., show error message)
+      this.showErrorMessage('Error uploading files. Please try again.'); // Show error message
     }
   
-    // Clear image previews after upload
     this.imagePreviews = [];
   }
-  addProduct() {
-    // Assuming you have HttpClient imported and injected
 
+  addProduct() {
     this.http.post(this.APIUrl, this.product)
-      .subscribe((response) => {
+      .subscribe((response: any) => {
         console.log('Product added successfully:', response);
-        // Optionally reset form or handle success message
+        this.showSuccessMessage('Product added successfully!'); // Show success message
+        this.closeModal(); // Close modal after showing success message
       }, (error) => {
         console.error('Error adding product:', error);
-        // Handle error (e.g., show error message)
+        this.showErrorMessage('Failed to add product. Please try again.'); // Show error message
       });
   }
 }

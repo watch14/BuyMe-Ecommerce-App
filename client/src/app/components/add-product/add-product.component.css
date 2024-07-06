@@ -168,3 +168,43 @@ button:hover:not([disabled]) {
     width: 100%;
   }
 }
+
+
+
+/* add-product.component.css */
+
+.success-message {
+  background-color: #dff0d8; /* Success message background color */
+  color: #3c763d; /* Success message text color */
+  border: 1px solid #d6e9c6; /* Success message border color */
+  padding: 10px;
+  margin-top: 20px;
+  border-radius: 4px;
+}
+
+
+/* Styles for Success Snackbar */
+.snackbar-success .larger-snack-bar{
+  background-color: #4CAF50; /* Green */
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Styles for Error Snackbar */
+.snackbar-error , .larger-snack-bar, .blue-snackbar{
+  background-color: #f44336; /* Red */
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}
+
+.blue-snackbar {
+  background: #2196F3;
+}
+
+/* Larger size for snack bar */
+.larger-snack-bar {
+  font-size: 20px;
+  min-width: 300px; /* Adjust width as needed */
+}
