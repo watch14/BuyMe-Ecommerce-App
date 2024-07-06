@@ -76,37 +76,41 @@
       multiple
     />
   </div>
-  <div *ngIf="imagePreviews.length > 0">
-    <h4>Selected Images:</h4>
-    <div *ngFor="let preview of imagePreviews; let i = index">
-      <img
-        [src]="preview.url"
-        style="max-width: 200px; max-height: 200px; margin: 10px"
-      />
-      <button
-        (click)="removeImage(i)"
-        style="position: absolute; top: 5px; right: 5px"
-      >
-        X
-      </button>
-    </div>
-  </div>
-  <!-- Button to upload images -->
-  <button
-    type="button"
-    (click)="uploadFiles()"
-    [disabled]="imagePreviews.length === 0"
-  >
-    Upload Images
-  </button>
 </form>
 
+<div *ngIf="imagePreviews.length > 0">
+  <h4>Selected Images:</h4>
+  <div *ngFor="let preview of imagePreviews; let i = index">
+    <img
+      [src]="preview.url"
+      style="max-width: 200px; max-height: 200px; margin: 10px"
+    />
+    <button
+      (click)="removeImage(i)"
+      style="position: absolute; top: 5px; right: 5px"
+    >
+      X
+    </button>
+  </div>
+</div>
+<!-- Button to upload images -->
 <button
+  type="button"
+  (click)="uploadFiles()"
+  [disabled]="imagePreviews.length === 0"
+>
+  Add Product
+</button>
+
+<br />
+<br />
+
+<!-- <button
   type="submit"
   [disabled]="!productForm.form.valid || imagePreviews.length === 0"
 >
   Add Product
-</button>
+</button> -->
 
 <div *ngIf="uploadedImageUrls.length > 0">
   <h4>Images Uploaded Successfully!</h4>
