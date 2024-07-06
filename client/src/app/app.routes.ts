@@ -3,7 +3,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
-import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
