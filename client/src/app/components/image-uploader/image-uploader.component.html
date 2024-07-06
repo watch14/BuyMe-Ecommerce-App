@@ -1,4 +1,40 @@
-<h1>Storage</h1>
-<label for="fileUpload">Choose a File</label>
-<input id="fileUpload" type="file" #upload />
-<button (click)="uploadFile(upload)">Upload</button>
+<div>
+  <input
+    type="file"
+    id="fileInput"
+    (change)="handleFileInput($event)"
+    multiple
+  />
+  <button (click)="uploadFiles()" [disabled]="imagePreviews.length === 0">
+    Upload
+  </button>
+</div>
+
+<div *ngIf="imagePreviews.length > 0">
+  <h4>Selected Images:</h4>
+  <div
+    *ngFor="let preview of imagePreviews; let i = index"
+    style="position: relative; display: inline-block"
+  >
+    <img
+      [src]="preview.url"
+      style="max-width: 200px; max-height: 200px; margin: 10px"
+    />
+    <button
+      (click)="removeImage(i)"
+      style="position: absolute; top: 5px; right: 5px"
+    >
+      X
+    </button>
+  </div>
+</div>
+
+<div *ngIf="uploadedImageUrls.length > 0">
+  <h4>Uploaded Images:</h4>
+  <div *ngFor="let url of uploadedImageUrls">
+    <img
+      [src]="url"
+      style="max-width: 300px; max-height: 300px; margin: 10px"
+    />
+  </div>
+</div>
