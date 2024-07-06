@@ -1,3 +1,4 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { Component, inject} from '@angular/core';
 import { Storage, UploadTask, getDownloadURL, ref, uploadBytesResumable, UploadTaskSnapshot } from '@angular/fire/storage';
@@ -6,7 +7,6 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-
 interface Product {
   productName: string;
   categoryId: string; // Replace with appropriate type
@@ -21,7 +21,7 @@ interface Product {
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, MatProgressSpinnerModule],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.css'
 })
@@ -29,6 +29,9 @@ interface Product {
 
 export class AddProductComponent {
   readonly APIUrl = "http://localhost:3000/api/product/create";
+
+  isLoading = false; // Flag to track overall loading state
+  isUploading = false; // Flag to track image upload loading state
 
   constructor(
     private storage: Storage,
@@ -62,7 +65,7 @@ export class AddProductComponent {
 
   showSuccessMessage(message: string) {
     const config: MatSnackBarConfig = {
-      duration: 6000,
+      duration: 3000,
       panelClass: ['snackbar-success', 'larger-snack-bar'], // Custom CSS classes for success message
       horizontalPosition: 'center', // Positioning the snack bar
       verticalPosition: 'top', // Positioning the snack bar
@@ -72,7 +75,7 @@ export class AddProductComponent {
 
   showErrorMessage(message: string) {
     const config: MatSnackBarConfig = {
-      duration: 6000,
+      duration: 3000,
       panelClass: ['snackbar-error', 'larger-snack-bar'], // Custom CSS classes for error message
       horizontalPosition: 'center', // Positioning the snack bar
       verticalPosition: 'top', // Positioning the snack bar
@@ -107,6 +110,8 @@ export class AddProductComponent {
 
   async uploadFiles() {
     if (this.imagePreviews.length === 0) return;
+  
+    this.isUploading = true; // Set uploading flag to true
   
     const uploadTasks: Promise<void>[] = [];
   
@@ -146,10 +151,12 @@ export class AddProductComponent {
       this.showErrorMessage('Error uploading files. Please try again.'); // Show error message
     }
   
+    this.isUploading = false; // Set uploading flag to false after completion
     this.imagePreviews = [];
   }
 
   addProduct() {
+    this.isLoading = true; // Set loading flag to true
     this.http.post(this.APIUrl, this.product)
       .subscribe((response: any) => {
         console.log('Product added successfully:', response);
@@ -158,6 +165,9 @@ export class AddProductComponent {
       }, (error) => {
         console.error('Error adding product:', error);
         this.showErrorMessage('Failed to add product. Please try again.'); // Show error message
+      })
+      .add(() => {
+        this.isLoading = false; // Set loading flag to false after completing HTTP request
       });
   }
 }
