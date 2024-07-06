@@ -44,36 +44,43 @@ router.post("/", addToFavorite);
 
 /**
  * @swagger
- * /api/favorite/delete/{id}:
- *   delete:
+ * /api/favorite/remove:
+ *   post:
  *     summary: Remove from favorite
  *     tags: [Favorites]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *           description: ObjectId of the favorite to remove
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userId
+ *               - productId
+ *             properties:
+ *               userId:
+ *                 type: string
+ *               productId:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Removed from favorites successfully
  *       404:
- *         description: Favorite not found
+ *         description: Product not found in favorites
  *       500:
  *         description: Internal server error
  */
-router.delete("/delete/:id", removeFromFavorite);
+router.post("/remove", removeFromFavorite);
 
 /**
  * @swagger
- * /api/favorite/user/{id}:
+ * /api/favorite/user/{userId}:
  *   get:
  *     summary: Get user's favorite products
  *     tags: [Favorites]
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: userId
  *         required: true
  *         schema:
  *           type: string
@@ -81,11 +88,9 @@ router.delete("/delete/:id", removeFromFavorite);
  *     responses:
  *       200:
  *         description: Favorites retrieved successfully
- *       404:
- *         description: User not found
  *       500:
  *         description: Internal server error
  */
-router.get("/user/:id", getUserFavorites);
+router.get("/user/:userId", getUserFavorites);
 
 export default router;
