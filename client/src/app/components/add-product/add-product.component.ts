@@ -46,6 +46,16 @@ export class AddProductComponent {
 
   imagePreviews: { file: File, url: string }[] = [];
 
+  showModal = false;
+
+  openAddProductModal() {
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+  }
+
   handleFileInput(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) {
