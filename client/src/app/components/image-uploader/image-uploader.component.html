@@ -1,0 +1,86 @@
+<p>image-uploader works!</p>
+<div class="create-product-container">
+  <h2>Create Product</h2>
+  <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+    <div class="form-group">
+      <label for="productName">Product Name</label>
+      <input type="text" id="productName" name="productName" ngModel required />
+    </div>
+
+    <div class="form-group">
+      <label for="categoryId">Category ID</label>
+      <input type="text" id="categoryId" name="categoryId" ngModel required />
+    </div>
+
+    <div class="form-group">
+      <label for="productPrice">Product Price</label>
+      <input
+        type="number"
+        id="productPrice"
+        name="productPrice"
+        ngModel
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="productColor">Product Color</label>
+      <input type="text" id="productColor" name="productColor" ngModel />
+    </div>
+
+    <div class="form-group">
+      <label for="productDescription">Product Description</label>
+      <textarea
+        id="productDescription"
+        name="productDescription"
+        ngModel
+        required
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="productRate">Product Rate</label>
+      <input
+        type="number"
+        id="productRate"
+        name="productRate"
+        ngModel
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="productStock">Product Stock</label>
+      <input
+        type="number"
+        id="productStock"
+        name="productStock"
+        ngModel
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="productDiscount">Product Discount</label>
+      <input
+        type="number"
+        id="productDiscount"
+        name="productDiscount"
+        ngModel
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="productPicture">Product Picture</label>
+      <input
+        type="file"
+        id="productPicture"
+        (change)="onFileSelected($event)"
+      />
+    </div>
+
+    <button type="submit" [disabled]="!productForm.valid || !selectedFile">
+      Create Product
+    </button>
+  </form>
+</div>
