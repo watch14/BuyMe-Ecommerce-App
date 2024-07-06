@@ -9,6 +9,8 @@ import CategoryRouter from "./routes/category.js";
 import PromocodeRouter from "./routes/promocode.js";
 import CartartRouter from "./routes/cart.js";
 
+import cors from "cors";
+
 import ProductRouter from "./routes/products.js";
 import favoriteRoutes from "./routes/favorites.js";
 import sortRoutes from "./routes/sort.js";
@@ -20,7 +22,7 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 const port = 3000;
-
+app.use(cors());
 // Swagger options
 const swaggerOptions = {
   swaggerDefinition: {

@@ -73,19 +73,19 @@ export class AddProductComponent {
 
   async uploadFiles() {
     if (this.imagePreviews.length === 0) return;
-
+  
     const uploadTasks: Promise<void>[] = [];
-
+  
     for (let preview of this.imagePreviews) {
       const file = preview.file;
       const storageRef = ref(this.storage, file.name);
       const uploadTask = uploadBytesResumable(storageRef, file);
-
+  
       uploadTasks.push(
         new Promise<void>((resolve, reject) => {
           uploadTask.on('state_changed',
             (snapshot) => {
-              // Handle progress
+              // Handle progress if needed
             },
             (error) => {
               console.error('Error uploading file:', error);
@@ -101,22 +101,21 @@ export class AddProductComponent {
         })
       );
     }
-
+  
     try {
       await Promise.all(uploadTasks);
       console.log("All files uploaded successfully!");
-
-      // After uploading images, call function to add product
+  
+      // After uploading images and getting URLs, call function to add product
       this.addProduct();
     } catch (error) {
       console.error('Error uploading files:', error);
       // Handle error appropriately (e.g., show error message)
     }
-
+  
     // Clear image previews after upload
     this.imagePreviews = [];
   }
-
   addProduct() {
     // Assuming you have HttpClient imported and injected
 

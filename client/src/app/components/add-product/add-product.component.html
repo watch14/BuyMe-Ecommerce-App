@@ -1,5 +1,3 @@
-<!-- add-product.component.html -->
-
 <h2>Add Product</h2>
 
 <form #productForm="ngForm" (ngSubmit)="addProduct()">
@@ -78,29 +76,37 @@
       multiple
     />
   </div>
+  <div *ngIf="imagePreviews.length > 0">
+    <h4>Selected Images:</h4>
+    <div *ngFor="let preview of imagePreviews; let i = index">
+      <img
+        [src]="preview.url"
+        style="max-width: 200px; max-height: 200px; margin: 10px"
+      />
+      <button
+        (click)="removeImage(i)"
+        style="position: absolute; top: 5px; right: 5px"
+      >
+        X
+      </button>
+    </div>
+  </div>
+  <!-- Button to upload images -->
   <button
-    type="submit"
-    [disabled]="!productForm.form.valid || imagePreviews.length === 0"
+    type="button"
+    (click)="uploadFiles()"
+    [disabled]="imagePreviews.length === 0"
   >
-    Add Product
+    Upload Images
   </button>
 </form>
 
-<div *ngIf="imagePreviews.length > 0">
-  <h4>Selected Images:</h4>
-  <div *ngFor="let preview of imagePreviews; let i = index">
-    <img
-      [src]="preview.url"
-      style="max-width: 200px; max-height: 200px; margin: 10px"
-    />
-    <button
-      (click)="removeImage(i)"
-      style="position: absolute; top: 5px; right: 5px"
-    >
-      X
-    </button>
-  </div>
-</div>
+<button
+  type="submit"
+  [disabled]="!productForm.form.valid || imagePreviews.length === 0"
+>
+  Add Product
+</button>
 
 <div *ngIf="uploadedImageUrls.length > 0">
   <h4>Images Uploaded Successfully!</h4>
