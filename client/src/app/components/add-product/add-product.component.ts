@@ -76,7 +76,7 @@ export class AddProductComponent {
   
     const uploadTasks: Promise<void>[] = [];
   
-    for (let preview of this.imagePreviews) {
+    for (let preview of this.imagePreviews) {console
       const file = preview.file;
       const storageRef = ref(this.storage, file.name);
       const uploadTask = uploadBytesResumable(storageRef, file);
@@ -93,7 +93,6 @@ export class AddProductComponent {
             },
             async () => {
               const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-              console.log("File uploaded. Download URL:", downloadURL);
               this.product.productPicture.push(downloadURL); // Store the download URL in product model
               resolve();
             }

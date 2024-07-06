@@ -1,3 +1,5 @@
+<!-- add-product.component.html -->
+
 <h2>Add Product</h2>
 
 <form #productForm="ngForm" (ngSubmit)="addProduct()">
@@ -80,20 +82,15 @@
 
 <div *ngIf="imagePreviews.length > 0">
   <h4>Selected Images:</h4>
-  <div *ngFor="let preview of imagePreviews; let i = index">
-    <img
-      [src]="preview.url"
-      style="max-width: 200px; max-height: 200px; margin: 10px"
-    />
-    <button
-      (click)="removeImage(i)"
-      style="position: absolute; top: 5px; right: 5px"
-    >
-      X
-    </button>
+  <div
+    *ngFor="let preview of imagePreviews; let i = index"
+    class="image-preview-container"
+  >
+    <img [src]="preview.url" class="image-preview" />
+    <button (click)="removeImage(i)" class="remove-button">X</button>
   </div>
 </div>
-<!-- Button to upload images -->
+
 <button
   type="button"
   (click)="uploadFiles()"
@@ -102,8 +99,8 @@
   Add Product
 </button>
 
-<br />
-<br />
+<!-- <br />
+<br /> -->
 
 <!-- <button
   type="submit"
