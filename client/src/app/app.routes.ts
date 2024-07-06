@@ -4,6 +4,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { ImageUploaderComponent } from './components/image-uploader/image-uploader.component';
+import { AddProductComponent } from './components/add-product/add-product.component';
 
 export const routes: Routes = [
     {'path': '', component:HomeComponent},
@@ -11,4 +12,5 @@ export const routes: Routes = [
     {'path': 'register', component:RegisterComponent},
     {'path': 'reset-password', component:ResetPasswordComponent},
     {'path': 'image-uploader', component:ImageUploaderComponent},
+    {'path': 'add-product', component:AddProductComponent},
 ];
