@@ -8,6 +8,7 @@
     <input
       id="productName"
       name="productName"
+      type="text"
       [(ngModel)]="product.productName"
       required
     />
@@ -17,6 +18,7 @@
     <input
       id="categoryId"
       name="categoryId"
+      type="text"
       [(ngModel)]="product.categoryId"
       required
     />
@@ -36,6 +38,7 @@
     <input
       id="productColor"
       name="productColor"
+      type="text"
       [(ngModel)]="product.productColor"
       required
     />
@@ -78,26 +81,30 @@
       multiple
     />
   </div>
-</form>
 
-<div *ngIf="imagePreviews.length > 0">
-  <h4>Selected Images:</h4>
-  <div
-    *ngFor="let preview of imagePreviews; let i = index"
-    class="image-preview-container"
-  >
-    <img [src]="preview.url" class="image-preview" />
-    <button (click)="removeImage(i)" class="remove-button">X</button>
+  <div *ngIf="imagePreviews.length > 0">
+    <h4>Selected Images:</h4>
+    <div
+      *ngFor="let preview of imagePreviews; let i = index"
+      class="image-preview-container"
+    >
+      <img [src]="preview.url" class="image-preview" />
+      <button (click)="removeImage(i)" class="remove-button">X</button>
+    </div>
   </div>
-</div>
 
-<button
-  type="button"
-  (click)="uploadFiles()"
-  [disabled]="imagePreviews.length === 0"
->
-  Add Product
-</button>
+  <button
+    type="button"
+    (click)="uploadFiles()"
+    [disabled]="imagePreviews.length === 0"
+  >
+    Add Product
+  </button>
+
+  <div *ngIf="uploadedImageUrls.length > 0">
+    <h4>Images Uploaded Successfully!</h4>
+  </div>
+</form>
 
 <!-- <br />
 <br /> -->
@@ -108,7 +115,3 @@
 >
   Add Product
 </button> -->
-
-<div *ngIf="uploadedImageUrls.length > 0">
-  <h4>Images Uploaded Successfully!</h4>
-</div>

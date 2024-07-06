@@ -9,58 +9,65 @@ body {
 }
 
 h2 {
-  font-size: 1.5em;
+  font-size: 2.5em; /* Larger heading for emphasis */
   color: #333;
   margin-bottom: 20px;
 }
 
 h4 {
-  font-size: 1.2em;
+  font-size: 1.8em; /* Slightly larger heading */
   color: #333;
   margin-bottom: 10px;
 }
 
 form {
-  margin-bottom: 20px;
+  margin-bottom: 30px; /* Increased margin for form sections */
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 div {
-  margin-bottom: 15px;
+  margin-bottom: 20px; /* Increased spacing between sections */
 }
 
 label {
   display: block;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 10px; /* Slightly increased margin */
+  color: #555; /* Darkened label color */
 }
 
 input[type="text"],
 input[type="number"],
 textarea {
   width: 100%;
-  padding: 8px;
+  padding: 12px;
   font-size: 1em;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
 }
 
 textarea {
-  height: 100px;
+  height: 120px;
   resize: vertical;
 }
 
 input[type="file"] {
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
 button {
-  padding: 10px 20px;
+  padding: 12px 12px;
   font-size: 1em;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button[disabled] {
@@ -69,43 +76,41 @@ button[disabled] {
 }
 
 button:hover:not([disabled]) {
-  background-color: #0056b3;
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
 .image-preview-container {
   position: relative;
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .image-preview {
   max-width: 200px;
   max-height: 200px;
-  margin-bottom: 10px;
   border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .remove-button {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  background-color: red;
+  top: 10px;
+  right: 10px;
+  background-color: #dc3545; /* Red delete button */
   color: white;
   border: none;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  padding: 0;
+  font-size: 14px;
 }
 
 .remove-button:hover {
-  background-color: darkred;
+  background-color: #c82333; /* Darker red on hover */
 }
 
 @media (max-width: 768px) {
