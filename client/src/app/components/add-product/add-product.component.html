@@ -1,26 +1,94 @@
-<p>add-product works!</p>
+<!-- add-product.component.html -->
 
-<!-- image uploader -->
-<!-- image uploader -->
+<h2>Add Product</h2>
 
-<div>
-  <input
-    type="file"
-    id="fileInput"
-    (change)="handleFileInput($event)"
-    multiple
-  />
-  <button (click)="uploadFiles()" [disabled]="imagePreviews.length === 0">
-    Upload
+<form #productForm="ngForm" (ngSubmit)="addProduct()">
+  <div>
+    <label for="productName">Product Name:</label>
+    <input
+      id="productName"
+      name="productName"
+      [(ngModel)]="product.productName"
+      required
+    />
+  </div>
+  <div>
+    <label for="categoryId">Category ID:</label>
+    <input
+      id="categoryId"
+      name="categoryId"
+      [(ngModel)]="product.categoryId"
+      required
+    />
+  </div>
+  <div>
+    <label for="productPrice">Price:</label>
+    <input
+      id="productPrice"
+      name="productPrice"
+      [(ngModel)]="product.productPrice"
+      type="number"
+      required
+    />
+  </div>
+  <div>
+    <label for="productColor">Color:</label>
+    <input
+      id="productColor"
+      name="productColor"
+      [(ngModel)]="product.productColor"
+      required
+    />
+  </div>
+  <div>
+    <label for="productDescription">Description:</label>
+    <textarea
+      id="productDescription"
+      name="productDescription"
+      [(ngModel)]="product.productDescription"
+      required
+    ></textarea>
+  </div>
+  <div>
+    <label for="productRate">Rate:</label>
+    <input
+      id="productRate"
+      name="productRate"
+      [(ngModel)]="product.productRate"
+      type="number"
+      required
+    />
+  </div>
+  <div>
+    <label for="productStock">Stock:</label>
+    <input
+      id="productStock"
+      name="productStock"
+      [(ngModel)]="product.productStock"
+      type="number"
+      required
+    />
+  </div>
+  <div>
+    <label for="fileInput">Product Images:</label>
+    <input
+      type="file"
+      id="fileInput"
+      (change)="handleFileInput($event)"
+      multiple
+    />
+  </div>
+  <button
+    type="submit"
+    [disabled]="!productForm.form.valid || imagePreviews.length === 0"
+  >
+    Add Product
   </button>
-</div>
+</form>
 
 <div *ngIf="imagePreviews.length > 0">
   <h4>Selected Images:</h4>
-  <div
-    *ngFor="let preview of imagePreviews; let i = index"
-    style="position: relative; display: inline-block"
-  >
+  <div *ngFor="let preview of imagePreviews; let i = index">
     <img
       [src]="preview.url"
       style="max-width: 200px; max-height: 200px; margin: 10px"
@@ -35,8 +103,5 @@
 </div>
 
 <div *ngIf="uploadedImageUrls.length > 0">
-  <h4>Image Uploaded Successfully</h4>
+  <h4>Images Uploaded Successfully!</h4>
 </div>
-
-<!-- image uploader -->
-<!-- image uploader -->
