@@ -18,6 +18,25 @@ const firebaseConfig = {
 
 };
 
+// Your web app's Firebase configuration
+
+const firebaseConfig2 = {
+
+  apiKey: "AIzaSyBMHPbLIt-ePXEnSEHfhzSgEl0flz7zt0k",
+
+  authDomain: "buyme-3fd57.firebaseapp.com",
+
+  projectId: "buyme-3fd57",
+
+  storageBucket: "buyme-3fd57.appspot.com",
+
+  messagingSenderId: "98610282041",
+
+  appId: "1:98610282041:web:4c8463b67f77982afed7e8"
+
+};
+
+
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), importProvidersFrom([
