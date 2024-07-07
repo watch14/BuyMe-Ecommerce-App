@@ -5,6 +5,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { AddProductComponent } from './components/add-product/add-product.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { ProductComponent } from './pages/product/product.component';
 
 export const routes: Routes = [
     {'path': '', component:HomeComponent},
@@ -13,4 +14,7 @@ export const routes: Routes = [
     {'path': 'reset-password', component:ResetPasswordComponent},
 
     {'path': 'admin-dashboard', component:AdminDashboardComponent},
+
+    {'path': 'product', component:ProductComponent},
+
 ];

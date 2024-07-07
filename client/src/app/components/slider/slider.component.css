@@ -1,0 +1,52 @@
+.slider{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+
+    padding: 80px;
+    background-image: url("../../../assets/slider/slider.png");
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the background image from repeating */
+    background-size: cover; /* Ensure the background image covers the entire area */
+
+}
+
+h1{
+    color: var(--White, #FFF);
+    text-align: center;
+
+    /* headers */
+    font-family: "Galderglynn Titling";
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 68px; /* 106.25% */
+    width: 668px;
+}
+
+p{
+    color: var(--White, #FFF);
+    text-align: center;
+ 
+    font-family: Sarabun;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 2px;
+}
+
+button{
+    display: flex;
+    width: 358px;
+    height: 52px;
+    padding: 16px 54px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    border-radius: 40px;
+    background: var(--White, #FFF);
+
+}

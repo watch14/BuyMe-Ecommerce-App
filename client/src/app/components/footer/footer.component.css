@@ -144,6 +144,14 @@
     align-self: stretch;
 }
 
+hr{
+    width: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.10);
+
+    ;
+}
+
+
 .rights{
     color: rgba(0, 0, 0, 0.60);
     font-family: Sarabun;
