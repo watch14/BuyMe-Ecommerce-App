@@ -10,9 +10,9 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 interface Product {
   productName: string;
-  categoryId: string; // Replace with appropriate type
+  categoryId: string; 
   productPrice: number;
-  productPicture: string[]; // Array to store image URLs
+  productPicture: string[]; 
   productColor: string;
   productDescription: string;
   productRate: number;
@@ -31,30 +31,26 @@ interface Product {
 export class AddProductComponent {
   readonly APIUrl = "http://localhost:3000/api/product/create";
 
-  isLoading = false; // Flag to track overall loading state
-  isUploading = false; // Flag to track image upload loading state
-
-  constructor(
-    private storage: Storage,
-    private http: HttpClient,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar // Inject MatSnackBar service
-  ) {}
-
+  isLoading = false;
+  isUploading = false;
+  showModal = false;
+  imagePreviews: { file: File, url: string }[] = [];
   product: Product = {
     productName: '',
     categoryId: '',
     productPrice: 0,
-    productPicture: [],
+    productPicture: [], // Initialize as an empty array
     productColor: '',
     productDescription: '',
     productRate: 0,
     productStock: 0
   };
 
-  imagePreviews: { file: File, url: string }[] = [];
-
-  showModal = false;
+  constructor(
+    private storage: Storage,
+    private http: HttpClient,
+    private snackBar: MatSnackBar,
+  ) {}
 
   openAddProductModal() {
     this.showModal = true;
@@ -67,9 +63,9 @@ export class AddProductComponent {
   showSuccessMessage(message: string) {
     const config: MatSnackBarConfig = {
       duration: 3000,
-      panelClass: ['snackbar-success', 'larger-snack-bar'], // Custom CSS classes for success message
-      horizontalPosition: 'center', // Positioning the snack bar
-      verticalPosition: 'top', // Positioning the snack bar
+      panelClass: ['snackbar-success', 'larger-snack-bar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
     };
     this.snackBar.open(message, 'Close', config);
   }
@@ -77,9 +73,9 @@ export class AddProductComponent {
   showErrorMessage(message: string) {
     const config: MatSnackBarConfig = {
       duration: 3000,
-      panelClass: ['snackbar-error', 'larger-snack-bar'], // Custom CSS classes for error message
-      horizontalPosition: 'center', // Positioning the snack bar
-      verticalPosition: 'top', // Positioning the snack bar
+      panelClass: ['snackbar-error', 'larger-snack-bar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
     };
     this.snackBar.open(message, 'Close', config);
   }
@@ -111,16 +107,16 @@ export class AddProductComponent {
 
   async uploadFiles() {
     if (this.imagePreviews.length === 0) return;
-  
-    this.isUploading = true; // Set uploading flag to true
-  
+
+    this.isUploading = true;
+
     const uploadTasks: Promise<void>[] = [];
-  
+
     for (let preview of this.imagePreviews) {
       const file = preview.file;
       const storageRef = ref(this.storage, file.name);
       const uploadTask = uploadBytesResumable(storageRef, file);
-  
+
       uploadTasks.push(
         new Promise<void>((resolve, reject) => {
           uploadTask.on('state_changed',
@@ -140,35 +136,45 @@ export class AddProductComponent {
         })
       );
     }
-  
+
     try {
       await Promise.all(uploadTasks);
       console.log("All files uploaded successfully!");
-  
-      // After uploading images and getting URLs, call function to add product
       this.addProduct();
     } catch (error) {
       console.error('Error uploading files:', error);
-      this.showErrorMessage('Error uploading files. Please try again.'); // Show error message
+      this.showErrorMessage('Error uploading files. Please try again.');
     }
-  
-    this.isUploading = false; // Set uploading flag to false after completion
+
+    this.isUploading = false;
     this.imagePreviews = [];
   }
 
   addProduct() {
-    this.isLoading = true; // Set loading flag to true
+    this.isLoading = true;
+
     this.http.post(this.APIUrl, this.product)
       .subscribe((response: any) => {
         console.log('Product added successfully:', response);
-        this.showSuccessMessage('Product added successfully!'); // Show success message
-        this.closeModal(); // Close modal after showing success message
+        this.showSuccessMessage('Product added successfully!');
+        this.closeModal();
       }, (error) => {
         console.error('Error adding product:', error);
-        this.showErrorMessage('Failed to add product. Please try again.'); // Show error message
+        this.showErrorMessage('Failed to add product. Please try again.');
       })
       .add(() => {
-        this.isLoading = false; // Set loading flag to false after completing HTTP request
+        this.isLoading = false;
+        // Optionally clear form fields or reset product data
+        this.product = {
+          productName: '',
+          categoryId: '',
+          productPrice: 0,
+          productPicture: [],
+          productColor: '',
+          productDescription: '',
+          productRate: 0,
+          productStock: 0
+        };
       });
   }
 }
