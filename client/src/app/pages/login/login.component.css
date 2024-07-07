@@ -37,6 +37,8 @@ input, h1, button{
 .createaccount{
     margin: 48px 0;
     padding: 20px 24px;
+    width: 600px;
+    max-width: 80%;
 
     display: flex;
     flex-direction: column;
