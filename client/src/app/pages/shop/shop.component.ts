@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
   styleUrl: './shop.component.css'
 })
 export class ShopComponent implements OnInit {
-  readonly APIUrl = 'http://localhost:3000/api/product/search?skip=0&take=10'; // Update with your API endpoint
+  readonly APIUrl = 'http://localhost:3000/api/product/search?skip=0&take=16'; // Update with your API endpoint
   products: any[] = [];
 
   constructor(private http: HttpClient) {}
