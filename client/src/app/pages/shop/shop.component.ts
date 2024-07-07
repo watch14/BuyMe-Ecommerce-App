@@ -1,34 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../../services/product.service';
-import { HttpClientModule } from '@angular/common/http';
+import { ProductService } from '../../services/product.service'; // Import ProductService
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, RouterModule],
+  imports: [HttpClientModule, 
+            CommonModule, 
+            RouterModule, 
+            ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.css'
 })
 export class ShopComponent implements OnInit {
+  readonly APIUrl = 'http://localhost:3000/api/product/search?skip=0&take=10'; // Update with your API endpoint
   products: any[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(private http: HttpClient) {}
 
-  ngOnInit() {
-    this.fetchProducts();
-  }
+
 
   fetchProducts() {
-    this.productService.getProducts().subscribe(
-      (response: any) => { // Update the type to 'any'
-        this.products = response.data; // Access 'data' property here
-        console.log(this.products);
+    this.http.get<any>(this.APIUrl).subscribe(
+      (response: any) => {
+        this.products = response.data; // Assign products array from response.data
+        console.log('Fetched products:', this.products);
       },
       (error: any) => {
         console.error('Error fetching products:', error);
       }
     );
+  }
+  ngOnInit() {
+    this.fetchProducts();
   }
 }
