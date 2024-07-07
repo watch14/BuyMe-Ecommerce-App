@@ -1,34 +1,34 @@
-<h1>Products</h1>
-<div *ngIf="products.length > 0">
-  <h2>Products</h2>
-  <ul>
-    <li *ngFor="let product of products">
-      <h3>{{ product.productName }}</h3>
-      <p>Price: ${{ product.productPrice }}</p>
-      <p>Color: {{ product.productColor }}</p>
-      <p>Description: {{ product.productDescription }}</p>
+<div class="all">
+  <h1>Products</h1>
+  <div *ngIf="products.length > 0">
+    <h2>Products</h2>
+    <ul class="pdcs">
+      <li class="product" *ngFor="let product of products">
+        <div
+          *ngIf="product.productPicture && product.productPicture.length > 0"
+        >
+        <div class="gallery-item">
+          <div class="image">
+            <li *ngFor="let picture of product.productPicture">
+              <img
+                [src]="picture"
+                alt="Product Image"
+                [class.product-image]="true"
+              />
+            </li>
+          </div>
+        </div>
 
-      <!-- Display product pictures -->
-      <div *ngIf="product.productPicture && product.productPicture.length > 0">
-        <h4>Product Pictures:</h4>
-        <ul>
-          <li *ngFor="let picture of product.productPicture">
-            <img
-              [src]="picture"
-              alt="Product Image"
-              style="max-width: 200px; max-height: 200px"
-            />
-          </li>
-        </ul>
-      </div>
-
-      <p>Stock: {{ product.productStock }}</p>
-      <p>Rate: {{ product.productRate }}</p>
-      <p>Created At: {{ product.createdAt | date }}</p>
-      <p>Updated At: {{ product.updatedAt | date }}</p>
-    </li>
-  </ul>
-</div>
-<div *ngIf="products.length === 0">
-  <p>No produ</p>
+        </div>
+        <div class="product-title">
+          <p>{{ product.productName }}</p>
+        </div>
+        <p>Rate: {{ product.productRate }}</p>
+        <p>Price: ${{ product.productPrice }}</p>
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="products.length === 0">
+    <p>No produ</p>
+  </div>
 </div>
