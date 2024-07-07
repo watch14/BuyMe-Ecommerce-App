@@ -23,12 +23,15 @@
     font-size: 14px;
 
 }
-
+.cont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .botcontainer{
     max-width: 1440px;
     width: 100%;
     padding: 0 20px;
-
 } 
 
 
