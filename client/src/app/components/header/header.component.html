@@ -21,8 +21,31 @@
       </div>
       <div class="headerbtns">
         <img src="../../../assets/icons/Wishlist.svg" />
-        <img src="../../../assets/icons/Cart.svg" />
-        <img src="../../../assets/icons/user-black.svg" />
+        <div class="cart-container">
+          <img src="../../../assets/icons/Cart.svg" />
+          <span *ngIf="cartCount > 0" class="cart-count">{{ cartCount }}</span>
+        </div>
+        <div
+          class="user-container"
+          [ngClass]="{ 'user-clicked': isUserClicked }"
+          (click)="toggleDropdown()"
+        >
+          <img src="../../../assets/icons/user-black.svg" class="user-icon" />
+          <div class="dropdown-menu" [class.show]="showDropdown">
+            <div class="dropdown-item">
+              <img src="../../../assets/icons/user.svg" alt="Account" />
+              Manage My Account
+            </div>
+            <div class="dropdown-item">
+              <img src="../../../assets/icons/icon-mallbag.svg" alt="Orders" />
+              My Orders
+            </div>
+            <div class="dropdown-item">
+              <img src="../../../assets/icons/Icon-logout.svg" alt="Logout" />
+              Logout
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <hr />
