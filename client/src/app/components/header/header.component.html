@@ -32,18 +32,18 @@
         >
           <img src="../../../assets/icons/user-black.svg" class="user-icon" />
           <div class="dropdown-menu" [class.show]="showDropdown">
-            <div class="dropdown-item">
+            <a class="dropdown-item" routerLink="/admin-dashboard">
               <img src="../../../assets/icons/user.svg" alt="Account" />
               Manage My Account
-            </div>
-            <div class="dropdown-item">
+            </a>
+            <a class="dropdown-item" routerLink="/orders">
               <img src="../../../assets/icons/icon-mallbag.svg" alt="Orders" />
               My Orders
-            </div>
-            <div class="dropdown-item">
+            </a>
+            <a class="dropdown-item" routerLink="/logout">
               <img src="../../../assets/icons/Icon-logout.svg" alt="Logout" />
               Logout
-            </div>
+            </a>
           </div>
         </div>
       </div>
