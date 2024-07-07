@@ -93,6 +93,12 @@ button{
     gap: 10px;
     border-radius: 40px;
     background: var(--Teal, #14B8A6);
+
+    color: var(--Text, #FAFAFA);
+    font-family: Sarabun;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
 }
 
 .login {

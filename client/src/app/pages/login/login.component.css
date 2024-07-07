@@ -1,0 +1,143 @@
+
+
+*{
+    margin: 0;
+    
+}
+
+input, h1, button{
+    color: var(--dark-blue, #111827);
+    font-family: Sarabun;
+
+
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+}
+.imagecont{
+    background: var(--dark-blue, #111827);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.rightcont{
+    background: var(--very-light-grey, #F0F0F0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+}
+
+.createaccount{
+    margin: 48px 0;
+    padding: 20px 24px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-inline: auto;
+    gap: 36px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+}
+
+
+h1{
+    color: var(--dark-blue, #111827);
+    font-family: Sarabun;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 1.44px;
+}
+
+p{
+    color: var(--dark-blue, #111827);
+    font-family: Sarabun;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+input{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    color: var(--Text2, #000);
+    font-family: Sarabun;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    background: #F0F0F0;
+
+    width: 100%;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.10);
+    padding-bottom: 8px;
+}
+
+button{
+    display: flex;
+    width: 370px;
+    padding: 16px 122px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 40px;
+    background: var(--Teal, #14B8A6);
+
+    color: var(--Text, #FAFAFA);
+    font-family: Sarabun;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.forget{
+    color: var(--Teal, #14B8A6);
+    font-family: Sarabun;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+}
+
+.login {
+    display: flex;
+    gap: 16px;
+
+    color: var(--dark-blue, #111827);
+    font-family: Sarabun;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+.login a{
+
+    font-weight: 700;
+
+}
+
+@media (min-width: 1280px),
+       (min-width: 1024px),
+       (min-width: 768px),
+       (min-width: 640px),
+       (min-width: 480px),
+       (min-width: 360px),
+       (min-width: 320px){
+  /* Reset or override specific styles */
+  .container {
+    max-width: none !important; /* Reset max-width */
+  }
+
+}
