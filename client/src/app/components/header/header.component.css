@@ -1,0 +1,84 @@
+*{
+    font-family: Sarabun;
+    font-size: 14px;
+    font-style: normal;
+    margin: 0 0;
+}
+
+.topHeader{
+    padding: 4px 0px;
+    color: var(--White, #FFF);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0px;
+
+    background: var(--dark-blue, #111827);
+}
+
+.topHeader p{
+    margin: 0px;
+    font-size: 14px;
+
+}
+
+.botcontainer{
+    max-width: 1440px;
+    width: 100%;
+    padding: 0 20px;
+
+} 
+
+
+.header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+}
+
+
+
+.logo{
+    width: 120px;
+    height: 32px;
+}
+
+.headerLinks a{
+    color: var(--dark-blue, #111827);
+    font-family: Sarabun;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.headerLinks{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+}
+
+input {
+    position: relative;
+}
+
+.searchbtn{
+    position: absolute;
+    
+}
+
+.headerbtns{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.headerbtns img{
+    min-width: 32px;
+    min-height: 32px;
+}
