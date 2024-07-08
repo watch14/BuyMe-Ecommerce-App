@@ -23,14 +23,12 @@
           <p>{{ product.productName }}</p>
         </div>
         <div class="rating">
-          <i class="fa fa-star-o"></i>
-          <i class="fa fa-star-o"></i>
-          <i class="fa fa-star-o"></i>
-          <i class="fa fa-star-o"></i>
-          <i class="fa fa-star-o"></i>
+          <i *ngFor="let star of [1, 2, 3, 4, 5]" class="fa fa-star-o"></i>
           <span class="product-rate">{{ product.productRate }}</span>
         </div>
-        <p><span class="price">${{ product.productPrice }}</span></p>
+        <p>
+          <span class="price">${{ product.productPrice }}</span>
+        </p>
       </li>
     </ul>
   </div>
