@@ -7,15 +7,37 @@
       <h1>Create an account</h1>
       <p>Enter your details below</p>
       <form [formGroup]="registerForm" action="">
-        <input formControlName="firstName" type="text" placeholder="*First Name" />
-        <input formControlName="lastName"  type="text" placeholder="*Last Name" />
-        <input formControlName="email" type="text" placeholder="*Email" />
-        <input formControlName="password" type="text" placeholder="*Password" />
-        <input formControlName="confirmPassword" type="text" placeholder="*Confirm Password" />
+        <div>
+          <input formControlName="firstName" type="text" placeholder="First Name" />
+          <span *ngIf="registerForm.hasError('required', 'firstName') && registerForm.controls['firstName'].dirty" style="color: red;">*First Name Required</span>
+        </div>
+        <div>
+          <input formControlName="lastName" type="text" placeholder="Last Name" />
+          <span *ngIf="registerForm.hasError('required', 'lastName') && registerForm.controls['lastName'].dirty" style="color: red;">*Last Name Required</span>
+        </div>
+        <div>
+          <input formControlName="email" type="text" placeholder="Email" />
+          <span *ngIf="registerForm.hasError('required', 'email') && registerForm.controls['email'].dirty" style="color: red;">*Valid Email Required</span>
+          <span *ngIf="registerForm.hasError('email', 'email')" style="color: red;">*Email is Invalid</span>
+
+        </div>
+        <div>
+          <input formControlName="password" type="password" placeholder="Password" />
+          <span *ngIf="registerForm.hasError('required', 'password') && registerForm.controls['password'].dirty" style="color: red;">*Password Required</span>
+        </div>
+        <div>
+          <input formControlName="confirmPassword" type="password" placeholder="Confirm Password" />
+          <span *ngIf="registerForm.hasError('required', 'confirmPassword') && registerForm.controls['confirmPassword'].dirty" style="color: red;">*Confirm Password Required</span>
+          <span *ngIf="registerForm.hasError('confirmPasswordValidator', 'confirmPassword')" style="color: red;">
+            *Passwords must match</span>
+
+        </div>
         <button 
-        [disabled]="registerForm.invalid" 
-        [class.disabled]="registerForm.invalid"
-         (click)="register()">Create Account
+          [disabled]="registerForm.invalid" 
+          [class.disabled]="registerForm.invalid"
+          (click)="register()"
+        >
+          Create Account
         </button>
       </form>
       <div class="login">

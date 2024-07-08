@@ -22,7 +22,12 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 const port = 3000;
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:4200",
+    credentials: true,
+  })
+);
 // Swagger options
 const swaggerOptions = {
   swaggerDefinition: {

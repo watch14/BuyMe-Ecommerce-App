@@ -5,6 +5,7 @@ import { provideStorage, getStorage } from '@angular/fire/storage'
 
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideHttpClient } from '@angular/common/http';
 
 // Your web app's Firebase configuration
 
@@ -40,6 +41,6 @@ const firebaseConfig2 = {
 
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes),
+  providers: [provideRouter(routes), provideHttpClient(),
      importProvidersFrom(provideFirebaseApp(() => initializeApp(firebaseConfig))), importProvidersFrom(provideStorage(() => getStorage())), provideAnimationsAsync(), provideAnimationsAsync()]
 };
