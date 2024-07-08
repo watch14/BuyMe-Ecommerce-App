@@ -8,6 +8,7 @@ import { AddProductComponent } from './components/add-product/add-product.compon
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { ProductComponent } from './pages/product/product.component';
 import { ShopComponent } from './pages/shop/shop.component';
+import { ContactComponent } from './pages/contact/contact.component';
 
 export const routes: Routes = [
     {'path': '', component:HomeComponent},
@@ -19,6 +20,8 @@ export const routes: Routes = [
 
     {'path': 'shop', component:ShopComponent},
     {'path': 'product', component:ProductComponent},
+
+    {'path': 'contact', component:ContactComponent},
 
 
 ];
