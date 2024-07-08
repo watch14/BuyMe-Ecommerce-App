@@ -158,7 +158,7 @@ export const sendEmail = async (req, res, next) => {
     <html> <head> <title>Password Reset Request</title>
      </head> 
      <body>
-      I <h1>Password Reset Request</h1> <p>Dear ${user.username},</p> 
+      I <h1>Password Reset Request</h1> <p>Dear ${user.firstName},</p> 
      <p>We have received a request to reset your password for your account with BookMYBook. To complete the password 
      reset process, please click on the button below:</p>
       <a href=${process.env.LIVE_URL}/reset/${token}>
