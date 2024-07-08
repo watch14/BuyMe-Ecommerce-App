@@ -6,12 +6,27 @@
     <div class="createaccount">
       <h1>Login</h1>
       <p>Enter your details below</p>
-      <input type="text" placeholder="*Email" />
-      <input type="text" placeholder="*Password" />
-      <button>Create Account</button>
+      <form [formGroup]="loginForm" action="">
+        <div>
+          <input formControlName="email" type="text" placeholder="Email" />
+          <span *ngIf="loginForm.hasError('required', 'email') && loginForm.controls['email'].dirty" style="color: red;">*Valid Email Required</span>
+          <span *ngIf="loginForm.hasError('email', 'email')" style="color: red;">*Email is Invalid</span>
+        </div>
+        <div>
+          <input formControlName="password" type="password" placeholder="Password" />
+          <span *ngIf="loginForm.hasError('required', 'password') && loginForm.controls['password'].dirty" style="color: red;">*Password Required</span>
+        </div>
+        <button 
+          [disabled]="loginForm.invalid" 
+          [class.disabled]="loginForm.invalid"
+          (click)="login()"
+        >
+          Login
+        </button>
+      </form>
       <a href="/reset-password" class="forget">Forget Password?</a>
       <div class="login">
-        <p>Already have an account?</p>
+        <p>Don't have an account?</p>
         <a href="/register">Register</a>
       </div>
     </div>

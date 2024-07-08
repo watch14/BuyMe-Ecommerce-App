@@ -32,6 +32,14 @@
         >
           <img src="../../../assets/icons/user-black.svg" class="user-icon" />
           <div class="dropdown-menu" [class.show]="showDropdown">
+            <a class="dropdown-item" routerLink="/login">
+              <img src="../../../assets/icons/user.svg" alt="Account" />
+              Login
+            </a>
+            <a class="dropdown-item" routerLink="/register">
+              <img src="../../../assets/icons/user.svg" alt="Account" />
+              Register
+            </a>
             <a class="dropdown-item" routerLink="/admin-dashboard">
               <img src="../../../assets/icons/user.svg" alt="Account" />
               Manage My Account
@@ -40,7 +48,7 @@
               <img src="../../../assets/icons/icon-mallbag.svg" alt="Orders" />
               My Orders
             </a>
-            <a class="dropdown-item" routerLink="/logout">
+            <a class="dropdown-item" routerLink="/login">
               <img src="../../../assets/icons/Icon-logout.svg" alt="Logout" />
               Logout
             </a>
