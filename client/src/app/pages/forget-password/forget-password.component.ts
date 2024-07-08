@@ -3,13 +3,13 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-reset-password',
+  selector: 'app-forget-password',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './reset-password.component.html',
-  styleUrl: './reset-password.component.css'
+  templateUrl: './forget-password.component.html',
+  styleUrl: './forget-password.component.css'
 })
-export class ResetPasswordComponent implements OnInit{
+export class ForgetPasswordComponent {
 
   resetForm !: FormGroup;
   fb = inject(FormBuilder)
@@ -23,4 +23,5 @@ export class ResetPasswordComponent implements OnInit{
   Submit(){
     console.log(this.resetForm.value)
   }
+  
 }

@@ -4,6 +4,9 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { CreateSuccess } from "../utils/success.js";
 import { CreateError } from "../utils/error.js";
+import UserToken from "../models/UserToken.js";
+
+import nodemailer from "nodemailer";
 
 //register user / create an account
 export const register = async (req, res, next) => {
@@ -113,4 +116,71 @@ export const login = async (req, res, next) => {
     console.error("Login Went Wrong:", error);
     return next(CreateError(400, "Login Went Wrong!"));
   }
+};
+
+export const sendEmail = async (req, res, next) => {
+  const email = req.body.email;
+
+  const user = await User.findOne({
+    email: { $regex: new RegExp("^" + email, "i") },
+  });
+
+  if (!user) {
+    return next(CreateError(404, "User not found to rest Password!!"));
+  }
+  const payload = {
+    email: user.email,
+  };
+
+  const expiryTime = 300;
+  const token = jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: expiryTime,
+  });
+
+  const newToken = new UserToken({
+    userId: user._id,
+    token: token,
+  });
+
+  const mailTransporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "maamounchebbi@gmail.com",
+      pass: process.env.GMAIL_PASS2,
+    },
+  });
+
+  let mailDetails = {
+    from: "maamounchebbi@gmail.com",
+    to: email,
+    subject: "Reset Password",
+    html: `
+    <html> <head> <title>Password Reset Request</title>
+     </head> 
+     <body>
+      I <h1>Password Reset Request</h1> <p>Dear ${user.username},</p> 
+     <p>We have received a request to reset your password for your account with BookMYBook. To complete the password 
+     reset process, please click on the button below:</p>
+      <a href=${process.env.LIVE_URL}/reset/${token}>
+      <button style="background-color: #4CAF50; color: white;
+       padding: 14px 20px; border: none; cursor: pointer; border-radius: 4px;">
+       Reset Password</button></a> <p>Please note that this link is only valid for a 5mins.
+        If you did not request a password reset, please disregard this message.</p>
+        <p>Thank you,</p> <p>Let's Program Team</p> 
+         </body> 
+         </html>
+    `,
+  };
+
+  mailTransporter.sendMail(mailDetails, async (err, data) => {
+    if (err) {
+      console.log(err);
+      return next(
+        CreateError(500, "Something went wrong while sending the email!")
+      );
+    } else {
+      await newToken.save();
+      return next(CreateSuccess(200, "Email Sent Successfully!"));
+    }
+  });
 };

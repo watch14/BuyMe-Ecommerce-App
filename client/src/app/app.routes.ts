@@ -10,12 +10,14 @@ import { ProductComponent } from './pages/product/product.component';
 import { ShopComponent } from './pages/shop/shop.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 
 export const routes: Routes = [
     {'path': '', component:HomeComponent},
     {'path': 'login', component:LoginComponent},
     {'path': 'register', component:RegisterComponent},
-    {'path': 'reset-password', component:ResetPasswordComponent},
+    {'path': 'forget-password', component:ForgetPasswordComponent},
+    {'path': 'reset-password/:token', component:ResetPasswordComponent},
 
     {'path': 'admin-dashboard', component:AdminDashboardComponent},
 

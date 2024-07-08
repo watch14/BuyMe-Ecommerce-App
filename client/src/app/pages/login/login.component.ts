@@ -12,12 +12,13 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
+
 export class LoginComponent implements OnInit {
   fb = inject(FormBuilder);
   authService = inject(AuthService);
   router = inject(Router);
 
-  loginForm!: FormGroup;
+  loginForm !: FormGroup;
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -31,8 +32,8 @@ export class LoginComponent implements OnInit {
       this.authService.loginService(this.loginForm.value).subscribe({
         next: (res) => {
           alert('Login Successful!');
-          this.loginForm.reset();
-          this.router.navigate(['']); // or any route you want to navigate to after login
+          this.loginForm.reset();          
+          this.router.navigate(['']);
         },
         error: (err) => {
           console.log(err);
