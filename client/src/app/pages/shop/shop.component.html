@@ -7,24 +7,30 @@
         <div
           *ngIf="product.productPicture && product.productPicture.length > 0"
         >
-        <div class="gallery-item">
-          <div class="image">
-            <li *ngFor="let picture of product.productPicture">
-              <img
-                [src]="picture"
-                alt="Product Image"
-                [class.product-image]="true"
-              />
-            </li>
+          <div class="gallery-item">
+            <div class="image">
+              <li *ngFor="let picture of product.productPicture">
+                <img
+                  [src]="picture"
+                  alt="Product Image"
+                  [class.product-image]="true"
+                />
+              </li>
+            </div>
           </div>
-        </div>
-
         </div>
         <div class="product-title">
           <p>{{ product.productName }}</p>
         </div>
-        <p>Rate: {{ product.productRate }}</p>
-        <p>Price: ${{ product.productPrice }}</p>
+        <div class="rating">
+          <i class="fa fa-star-o"></i>
+          <i class="fa fa-star-o"></i>
+          <i class="fa fa-star-o"></i>
+          <i class="fa fa-star-o"></i>
+          <i class="fa fa-star-o"></i>
+          <span class="product-rate">{{ product.productRate }}</span>
+        </div>
+        <p><span class="price">${{ product.productPrice }}</span></p>
       </li>
     </ul>
   </div>
