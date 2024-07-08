@@ -70,14 +70,14 @@
       </div>
       <div class="heart">
         <div class="click" (click)="addToFavorites()">
-          <span class="fa" [ngClass]="{ 'fa-heart': isFavorite, 'fa-heart-o': !isFavorite }"></span>
+          <span
+            class="fa"
+            [ngClass]="{ 'fa-heart': isFavorite, 'fa-heart-o': !isFavorite }"
+          ></span>
           <div class="ring"></div>
           <div class="ring2"></div>
-          <p class="info" [ngClass]="{ 'info-tog': isFavorite }">Added to favourites!</p>
         </div>
       </div>
-      
-      
     </div>
   </div>
 </div>
