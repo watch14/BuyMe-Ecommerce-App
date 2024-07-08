@@ -3,6 +3,7 @@ import {
   login,
   register,
   registerAdmin,
+  resetPassword,
   sendEmail,
 } from "../controllers/auth.controller.js";
 
@@ -145,5 +146,37 @@ router.post("/login", login);
  *         description: Internal server error
  */
 router.post("/send-email", sendEmail);
+
+//reset the password
+/**
+ * @swagger
+ * /api/auth/reset-password:
+ *   post:
+ *     summary: Reset user's password
+ *     tags: [Auth]
+ *     description: Reset user's password using a valid token.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - token
+ *               - password
+ *             properties:
+ *               token:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Password reset successful
+ *       400:
+ *         description: Bad request (e.g., missing token or password)
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/reset-password", resetPassword);
 
 export default router;
