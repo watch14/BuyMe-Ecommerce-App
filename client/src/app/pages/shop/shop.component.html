@@ -3,36 +3,31 @@
   <div *ngIf="products.length > 0">
     <h2>Products</h2>
     <ul class="pdcs">
-      <li class="product" *ngFor="let product of products">
-        <div
-          *ngIf="product.productPicture && product.productPicture.length > 0"
-        >
-          <div class="gallery-item">
-            <div class="image">
-              <li *ngFor="let picture of product.productPicture">
-                <img
-                  [src]="picture"
-                  alt="Product Image"
-                  [class.product-image]="true"
-                />
-              </li>
+      <li class="product" *ngFor="let prod of products">
+        <a [routerLink]="['/product', prod._id]">
+          <!-- Use prod._id or any unique identifier for the product -->
+          <div *ngIf="prod.productPicture && prod.productPicture.length > 0">
+            <div class="gallery-item">
+              <div class="image">
+                <img [src]="prod.productPicture[0]" alt="Product Image" class="product-image" />
+              </div>
             </div>
           </div>
-        </div>
-        <div class="product-title">
-          <p>{{ product.productName }}</p>
-        </div>
-        <div class="rating">
-          <i *ngFor="let star of [1, 2, 3, 4, 5]" class="fa fa-star-o"></i>
-          <span class="product-rate">{{ product.productRate }}</span>
-        </div>
-        <p>
-          <span class="price">${{ product.productPrice }}</span>
-        </p>
+          <div class="product-title">
+            <p>{{ prod.productName }}</p>
+          </div>
+          <div class="rating">
+            <i *ngFor="let star of [1, 2, 3, 4, 5]" class="fa fa-star-o"></i>
+            <span class="product-rate">{{ prod.productRate }}</span>
+          </div>
+          <p>
+            <span class="price">${{ prod.productPrice }}</span>
+          </p>
+        </a>
       </li>
     </ul>
   </div>
   <div *ngIf="products.length === 0">
-    <p>No produ</p>
+    <p>No products available.</p>
   </div>
 </div>

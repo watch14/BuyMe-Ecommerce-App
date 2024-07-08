@@ -1,39 +1,42 @@
-<div class="all">
-    <h1>Products</h1>
-    <div *ngIf="product.length > 0">
-      <h2>Products</h2>
-      <ul class="pdcs">
-        <li class="product" *ngFor="let product of product">
-          <div
-            *ngIf="product.productPicture && product.productPicture.length > 0"
-          >
-            <div class="gallery-item">
-              <div class="image">
-                <li *ngFor="let picture of product.productPicture">
-                  <img
-                    [src]="picture"
-                    alt="Product Image"
-                    [class.product-image]="true"
-                  />
-                </li>
-              </div>
-            </div>
-          </div>
-          <div class="product-title">
-            <p>{{ product.productName }}</p>
-          </div>
-          <div class="rating">
-            <i *ngFor="let star of [1, 2, 3, 4, 5]" class="fa fa-star-o"></i>
-            <span class="product-rate">{{ product.productRate }}</span>
-          </div>
-          <p>
-            <span class="price">${{ product.productPrice }}</span>
-          </p>
-        </li>
-      </ul>
-    </div>
-    <div *ngIf="product.length === 0">
-      <p>No produ</p>
-    </div>
+<div class="product-details" *ngIf="product">
+  <h1>{{ product.productName }}</h1>
+
+  <div class="product-images">
+    <!-- Display the first image if available -->
+    <img
+      *ngIf="product.productPicture && product.productPicture.length > 0"
+      [src]="product.productPicture[0]"
+      alt="Product Image"
+    />
+
+    <!-- Display additional images if there are more than one -->
+    <ng-container
+      *ngIf="product.productPicture && product.productPicture.length > 1"
+    >
+      <img
+        *ngFor="let image of product.productPicture.slice(1)"
+        [src]="image"
+        alt="Product Image"
+      />
+    </ng-container>
   </div>
-  
+
+  <div class="product-description">
+    <p><strong>Description:</strong> {{ product.productDescription }}</p>
+    <p><strong>Category:</strong> {{ product.categoryId }}</p>
+    <p><strong>Color:</strong> {{ product.productColor }}</p>
+    <p><strong>Price:</strong> ${{ product.productPrice }}</p>
+    <p>
+      <strong>Rating:</strong>
+      <span
+        *ngFor="let star of [1, 2, 3, 4, 5]"
+        class="fa fa-star"
+        [ngClass]="{ 'fa-star-o': star > product.productRate }"
+      ></span>
+      <span class="product-rate">{{ product.productRate }}</span>
+    </p>
+    <p><strong>Stock:</strong> {{ product.productStock }}</p>
+    <p><strong>Created At:</strong> {{ product.createdAt | date }}</p>
+    <p><strong>Updated At:</strong> {{ product.updatedAt | date }}</p>
+  </div>
+</div>

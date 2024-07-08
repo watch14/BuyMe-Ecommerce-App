@@ -11,6 +11,7 @@ import { ShopComponent } from './pages/shop/shop.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 export const routes: Routes = [
     {'path': '', component:HomeComponent},
@@ -21,7 +22,9 @@ export const routes: Routes = [
     {'path': 'admin-dashboard', component:AdminDashboardComponent},
 
     {'path': 'shop', component:ShopComponent},
-    {'path': 'product', component:ProductComponent},
+    {'path': 'product/:id', component:ProductComponent},
+
+    {'path': 'cart', component:CartComponent},
 
     {'path': 'contact', component:ContactComponent},
     {'path': 'about-us', component:AboutUsComponent},

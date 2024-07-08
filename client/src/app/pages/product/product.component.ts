@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -13,25 +13,28 @@ import { Observable } from 'rxjs';
 })
 export class ProductComponent implements OnInit {
   readonly baseAPIUrl = 'http://localhost:3000/api/product/';
-  productId = '668af32a7f6d0bc641d8978f'; // Default product ID
+  productId: string | undefined;
+  product: any = {};
 
-  product: any = {}; // Assuming a single product object
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {}
+  ngOnInit() {
+    this.route.params.subscribe((params) => {
+      this.productId = params['id'];
+      this.fetchProduct();
+    });
+  }
 
   fetchProduct() {
     const apiUrl = this.baseAPIUrl + this.productId;
     this.http.get<any>(apiUrl).subscribe(
       (response: any) => {
-        this.product = response; // Assign product object from response
+        this.product = response.data; // Ensure response.data contains the product object
         console.log('Fetched product:', this.product);
       },
       (error: any) => {
         console.error('Error fetching product:', error);
       }
     );
-  }
-  ngOnInit() {
-    this.fetchProduct();
   }
 }
