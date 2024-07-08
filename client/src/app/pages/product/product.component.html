@@ -1,39 +1,83 @@
-<div class="all">
-    <h1>Products</h1>
-    <div *ngIf="product.length > 0">
-      <h2>Products</h2>
-      <ul class="pdcs">
-        <li class="product" *ngFor="let product of product">
-          <div
-            *ngIf="product.productPicture && product.productPicture.length > 0"
-          >
-            <div class="gallery-item">
-              <div class="image">
-                <li *ngFor="let picture of product.productPicture">
-                  <img
-                    [src]="picture"
-                    alt="Product Image"
-                    [class.product-image]="true"
-                  />
-                </li>
-              </div>
-            </div>
-          </div>
-          <div class="product-title">
-            <p>{{ product.productName }}</p>
-          </div>
-          <div class="rating">
-            <i *ngFor="let star of [1, 2, 3, 4, 5]" class="fa fa-star-o"></i>
-            <span class="product-rate">{{ product.productRate }}</span>
-          </div>
-          <p>
-            <span class="price">${{ product.productPrice }}</span>
-          </p>
-        </li>
-      </ul>
+<div class="product-details" *ngIf="product">
+  <div class="product-images">
+    <!-- Display product images -->
+    <img
+      *ngIf="product.productPicture && product.productPicture.length > 0"
+      [src]="product.productPicture[0]"
+      alt="Product Image"
+    />
+    <ng-container
+      *ngIf="product.productPicture && product.productPicture.length > 1"
+    >
+      <img
+        *ngFor="let image of product.productPicture.slice(1)"
+        [src]="image"
+        alt="Product Image"
+      />
+    </ng-container>
+  </div>
+
+  <div class="product-info">
+    <h1>{{ product.productName }}</h1>
+    <div class="product-description">
+      <!-- Star rating -->
+      <p>
+        <span
+          *ngFor="let star of [1, 2, 3, 4, 5]"
+          class="fa fa-star"
+          [ngClass]="{ 'fa-star-o': star > product.productRate }"
+        ></span>
+        <span class="product-rate"
+          ><strong>{{ product.productRate }}</strong
+          >/5</span
+        >
+      </p>
+      <!-- Product price -->
+      <p class="product-price">${{ product.productPrice }}</p>
+      <!-- Product description -->
+      <p>{{ product.productDescription }}</p>
+      <!-- Product category -->
+      <p><strong>Category:</strong> {{ categoryName$ | async }}</p>
+      <!-- Product color -->
+      <p class="color-desc">
+        Colours:<span
+          class="color-circle"
+          [style.backgroundColor]="product.productColor"
+        ></span>
+        <span class="color-name">{{ product.productColor }}</span>
+      </p>
     </div>
-    <div *ngIf="product.length === 0">
-      <p>No produ</p>
+    <!-- Quantity selection -->
+    <div class="number">
+      <div class="incdec">
+        <span class="minus"
+          ><button type="button" (click)="decrementQuantity()">-</button></span
+        >
+        <span class="num"
+          ><input
+            type="number"
+            id="quantity"
+            name="quantity"
+            [(ngModel)]="quantity"
+            min="1"
+        /></span>
+        <span class="plus"
+          ><button type="button" (click)="incrementQuantity()">+</button></span
+        >
+      </div>
+      <div class="buy">
+        <button type="button">Buy Now</button>
+      </div>
+      <div class="heart">
+        <div class="click" (click)="addToFavorites()">
+          <span
+            class="fa"
+            [ngClass]="{ 'fa-heart': isFavorite, 'fa-heart-o': !isFavorite }"
+          ></span>
+          <div class="ring"></div>
+          <div class="ring2"></div>
+        </div>
+      </div>
     </div>
   </div>
-  
+</div>
