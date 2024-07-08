@@ -1,76 +1,264 @@
-.all {
-    max-width: 1440px;
-    width: 100%;
-    padding: 0 20px;
-    margin-inline: auto;
+.product-details {
+  display: flex;
+  flex-direction: row; /* Ensure items are in a row */
+  justify-content: center; /* Center horizontally */
+  align-items: flex-start; /* Align items to the top */
+  width: 80%;
+  margin: 50px auto; /* Adjust margin for vertical positioning */
 }
 
-.pdcs {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+.product-images {
+  flex: 1; /* Take up remaining space */
+  padding: 30px; /* Add padding for space inside */
 }
 
-.product {
-    background-color: red;
+.product-images img {
+  max-width: 100%; /* Ensure images do not exceed container width */
+  max-height: 600px; /* Set a maximum height for consistency */
+  display: block; /* Ensure images do not have extra space below */
+  margin: 0 auto; /* Center images horizontally */
 }
 
-.gallery-item {
-    width: 100%;
-    height: 100%;
+.product-info {
+  flex: 1; /* Take up remaining space */
+  padding: 30px; /* Add padding for space inside */
+}
+
+.product-description .fa-star {
+  color: gold; /* Set the color of the filled star to gold */
+  font-size: 20px; /* Optional: Adjust the size of the stars */
+}
+
+.product-description .fa-star-o {
+  color: #ccc; /* Set the color of the outlined star to a lighter grey */
+  font-size: 20px; /* Optional: Adjust the size of the stars */
+}
+
+.product-description .product-rate {
+  margin-left: 10px; /* Adjust margin to move the rating number to the right */
+  color: #666; /* Set color of the "/5" to grey */
+}
+
+.product-description p.product-price {
+  font-size: 24px; /* Increase font size for the price */
+}
+
+.product-description .color-desc {
+  margin-bottom: 80px;
+}
+
+.product-description .color-circle {
+  display: inline-block;
+  width: 20px; /* Adjust circle size */
+  height: 20px; /* Adjust circle size */
+  border-radius: 50%; /* Make it a circle */
+  margin-left: 18px; /* Adjust spacing between circle and text */
+  box-shadow: 0 0 0 3px black; /* Create a border-like effect with box-shadow */
+  outline: 1px solid white; /* Add a thin white outline for spacing */
+}
+
+.product-description .color-name {
+  display: none; /* Hide the color name */
+}
+
+.color-desc {
+  font-size: 24px;
+}
+
+.product-description p:nth-last-child(2) {
+  border-bottom: 1px solid #ccc; /* Grey border color */
+  padding-bottom: 10px; /* Optional: Adjust padding for spacing */
+  margin-bottom: 20px; /* Optional: Adjust margin for spacing */
+}
+
+.number {
+  display: flex;
+  align-items: center; /* Align items vertically centered */
+  gap: 15px;
+}
+
+.incdec {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+.incdec .minus button,
+.incdec .plus button {
+  display: inline-block;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 0;
+  width: 50px;
+  height: 40px;
+  background: #eee;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.incdec .plus button {
+  background-color: #14b8a6;
+  color: white;
+}
+
+.incdec .minus button:hover,
+.incdec .plus button:hover {
+  cursor: pointer;
+}
+
+.incdec .minus {
+  margin-right: -4px;
+  border-radius: 8px 0 0 8px;
+}
+
+.incdec .plus {
+  margin-left: -4px;
+  border-radius: 0 8px 8px 0;
+}
+
+.incdec .num {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.incdec .num input[type="number"] {
+  text-align: center;
+  border: none;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  margin: 0;
+  width: 80px;
+  height: 40px;
+  font-size: 16px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.buy {
+  display: inline-block;
+  margin-left: 40px; /* Adjust spacing as needed */
+  width: 200px;
+}
+
+.buy button {
+  padding: 10px 40px; /* Adjust padding for size */
+  font-size: 16px; /* Adjust font size */
+  color: #fff; /* Text color */
+  background-color: #14b8a6; /* Button background color */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+}
+
+.buy button:hover {
+  background-color: #0f8677; /* Darker background on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
+}
+
+.buy button:active {
+  background-color: #0d6d5f; /* Even darker background on active */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow changes on click */
+}
+  
+  .click {
+    font-size: 33px;
+    color: rgba(0,0,0,.5);
+    width: 38px;
+    height: 38px;
+    margin: 0 auto;
     position: relative;
-}
-
-.gallery-item .image {
-    width: 100%;
-    height: 100%;
-    border-radius: 20px;
-    overflow: hidden;
-
-}
-
-.gallery-item .image img.product-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 50%;
     cursor: pointer;
-    transition: .5s ease-in-out;
-}
-
-.gallery-item:hover .image img {
-    transform: scale(1.5);
-}
-
-.product-title {
-    padding-top: 15px;
-    font-size: 16px;
-    color: black;
-    font-weight: 700;
-    text-transform: capitalize;
-}
-
-.rating {
-    display: flex;
-    align-items: center;
   }
   
-  .rating i {
-    color: #fa0;
-    line-height: 22px;
-    margin: 0 2px;
-    font-size: 14px;
+  .click span {
+    margin-top: 3px;
+    z-index: 999;
+    position: absolute;
   }
   
-  .rating .product-rate {
-    margin-left: 8px;
+  .click span:hover {
+    opacity: 0.8;
+  }
+  
+  .click span:active {
+    transform: scale(0.93, 0.93) translateY(2px);
+  }
+  
+  .ring, .ring2 {
+    opacity: 0;
+    background: grey;
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    top: 19px;
+    left: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .active span, .active-2 span {
+    color: #f52755 !important;
+  }
+  
+  .active-2 .ring {
+    width: 58px !important;
+    height: 58px !important;
+    top: -10px !important;
+    left: -10px !important;
+    position: absolute;
+    border-radius: 50%;
+    opacity: 1 !important;
+    background: #f52755 !important;
+  }
+  
+  .active-2 .ring2 {
+    background: #fff !important;
+  }
+  
+  .active-3 .ring2 {
+    width: 60px !important;
+    height: 60px !important;
+    top: -11px !important;
+    left: -11px !important;
+    position: absolute;
+    border-radius: 50%;
+    opacity: 1 !important;
+  }
+  
+  .info {
+    font-family: 'Open Sans', sans-serif;
     font-size: 12px;
-    color: #fa0;
-    font-weight: bold;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: grey;
+    position: relative;
+    top: 30px;
+    left: -46px;
+    opacity: 0;
+    transition: all 0.3s ease;
   }
-
-.price {
-    font-size: 20px;
-    color: black;
-    font-weight: 700;
-}
+  
+  .info-tog {
+    color: #f52755;
+    position: relative;
+    top: 45px;
+    opacity: 1;
+  }
+  
+  * {
+    transition: all .32s ease;
+  }
+  
