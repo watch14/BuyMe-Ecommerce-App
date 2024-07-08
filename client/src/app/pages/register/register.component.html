@@ -6,11 +6,18 @@
     <div class="createaccount">
       <h1>Create an account</h1>
       <p>Enter your details below</p>
-      <input type="text" placeholder="*First Name" />
-      <input type="text" placeholder="*Last Name" />
-      <input type="text" placeholder="*Email" />
-      <input type="text" placeholder="*Password" />
-      <button>Create Account</button>
+      <form [formGroup]="registerForm" action="">
+        <input formControlName="firstName" type="text" placeholder="*First Name" />
+        <input formControlName="lastName"  type="text" placeholder="*Last Name" />
+        <input formControlName="email" type="text" placeholder="*Email" />
+        <input formControlName="password" type="text" placeholder="*Password" />
+        <input formControlName="confirmPassword" type="text" placeholder="*Confirm Password" />
+        <button 
+        [disabled]="registerForm.invalid" 
+        [class.disabled]="registerForm.invalid"
+         (click)="register()">Create Account
+        </button>
+      </form>
       <div class="login">
         <p>Already have account?</p>
         <a href="/login">Log in</a>
