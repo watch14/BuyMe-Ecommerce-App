@@ -12,7 +12,8 @@
 }
 
 .product {
-    background-color: red;
+    
+    border-radius: 20px;
 }
 
 .gallery-item {
@@ -38,9 +39,9 @@
     transition: .5s ease-in-out;
 }
 
-.gallery-item:hover .image img {
+/* .gallery-item:hover .image img {
     transform: scale(1.5);
-}
+} */
 
 .product-title {
     padding-top: 15px;
