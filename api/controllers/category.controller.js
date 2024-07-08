@@ -63,7 +63,6 @@ export const getCategoryById = async (req, res, next) => {
     if (!category) {
       return next(CreateError(404, "category not found"));
     }
-    console.log(category);
     return next(
       CreateSuccess(200, "Category Retrieved Successfully!", category)
     );
