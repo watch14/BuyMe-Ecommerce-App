@@ -10,6 +10,7 @@ import { ProductComponent } from './pages/product/product.component';
 import { ShopComponent } from './pages/shop/shop.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { AboutUsComponent } from './pages/about-us/about-us.component';
 
 export const routes: Routes = [
     {'path': '', component:HomeComponent},
@@ -23,8 +24,10 @@ export const routes: Routes = [
     {'path': 'product', component:ProductComponent},
 
     {'path': 'contact', component:ContactComponent},
+    {'path': 'about-us', component:AboutUsComponent},
 
     {'path': 'not-found', component:NotFoundComponent},
+    
 
 
 ];
