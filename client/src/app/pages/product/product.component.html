@@ -23,7 +23,7 @@
 
   <div class="product-description">
     <p><strong>Description:</strong> {{ product.productDescription }}</p>
-    <p><strong>Category:</strong> {{ product.categoryId }}</p>
+    <p><strong>Category:</strong> {{ categoryName$ | async }}</p>
     <p><strong>Color:</strong> {{ product.productColor }}</p>
     <p><strong>Price:</strong> ${{ product.productPrice }}</p>
     <p>
