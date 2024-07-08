@@ -9,6 +9,7 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { ProductComponent } from './pages/product/product.component';
 import { ShopComponent } from './pages/shop/shop.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
     {'path': '', component:HomeComponent},
@@ -22,6 +23,8 @@ export const routes: Routes = [
     {'path': 'product', component:ProductComponent},
 
     {'path': 'contact', component:ContactComponent},
+
+    {'path': 'not-found', component:NotFoundComponent},
 
 
 ];
