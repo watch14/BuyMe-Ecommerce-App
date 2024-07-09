@@ -14,8 +14,10 @@ import { Router } from '@angular/router';
 })
 
 export class LoginComponent implements OnInit {
+
   fb = inject(FormBuilder);
   authService = inject(AuthService);
+  
   router = inject(Router);
 
   loginForm !: FormGroup;
