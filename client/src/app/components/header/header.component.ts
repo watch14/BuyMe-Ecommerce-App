@@ -19,6 +19,8 @@ export class HeaderComponent implements OnInit{
 
   cartCount = 1;
   showDropdown = false;
+
+  productDropdown = false;
   isUserClicked = false;
 
   products: any[] = [];
@@ -29,15 +31,15 @@ export class HeaderComponent implements OnInit{
     private renderer: Renderer2,
     private elementRef: ElementRef,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
-    this.fetchProducts(); // Fetch products when component initializes
 
     this.renderer.listen('document', 'click', (event: Event) => {
       if (!this.elementRef.nativeElement.contains(event.target)) {
         this.showDropdown = false;
+        this.productDropdown = false; 
         this.isUserClicked = false;
 
         this.authService.isLoggedIn$.subscribe(res=>{
@@ -56,41 +58,59 @@ export class HeaderComponent implements OnInit{
     this.authService.isLoggedIn$.next(false)
 
   }
-  fetchProducts() {
-    this.http.get<any[]>(apiUrls.ProductApi).subscribe(
-      (data) => {
-        console.log('API Response:', data); // Log the response
-        this.products = data || []; // Ensure data is an array or initialize as empty array
+
+  fetchProducts(query?: string): void {
+    let apiUrl = `${apiUrls.ProductApi}/search?skip=0&take=10`;
+    if (query) {
+      apiUrl += `&q=${query}`;
+    }
+  
+    this.http.get<any>(apiUrl).subscribe(
+      (response) => {
+        console.log('Fetched products:', response.data);
+        if (response.success && Array.isArray(response.data)) {
+          this.products = response.data;
+          this.searchResults = response.data; // search results initially with all products
+          this.productDropdown = true; 
+        } else {
+          console.error('Error fetching products:', response.message);
+          this.products = [];
+          this.searchResults = [];
+          this.productDropdown = false; 
+        }
       },
       (error) => {
         console.error('Error fetching products:', error);
-        this.products = []; // Set products as empty array on error
+        this.products = [];
+        this.searchResults = [];
+        this.productDropdown = false; 
       }
     );
   }
 
-  fetchSearchResults(query: string) {
+  fetchSearchResults(query: string): void {
     if (!query) {
-      this.searchResults = []; // Clear results if query is empty
+      this.searchResults = []; 
+      this.productDropdown = false; 
       return;
     }
 
-    // Filter products based on query
+    //  products based on query
     this.searchResults = this.products.filter(product =>
-      product.name.toLowerCase().includes(query.toLowerCase()) ||
-      product.description.toLowerCase().includes(query.toLowerCase())
+      product.productName.toLowerCase().includes(query.toLowerCase()) ||
+      product.productDescription.toLowerCase().includes(query.toLowerCase())
     );
+
+    this.productDropdown = true; // Show dropdown when there are results
   }
 
-  clearSearchResults() {
+  clearSearchResults(): void {
     this.searchResults = [];
+    this.productDropdown = false; // Hide dropdown when clearing results
   }
 
-  toggleDropdown() {
+  toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
-    if (this.showDropdown) {
-      this.isUserClicked = true;
-    }
   }
 
 }

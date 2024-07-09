@@ -12,15 +12,25 @@ import { Observable } from 'rxjs';
   styleUrl: './shop.component.css',
 })
 export class ShopComponent implements OnInit {
-  readonly APIUrl = 'http://localhost:3000/api/product/search?skip=0&take=12'; // Update with your API endpoint
+  readonly baseUrl = 'http://localhost:3000/api/product/search';
+  skip = 0;
+  take = 4;
   products: any[] = [];
+  hasMoreProducts = true; // Flag to track if there are more products available
 
   constructor(private http: HttpClient) {}
 
+  ngOnInit() {
+    this.fetchProducts();
+  }
+
   fetchProducts() {
-    this.http.get<any>(this.APIUrl).subscribe(
+    const url = `${this.baseUrl}?skip=${this.skip}&take=${this.take}`;
+
+    this.http.get<any>(url).subscribe(
       (response: any) => {
-        this.products = response.data; // Assign products array from response.data
+        this.products = response.data; // Replace current products with new ones
+        this.hasMoreProducts = response.data.length === this.take; // Check if there are more products to fetch
         console.log('Fetched products:', this.products);
       },
       (error: any) => {
@@ -28,7 +38,17 @@ export class ShopComponent implements OnInit {
       }
     );
   }
-  ngOnInit() {
+
+  nextSet() {
+    this.skip += this.take; // Move to the next set of products
+    this.fetchProducts();
+  }
+
+  prevSet() {
+    this.skip -= this.take; // Move to the previous set of products
+    if (this.skip < 0) {
+      this.skip = 0; // Ensure skip doesn't go below zero
+    }
     this.fetchProducts();
   }
 }
