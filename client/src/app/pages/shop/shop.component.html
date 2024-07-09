@@ -1,6 +1,6 @@
 <div class="all">
   <div *ngIf="products.length > 0">
-    <h1 class="tilte">Products</h1>
+    <h1 class="title">Products</h1>
     <ul class="pdcs grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <li class="product" *ngFor="let prod of products">
         <div class="image-container">
@@ -28,19 +28,24 @@
             <span class="rating">{{ prod.productRate }}</span>
           </div>
 
-          <!-- //price -->
-            <div class="flex items-center justify-between">
-              <span class="product-price">${{ prod.productPrice }}</span>
-              <img 
-                class="favorit" 
-                [src]="prod.isFavorite ? '../../../assets/icons/Wishlist-red.svg' : '../../../assets/icons/Wishlist.svg'" 
-                alt="Wishlist Icon"
-                (click)="toggleFavorite(prod)"
-              >
-            </div>
-
-
-
+          <!-- Price and Favorite Icon -->
+          <div class="flex items-center justify-between">
+            <span class="product-price">${{ prod.productPrice }}</span>
+            <img 
+              *ngIf="prod.isFavorite" 
+              src="../../../assets/icons/Wishlist-red.svg" 
+              alt="Wishlist Icon"
+              class="favorit"
+              (click)="toggleFavorite(prod)"
+            >
+            <img 
+              *ngIf="!prod.isFavorite" 
+              src="../../../assets/icons/Wishlist.svg" 
+              alt="Wishlist Icon"
+              class="favorit"
+              (click)="toggleFavorite(prod)"
+            >
+          </div>
         </div>
       </li>
     </ul>
