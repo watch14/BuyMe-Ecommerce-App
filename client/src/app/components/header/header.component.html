@@ -12,12 +12,19 @@
         <a routerLink="/">Home</a>
         <a routerLink="/">Categories</a>
         <a routerLink="/shop">Shop</a>
-        <div  class="search">
-          <button class="searchbtn">
-            <input type="text" placeholder="Search.." />
-            <img src="../../../assets/icons/Search.svg" alt="Search" />
-          </button>
+        <!-- search -->
+        <div class="search">
+          <input #searchQuery type="text" placeholder="Search.." (keyup)="fetchSearchResults(searchQuery.value)" />
+          <div class="search-results" *ngIf="searchResults.length > 0">
+            <ul>
+              <li *ngFor="let result of searchResults">
+                <!-- Adjust routerLink as per your application's routing -->
+                <a [routerLink]="['/product', result.id]">{{ result.name }}</a>
+              </li>
+            </ul>
+          </div>
         </div>
+
       </div>
       <div class="headerbtns">
         
