@@ -12,7 +12,7 @@
         <a routerLink="/">Home</a>
         <a routerLink="/">Categories</a>
         <a routerLink="/shop">Shop</a>
-        <div class="search">
+        <div *ngIf="isLoggedIn" class="search">
           <button class="searchbtn">
             <input type="text" placeholder="Search.." />
             <img src="../../../assets/icons/Search.svg" alt="Search" />
@@ -20,6 +20,7 @@
         </div>
       </div>
       <div class="headerbtns">
+        
         <img src="../../../assets/icons/Wishlist.svg" />
         <div class="cart-container">
           <img src="../../../assets/icons/Cart.svg" />
@@ -32,23 +33,27 @@
         >
           <img src="../../../assets/icons/user-black.svg" class="user-icon" />
           <div class="dropdown-menu" [class.show]="showDropdown">
-            <a class="dropdown-item" routerLink="/login">
+            <a *ngIf="!isLoggedIn" class="dropdown-item" routerLink="/login">
               <img src="../../../assets/icons/user.svg" alt="Account" />
               Login
             </a>
-            <a class="dropdown-item" routerLink="/register">
+            <a *ngIf="!isLoggedIn" class="dropdown-item" routerLink="/register">
               <img src="../../../assets/icons/user.svg" alt="Account" />
               Register
             </a>
-            <a class="dropdown-item" routerLink="/admin-dashboard">
+            <a *ngIf="isLoggedIn" class="dropdown-item" routerLink="/admin-dashboard">
+              <img src="../../../assets/icons/user.svg" alt="Account" />
+              Admin Dashboard
+            </a>
+            <a *ngIf="isLoggedIn" class="dropdown-item" routerLink="">
               <img src="../../../assets/icons/user.svg" alt="Account" />
               Manage My Account
             </a>
-            <a class="dropdown-item" routerLink="/orders">
+            <a *ngIf="isLoggedIn" class="dropdown-item" routerLink="/orders">
               <img src="../../../assets/icons/icon-mallbag.svg" alt="Orders" />
               My Orders
             </a>
-            <a class="dropdown-item" routerLink="/login">
+            <a *ngIf="isLoggedIn" (click)="logOut()" class="dropdown-item" routerLink="/login">
               <img src="../../../assets/icons/Icon-logout.svg" alt="Logout" />
               Logout
             </a>

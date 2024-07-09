@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Renderer2, ElementRef } from '@angular/core';
+import { Component, Renderer2, ElementRef, inject } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -10,9 +11,14 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+
+  authServise = inject(AuthService)
+  isLoggedIn: boolean = this.authServise.isLoggedIn();
+
   cartCount = 1;
   showDropdown = false;
   isUserClicked = false;
+
 
   constructor(private renderer: Renderer2, private elementRef: ElementRef) {}
 
@@ -31,5 +37,9 @@ export class HeaderComponent {
     if (this.showDropdown) {
       this.isUserClicked = !this.isUserClicked;
     }
+  }
+
+  logOut(){
+    localStorage.removeItem("user_id")
   }
 }
