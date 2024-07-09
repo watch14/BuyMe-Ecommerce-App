@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit{
   fetchProducts(query?: string): void {
     let apiUrl = `${apiUrls.ProductApi}/search?skip=0&take=10`;
     if (query) {
-      apiUrl += `&q=${query}`; // Update to use 'q' for query parameter
+      apiUrl += `&q=${query}`;
     }
   
     this.http.get<any>(apiUrl).subscribe(
@@ -70,32 +70,32 @@ export class HeaderComponent implements OnInit{
         console.log('Fetched products:', response.data);
         if (response.success && Array.isArray(response.data)) {
           this.products = response.data;
-          this.searchResults = response.data; // Update search results initially with all products
-          this.productDropdown = true; // Show dropdown when there are results
+          this.searchResults = response.data; // search results initially with all products
+          this.productDropdown = true; 
         } else {
           console.error('Error fetching products:', response.message);
           this.products = [];
           this.searchResults = [];
-          this.productDropdown = false; // Hide dropdown if there are no results
+          this.productDropdown = false; 
         }
       },
       (error) => {
         console.error('Error fetching products:', error);
         this.products = [];
         this.searchResults = [];
-        this.productDropdown = false; // Hide dropdown on error
+        this.productDropdown = false; 
       }
     );
   }
 
   fetchSearchResults(query: string): void {
     if (!query) {
-      this.searchResults = []; // Clear results if query is empty
-      this.productDropdown = false; // Hide dropdown when clearing results
+      this.searchResults = []; 
+      this.productDropdown = false; 
       return;
     }
 
-    // Filter products based on query
+    //  products based on query
     this.searchResults = this.products.filter(product =>
       product.productName.toLowerCase().includes(query.toLowerCase()) ||
       product.productDescription.toLowerCase().includes(query.toLowerCase())
