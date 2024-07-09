@@ -27,9 +27,20 @@
             </div>
             <span class="rating">{{ prod.productRate }}</span>
           </div>
-          <div class="flex items-center justify-between">
-            <span class="product-price">${{ prod.productPrice }}</span>
-          </div>
+
+          <!-- //price -->
+            <div class="flex items-center justify-between">
+              <span class="product-price">${{ prod.productPrice }}</span>
+              <img 
+                class="favorit" 
+                [src]="prod.isFavorite ? '../../../assets/icons/Wishlist-red.svg' : '../../../assets/icons/Wishlist.svg'" 
+                alt="Wishlist Icon"
+                (click)="toggleFavorite(prod)"
+              >
+            </div>
+
+
+
         </div>
       </li>
     </ul>

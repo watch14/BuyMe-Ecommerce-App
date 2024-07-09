@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
+import { RouterModule, Router } from '@angular/router';import { Observable } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-shop',
@@ -18,7 +18,7 @@ export class ShopComponent implements OnInit {
   products: any[] = [];
   hasMoreProducts = true; // Flag to track if there are more products available
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.fetchProducts();
@@ -29,7 +29,10 @@ export class ShopComponent implements OnInit {
 
     this.http.get<any>(url).subscribe(
       (response: any) => {
-        this.products = response.data; // Replace current products with new ones
+        this.products = response.data.map((product: any) => ({
+          ...product,
+          isFavorite: false // Add a new property to track favorite status
+        }));
         this.hasMoreProducts = response.data.length === this.take; // Check if there are more products to fetch
         console.log('Fetched products:', this.products);
       },
@@ -50,5 +53,15 @@ export class ShopComponent implements OnInit {
       this.skip = 0; // Ensure skip doesn't go below zero
     }
     this.fetchProducts();
+  }
+
+  toggleFavorite(product: any) {
+    if (!this.authService.isLoggedIn()) {
+      // Redirect to login page or show a message
+      alert('Need to logend in');
+      return;
+    }
+
+    product.isFavorite = !product.isFavorite; // Toggle the favorite status
   }
 }
