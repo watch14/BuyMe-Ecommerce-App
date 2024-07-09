@@ -1,10 +1,17 @@
 .product-details {
   display: flex;
-  flex-direction: row; /* Ensure items are in a row */
+  flex-direction: column; /* Change from row to column for responsiveness */
   justify-content: center; /* Center horizontally */
-  align-items: flex-start; /* Align items to the top */
+  align-items: center; /* Align items to the top */
   width: 80%;
   margin: 50px auto; /* Adjust margin for vertical positioning */
+}
+
+@media (min-width: 1220px) {
+  .product-details {
+    flex-direction: row;
+    align-items: flex-start;
+  }
 }
 
 .product-images {
