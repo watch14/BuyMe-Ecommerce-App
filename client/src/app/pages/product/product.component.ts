@@ -33,7 +33,7 @@ export class ProductComponent implements OnInit {
     const apiUrl = `${this.baseAPIUrl}product/${this.productId}`;
     this.http.get<any>(apiUrl).subscribe(
       (response: any) => {
-        this.product = response.data; // Ensure response.data contains the product object
+        this.product = response.data; 
         console.log('Fetched product:', this.product);
         this.categoryName$ = this.getCategoryName(this.product.categoryId);
       },
