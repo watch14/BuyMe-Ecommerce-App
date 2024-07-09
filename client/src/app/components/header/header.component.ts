@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Renderer2, ElementRef, inject } from '@angular/core';
+import { Component, Renderer2, ElementRef, inject, OnInit } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -10,10 +10,10 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
 
-  authServise = inject(AuthService)
-  isLoggedIn: boolean = this.authServise.isLoggedIn();
+  authService = inject(AuthService)
+  isLoggedIn: boolean = false
 
   cartCount = 1;
   showDropdown = false;
@@ -27,6 +27,10 @@ export class HeaderComponent {
       if (!this.elementRef.nativeElement.contains(event.target)) {
         this.showDropdown = false;
         this.isUserClicked = false;
+
+        this.authService.isLoggedIn$.subscribe(res=>{
+          this.isLoggedIn = this.authService.isLoggedIn();
+        })
       }
     });
   }
@@ -41,5 +45,7 @@ export class HeaderComponent {
 
   logOut(){
     localStorage.removeItem("user_id")
+    this.authService.isLoggedIn$.next(false)
+
   }
 }
