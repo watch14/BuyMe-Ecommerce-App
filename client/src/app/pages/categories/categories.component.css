@@ -29,3 +29,122 @@
     display: block;
     margin: 0 auto;
 }
+
+
+.recommended-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+  margin-bottom: 70px;
+}
+
+.recommended-products {
+  max-width: 1440px;
+  width: 100%;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.products-container {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.category-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 70px;
+  }
+  
+  .category-products {
+    max-width: 1440px;
+    width: 100%;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+  
+  .products-container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  
+  .category-category {
+    border-radius: 20px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .category-gallery-item {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  
+  .category-gallery-item .category-image {
+    width: 100%;
+    height: 0;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px; /* Apply border-radius if needed */
+  }
+  
+  .category-gallery-item .category-image img.category-product-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 50%;
+    cursor: pointer;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .category-product-title {
+    padding-top: 15px;
+    font-size: 16px;
+    color: black;
+    font-weight: 700;
+    text-transform: capitalize;
+  }
+  
+  .category-rating {
+    display: flex;
+    align-items: center;
+  }
+  
+  .category-rating i {
+    color: #fa0;
+    line-height: 22px;
+    margin: 0 2px;
+    font-size: 14px;
+  }
+  
+  .category-rating .category-product-rate {
+    margin-left: 8px;
+    font-size: 12px;
+    color: #fa0;
+    font-weight: bold;
+  }
+  
+  .category-price {
+    font-size: 20px;
+    color: black;
+    font-weight: 700;
+  }
+  
+  .no-products-found {
+    color: #999;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .category-product {
+    margin-bottom: 70px;
+  }
+  

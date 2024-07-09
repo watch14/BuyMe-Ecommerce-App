@@ -1,36 +1,73 @@
 <div class="categories-container">
     <h2 class="categories-title">CATEGORIES</h2>
     <div class="categories-content">
-      <div class="category-item">
-        <img src="../../../assets/categorys/Frame 106.svg" alt="">
+      <div class="category-item" (click)="fetchProductsByCategory('category1_id')">
+        <img src="../../../assets/categorys/Frame 106.svg" alt="Desktops">
       </div>
-      <div class="category-item">
-        <img src="../../../assets/categorys/Frame 107.svg" alt="">
+      <div class="category-item" (click)="fetchProductsByCategory('category2_id')">
+        <img src="../../../assets/categorys/Frame 107.svg" alt="Laptops">
       </div>
-      <div class="category-item">
-        <img src="../../../assets/categorys/Frame 109.svg" alt="">
+      <div class="category-item" (click)="fetchProductsByCategory('category3_id')">
+        <img src="../../../assets/categorys/Frame 109.svg" alt="Monitors">
       </div>
-      <div class="category-item">
-        <img src="../../../assets/categorys/Frame 110.svg" alt="">
+      <div class="category-item" (click)="fetchProductsByCategory('category4_id')">
+        <img src="../../../assets/categorys/Frame 110.svg" alt="Keyboards">
       </div>
-      <div class="category-item">
-        <img src="../../../assets/categorys/Frame 111.svg" alt="">
+      <div class="category-item" (click)="fetchProductsByCategory('category5_id')">
+        <img src="../../../assets/categorys/Frame 111.svg" alt="Mouse">
       </div>
-      <div class="category-item">
-        <img src="../../../assets/categorys/Frame 112.svg" alt="">
+      <div class="category-item" (click)="fetchProductsByCategory('category6_id')">
+        <img src="../../../assets/categorys/Frame 112.svg" alt="Controller">
       </div>
-      <div class="category-item">
-        <img src="../../../assets/categorys/Frame 113.svg" alt="">
+      <div class="category-item" (click)="fetchProductsByCategory('category7_id')">
+        <img src="../../../assets/categorys/Frame 113.svg" alt="Headsets">
       </div>
-      <div class="category-item">
-        <img src="../../../assets/categorys/Frame 114.svg" alt="">
+      <div class="category-item" (click)="fetchProductsByCategory('category8_id')">
+        <img src="../../../assets/categorys/Frame 114.svg" alt="Microphones">
       </div>
-      <div class="category-item">
-        <img src="../../../assets/categorys/Frame 115.svg" alt="">
+      <div class="category-item" (click)="fetchProductsByCategory('category9_id')">
+        <img src="../../../assets/categorys/Frame 115.svg" alt="Other">
       </div>
-      <div class="category-item">
-        <img src="../../../assets/categorys/Frame 116.svg" alt="">
+      <div class="category-item" (click)="fetchProductsByCategory('category10_id')">
+        <img src="../../../assets/categorys/Frame 116.svg" alt="Components">
       </div>
     </div>
   </div>
   
+  
+  
+  <!-- Recommended products section -->
+<div class="category-products">
+    <h2 class="category-title">YOU MIGHT ALSO LIKE</h2>
+    <div class="products-container">
+      <div *ngFor="let category of categories" class="category-category">
+        <h3>{{ category.categoryName }}</h3>
+        <div class="category-product-list">
+          <div *ngIf="category.products && category.products.length > 0">
+            <div *ngFor="let product of category.products" class="category-product">
+              <a [routerLink]="['/product', product._id]">
+                <div *ngIf="product.productPicture && product.productPicture.length > 0" class="category-gallery-item">
+                  <div class="category-image">
+                    <img [src]="product.productPicture[0]" alt="Product Image" class="category-product-image" />
+                  </div>
+                </div>
+                <div class="category-product-title">
+                  <p>{{ product.productName }}</p>
+                </div>
+                <div class="category-rating">
+                  <i *ngFor="let star of [1, 2, 3, 4, 5]" class="fa fa-star-o"></i>
+                  <span class="category-product-rate">{{ product.productRate }}</span>
+                </div>
+                <p>
+                  <span class="category-price">$ {{ product.productPrice }}</span>
+                </p>
+              </a>
+            </div>
+          </div>
+          <div *ngIf="!category.products || category.products.length === 0" class="no-products-found">
+            No products found for this category.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
