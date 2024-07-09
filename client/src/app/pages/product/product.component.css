@@ -74,7 +74,7 @@
 .number {
   display: flex;
   align-items: center; /* Align items vertically centered */
-  gap: 15px;
+  gap: 8px;
 }
 
 .incdec {
@@ -245,4 +245,67 @@ input[type="number"]::-webkit-outer-spin-button {
 
 * {
   transition: all 0.32s ease;
+}
+
+.delivery-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  margin-top: 60px;
+  width: 60%;
+  padding: 20px; /* Add padding inside the block */
+  border: 2px solid #ccc; /* Border around the block */
+  border-radius: 25px; /* Optional: rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: shadow effect */
+}
+
+.delivery-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delivery-item i {
+  font-size: 24px;
+}
+
+.delivery-item div {
+  display: flex;
+  flex-direction: column;
+}
+
+.delivery-item strong {
+  font-size: 16px;
+}
+
+.delivery-item p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.delivery-item a {
+  text-decoration: none;
+
+}
+
+.delivery-item a:hover {
+  text-decoration: underline;
+}
+
+.custom-icon {
+  width: 50px; /* Adjust the size as needed */
+  height: 50px; /* Adjust the size as needed */
+}
+
+.custom-icon img {
+  width: 100%; /* Ensure the image fits the container */
+  height: 100%; /* Ensure the image fits the container */
+}
+
+.divider {
+  width: calc(100% + 40px); /* Ensures the line touches the borders */
+  margin: 10px -20px; /* Adjust margins to touch the borders */
+  border: none;
+  border-top: 1px solid #ccc;
 }
