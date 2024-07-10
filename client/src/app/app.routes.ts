@@ -13,7 +13,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
-import { CategoriesComponent } from './pages/categories/categories.component';
+import { FavouriteComponent } from './pages/favourite/favourite.component';
 
 export const routes: Routes = [
     {'path': '', component:HomeComponent},
@@ -26,7 +26,8 @@ export const routes: Routes = [
 
     {'path': 'shop', component:ShopComponent},
     {'path': 'product/:id', component:ProductComponent},
-    {'path': 'categories', component:CategoriesComponent},
+    {'path': 'favourite', component:FavouriteComponent},
+
 
     {'path': 'cart', component:CartComponent},
 

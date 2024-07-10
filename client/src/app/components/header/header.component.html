@@ -29,13 +29,20 @@
           </div>
         </div>
 
-
-
       </div>
 
       <div class="headerbtns">
-        
-        <img src="../../../assets/icons/Wishlist.svg" />
+
+<a routerLink='/favourite'>
+  <img 
+    class="favourite" 
+    *ngIf="isLoggedIn" 
+    [src]="iconSrc" 
+    (mouseover)="changeIcon(true)" 
+    (mouseout)="changeIcon(false)" 
+  />
+</a>
+
         <div class="cart-container">
           <img src="../../../assets/icons/Cart.svg" />
           <span *ngIf="cartCount > 0" class="cart-count">{{ cartCount }}</span>

@@ -45,6 +45,7 @@
 .logo {
   width: 100px;
   height: auto;
+  cursor: pointer;
 }
 
 .headerLinks a {
@@ -302,4 +303,8 @@
 
 .search-results-item:last-child {
   border-bottom: none;
+}
+
+.favourite:hover {
+  cursor: pointer;
 }

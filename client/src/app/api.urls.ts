@@ -4,4 +4,6 @@ export const apiUrls = {
 
     ProductApi: 'http://localhost:3000/api/product/',
 
+    favoritApi: 'http://localhost:3000/api/favorite'
+
 }

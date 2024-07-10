@@ -26,6 +26,14 @@ export class HeaderComponent implements OnInit{
   products: any[] = [];
   searchResults: any[] = [];
 
+  iconSrc: string = '../../../assets/icons/Wishlist.svg';
+
+  changeIcon(isHover: boolean): void {
+    this.iconSrc = isHover 
+      ? '../../../assets/icons/Wishlist-red.svg' 
+      : '../../../assets/icons/Wishlist.svg';
+  }
+
 
   constructor(
     private renderer: Renderer2,
