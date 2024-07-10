@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';import { Observable } from 'rxjs';
+import { RouterModule, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -11,8 +12,6 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.css',
 })
-
-
 export class ShopComponent implements OnInit {
   readonly baseUrl = 'http://localhost:3000/api/product/search';
   skip = 0;
@@ -31,10 +30,21 @@ export class ShopComponent implements OnInit {
 
     this.http.get<any>(url).subscribe(
       (response: any) => {
-        this.products = response.data.map((product: any) => ({
+        const fetchedProducts = response.data.map((product: any) => ({
           ...product,
-          isFavorite: false
+          isFavorite: false,
         }));
+
+        // Determine if there are more products to fetch
+        if (fetchedProducts.length < this.take) {
+          this.hasMoreProducts = false; // No more products to fetch
+        } else {
+          this.hasMoreProducts = true; // There may be more products to fetch
+        }
+
+        // Update products array with fetched products
+        this.products = fetchedProducts;
+
         this.loadUserFavorites();
       },
       (error: any) => {
@@ -54,24 +64,29 @@ export class ShopComponent implements OnInit {
           const favoriteProductIds = response.data?.productIds;
 
           if (Array.isArray(favoriteProductIds)) {
-            favoriteProductIds.forEach(favProduct => {
-              const productIndex = this.products.findIndex(prod => prod._id === favProduct._id);
+            favoriteProductIds.forEach((favProduct) => {
+              const productIndex = this.products.findIndex(
+                (prod) => prod._id === favProduct._id
+              );
               if (productIndex !== -1) {
                 this.products[productIndex].isFavorite = true;
               }
             });
           } else {
-            console.error('Favorites productIds is not an array or undefined:', favoriteProductIds);
+            console.error(
+              'Favorites productIds is not an array or undefined:',
+              favoriteProductIds
+            );
           }
         },
-        error => console.error('Error fetching user favorites:', error)
+        (error) => console.error('Error fetching user favorites:', error)
       );
     }
   }
 
   toggleFavorite(product: any) {
     if (!this.authService.isLoggedIn()) {
-      alert("You need to be logged in!");
+      alert('You need to be logged in!');
       return;
     }
 
@@ -80,14 +95,14 @@ export class ShopComponent implements OnInit {
         () => {
           product.isFavorite = false;
         },
-        error => console.error('Error removing from favorites:', error)
+        (error) => console.error('Error removing from favorites:', error)
       );
     } else {
       this.authService.addToFavorites(product._id).subscribe(
         () => {
           product.isFavorite = true;
         },
-        error => console.error('Error adding to favorites:', error)
+        (error) => console.error('Error adding to favorites:', error)
       );
     }
   }
