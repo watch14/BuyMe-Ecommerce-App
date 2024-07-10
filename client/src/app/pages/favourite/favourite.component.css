@@ -6,7 +6,7 @@
   padding-top: 40px;
 }
 
-.tilte {
+h1 {
   color: #111827;
   text-align: center;
 
@@ -16,6 +16,7 @@
   font-weight: 900;
   line-height: 68px; /* 242.857% */
   padding-bottom: 20px;
+  color: #111827;
 }
 
 :root {

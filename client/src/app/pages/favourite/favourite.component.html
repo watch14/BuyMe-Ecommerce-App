@@ -1,6 +1,6 @@
 <div class="all">
     <div *ngIf="products.length > 0">
-      <h1 class="title">favourits</h1>
+      <h1 class="title">Favourites</h1>
       <ul class="pdcs grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <li class="product" *ngFor="let prod of products">
           <div class="image-container">
@@ -52,7 +52,7 @@
 
     </div>
     <div *ngIf="products.length === 0">
-      <p class="no-products">No products available.</p>
+      <h1 class="title">You have no favourite product.</h1>
     </div>
   </div>
   
