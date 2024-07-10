@@ -54,10 +54,7 @@ export class ProductComponent implements OnInit {
     return this.http.get<any>(apiUrl).pipe(map((response: any) => response.data.categoryName));
   }
 
-  
-  
-  
-  
+ 
 
   addToFavorites() {
     if (this.isFavorite) {
