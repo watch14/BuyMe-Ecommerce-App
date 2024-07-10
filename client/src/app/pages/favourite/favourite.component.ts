@@ -11,25 +11,29 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './favourite.component.html',
   styleUrl: './favourite.component.css'
 })
+
+
 export class FavouriteComponent implements OnInit {
 
   products: any[] = [];
   baseUrl: any;
 
-
   constructor(private http: HttpClient, private authService: AuthService) {}
+
   ngOnInit(): void {
     this.userFavorites()
   }
 
-  
-  userFavorites(){
-    if(this.authService.isLoggedIn()){
+  userFavorites() {
+    if (this.authService.isLoggedIn()) {
       this.authService.getUserFavorites().subscribe(
         (response: any) => {
           console.log('Full favorites response:', response);
           console.log('Data property:', response.data);
-          this.products = response.data.productIds;
+          this.products = response.data.productIds.map((product: any) => ({
+            ...product,
+            isFavorite: true
+          }));
           console.log('productIds:', response.data.productIds);
         },
         error => console.error('Error fetching favorites:', error)
@@ -59,7 +63,4 @@ export class FavouriteComponent implements OnInit {
       );
     }
   }
-
-
-
 }
