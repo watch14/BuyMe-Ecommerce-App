@@ -1,34 +1,64 @@
 <div class="categories-container">
-    <h2 class="categories-title">CATEGORIES</h2>
-    <div class="categories-content">
-      <div class="category-item" *ngFor="let category of categories">
-        <img [src]="'../../../assets/categorys/' + category.image" [alt]="category.categoryName" (click)="toggleCategoryProducts(category)">
-        <div class="category-products" *ngIf="category.showProducts">
-          <div class="products-container">
-            <div *ngFor="let product of category.products" class="category-product">
-              <a [routerLink]="['/product', product._id]">
-                <div *ngIf="product.productPicture && product.productPicture.length > 0" class="category-gallery-item">
-                  <div class="category-image">
-                    <img [src]="product.productPicture[0]" alt="Product Image" class="category-product-image" />
-                  </div>
-                </div>
-                <div class="category-product-title">
-                  <p>{{ product.productName }}</p>
-                </div>
-                <div class="category-rating">
-                  <i *ngFor="let star of [1, 2, 3, 4, 5]" class="fa fa-star-o"></i>
-                  <span class="category-product-rate">{{ product.productRate }}</span>
-                </div>
-                <p>
-                  <span class="category-price">$ {{ product.productPrice }}</span>
-                </p>
-              </a>
-            </div>
-          </div>
-          <div *ngIf="!category.products || category.products.length === 0" class="no-products-found">
-            No products found for this category.
-          </div>
-        </div>
-      </div>
+  <h2 class="categories-title">CATEGORIES</h2>
+  <div class="categories-content">
+    <div class="category-item" *ngFor="let category of categories">
+      <img
+        [src]="'../../../assets/categorys/' + category.image"
+        [alt]="category.categoryName"
+        (click)="showCategoryProducts(category)"
+      />
     </div>
   </div>
+  <div class="selected-category-products" *ngIf="selectedCategory">
+    <h3>{{ selectedCategory.categoryName }}</h3>
+    <div class="products-container pdcs grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div *ngFor="let product of selectedCategory.products" class="product">
+        <a [routerLink]="['/product', product._id]">
+          <div *ngIf="product.productPicture && product.productPicture.length > 0" class="image-container">
+            <img [src]="product.productPicture[0]" alt="Product Image" class="product-image" />
+          </div>
+          <div class="px-5 pb-5">
+            <div class="product-title">
+              <h5 class="product-name">{{ product.productName }}</h5>
+            </div>
+            <div class="flex items-center mt-2.5 mb-5">
+              <div class="flex items-center space-x-1 rtl:space-x-reverse">
+                <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+                  <svg *ngIf="i < product.productRate" class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                  </svg>
+                  <svg *ngIf="i >= product.productRate" class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                    <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                  </svg>
+                </ng-container>
+              </div>
+              <span class="rating">{{ product.productRate }}</span>
+            </div>
+
+            <!-- Price and Favorite Icon -->
+            <div class="flex items-center justify-between">
+              <span class="product-price">${{ product.productPrice }}</span>
+              <img 
+                *ngIf="product.isFavorite" 
+                src="../../../assets/icons/Wishlist-red.svg" 
+                alt="Wishlist Icon"
+                class="favorit"
+                (click)="toggleFavorite(product)"
+              >
+              <img 
+                *ngIf="!product.isFavorite" 
+                src="../../../assets/icons/Wishlist.svg" 
+                alt="Wishlist Icon"
+                class="favorit"
+                (click)="toggleFavorite(product)"
+              >
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div *ngIf="!selectedCategory.products || selectedCategory.products.length === 0" class="no-products-found">
+      No products found for this category.
+    </div>
+  </div>
+</div>

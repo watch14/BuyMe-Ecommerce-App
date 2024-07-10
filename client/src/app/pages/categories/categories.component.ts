@@ -13,6 +13,9 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./categories.component.css'],
 })
 export class CategoriesComponent implements OnInit {
+toggleFavorite(_t16: any) {
+throw new Error('Method not implemented.');
+}
   readonly baseAPIUrl = 'http://localhost:3000/api/';
   categories: any[] = [
     { image: 'Frame 106.svg', categoryName: 'Desktops', showProducts: false },
@@ -34,6 +37,7 @@ export class CategoriesComponent implements OnInit {
     { image: 'Frame 115.svg', categoryName: 'Other', showProducts: false },
     { image: 'Frame 116.svg', categoryName: 'Components', showProducts: false },
   ];
+  selectedCategory: any = null;
 
   constructor(private http: HttpClient) {}
 
@@ -91,7 +95,7 @@ export class CategoriesComponent implements OnInit {
       );
   }
 
-  toggleCategoryProducts(category: any) {
-    category.showProducts = !category.showProducts;
+  showCategoryProducts(category: any) {
+    this.selectedCategory = category;
   }
 }
