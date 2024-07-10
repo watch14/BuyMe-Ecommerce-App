@@ -1,13 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { apiUrls } from '../api.urls';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   http = inject(HttpClient);
+
+  
 
   isLoggedIn$ = new BehaviorSubject<boolean>(this.isLoggedIn());
 
@@ -54,4 +56,16 @@ export class AuthService {
     }
     return this.http.post<any>(`${apiUrls.cartApi}/add-to-cart`, { userId, productId, quantity });
   }
+
+  getUserCart() {
+    const userId = localStorage.getItem("user_id");
+
+    return this.http.get<any>(`${apiUrls.cartApi}/get-cart?userId=${userId}`);
+
+  }
+
+  getProductDetails(productId: string): Observable<any> {
+    return this.http.get<any>(`${apiUrls.ProductApi}/${productId}`);
+  }
+
 }

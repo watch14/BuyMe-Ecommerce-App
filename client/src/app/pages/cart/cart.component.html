@@ -1,59 +1,14 @@
-<div class="cart-container">
-    <div class="cart-items">
-        <div class="cart-item">
-            <div class="item-details">
-                <img src="../../../assets/razer.png" alt="LCD Monitor">
-                <div class="item-info">
-                    <h4>LCD Monitor</h4>
-                    <p>Color: White</p>
-                </div>
-            </div>
-            <div class="item-price">$145</div>
-            <div class="item-quantity">
-                <button>-</button>
-                <span>1</span>
-                <button>+</button>
-            </div>
-            <div class="remove-item">🗑️</div>
-        </div>
-        <div class="cart-item">
-            <div class="item-details">
-                <img src="../../../assets/razer.png" alt="H1 Gamepad">
-                <div class="item-info">
-                    <h4>H1 Gamepad</h4>
-                    <p>Color: Red</p>
-                </div>
-            </div>
-            <div class="item-price">$180</div>
-            <div class="item-quantity">
-                <button>-</button>
-                <span>1</span>
-                <button>+</button>
-            </div>
-            <div class="remove-item">🗑️</div>
-        </div>
+<div *ngIf="products.length > 0; else emptyCart">
+    <div *ngFor="let product of products" class="cart-item">
+      <img [src]="product.productPicture[0]" alt="{{ product.productName }}" class="product-image"/>
+      <div class="product-details">
+        <h3>{{ product.productName }}</h3>
+        <p>Quantity: {{ product.quantity }}</p>
+      </div>
     </div>
-    <div class="order-summary">
-        <div class="infos">
-            <h3>Order Summary</h3>
-            <p>
-                <span>Subtotal</span>
-                <span>$325</span>
-            </p>
-            <p>
-                <span>Discount (-20%)</span>
-                <span>-$65</span>
-            </p>
-            <p>
-                <span>Delivery Fee</span>
-                <span>$15</span>
-            </p>
-        </div>
-
-        <p class="total">
-            <span>Total</span>
-            <span>$260</span>
-        </p>
-        <a href="#" class="checkout-button">Go to Checkout →</a>
-    </div>
-</div>
+  </div>
+  
+  <ng-template #emptyCart>
+    <p>Your cart is empty.</p>
+  </ng-template>
+  
