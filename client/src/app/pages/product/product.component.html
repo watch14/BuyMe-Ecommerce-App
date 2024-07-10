@@ -1,22 +1,27 @@
 <div class="product-details" *ngIf="product">
   <div class="product-images">
-    <!-- Display product images -->
-    <img
-      *ngIf="product.productPicture && product.productPicture.length > 0"
-      [src]="product.productPicture[0]"
-      alt="Product Image"
-    />
-    <ng-container
-      *ngIf="product.productPicture && product.productPicture.length > 1"
-    >
+    <div class="card">
+      <!-- Main product image -->
       <img
-        *ngFor="let image of product.productPicture.slice(1)"
-        [src]="image"
+        class="main-image"
+        *ngIf="product.productPicture && product.productPicture.length > 0"
+        [src]="product.productPicture[0]"
         alt="Product Image"
       />
-    </ng-container>
+  
+      <!-- Side images -->
+      <div class="side-images" *ngIf="product.productPicture && product.productPicture.length > 1">
+        <img
+          class="side-image"
+          *ngFor="let image of product.productPicture.slice(1); let i = index"
+          [src]="image"
+          alt="Product Image"
+          (click)="changeMainImage(i + 1)"
+        />
+      </div>
+    </div>
   </div>
-
+  
   <div class="product-info">
     <h1>{{ product.productName }}</h1>
     <div class="product-description">
@@ -143,3 +148,5 @@
     </div>
   </div>
 </div>
+
+

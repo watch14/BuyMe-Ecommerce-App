@@ -109,4 +109,13 @@ export class ProductComponent implements OnInit {
       this.quantity--;
     }
   }
+
+  changeMainImage(index: number): void {
+    if (index >= 0 && index < this.product.productPicture.length) {
+      // Swap main image with clicked side image
+      const temp = this.product.productPicture[0];
+      this.product.productPicture[0] = this.product.productPicture[index];
+      this.product.productPicture[index] = temp;
+    }
+  }
 }

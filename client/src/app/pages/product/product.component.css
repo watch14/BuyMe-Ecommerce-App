@@ -14,6 +14,44 @@
   }
 }
 
+/*Main & Side-Image css starts here*/
+
+.card {
+  position: relative;
+}
+
+.main-image {
+  display: block;
+  max-width: 100%;
+}
+
+.side-images {
+  position: absolute;
+  top: 10px; /* Adjust the top value as needed */
+  left: 10px; /* Adjust the right value as needed */
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.5s ease; /* Transition for opacity */
+}
+
+.side-image {
+  width: 100px;
+  height: 100px;
+  border: 1px solid rgb(233, 233, 233);
+  border-radius: 2px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.5s ease; /* Smooth transition for opacity */
+  transform: scale(0.5); /* Scale down the image to 50% of its original size */
+  transform-origin: center;
+}
+
+.side-image:hover {
+  opacity: 1; /* Brighten side-image on hover */
+}
+
+/*Main & Side-Image css ends here*/
+
 .product-images {
   flex: 1; /* Take up remaining space */
   padding: 30px; /* Add padding for space inside */
@@ -293,7 +331,6 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .delivery-item a {
   text-decoration: none;
-
 }
 
 .delivery-item a:hover {
@@ -370,7 +407,6 @@ input[type="number"]::-webkit-outer-spin-button {
   cursor: pointer;
   transition: transform 0.5s ease-in-out;
 }
-
 
 .recommended-product-title {
   padding-top: 15px;
