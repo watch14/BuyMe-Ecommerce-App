@@ -72,13 +72,14 @@ export class AuthService {
 
   }
 
-  getProductDetails(productId: string): Observable<any> {
-    return this.http.get<any>(`${apiUrls.ProductApi}/${productId}`);
-  }
-
   getCartCount(): Observable<any> {
     const userId = localStorage.getItem("user_id");
     return this.http.get<any>(`${apiUrls.cartApi}/count?userId=${userId}`);
   }
+  
+  getProductDetails(productId: string): Observable<any> {
+    return this.http.get<any>(`${apiUrls.ProductApi}/${productId}`);
+  }
+
 
 }

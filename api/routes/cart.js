@@ -5,6 +5,7 @@ import {
   deleteFromCart,
   emptyCart,
   getCart,
+  getCartCount,
   removeCart,
 } from "../controllers/cart.controller.js";
 
@@ -106,6 +107,36 @@ router.post("/add-to-cart", addToCart);
  *         description: Internal server error
  */
 router.get("/get-cart", getCart);
+
+/**
+ * @swagger
+ * /api/cart/count:
+ *   get:
+ *     summary: Get the total quantity of items in the user's cart
+ *     tags: [Cart]
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Cart count retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 count:
+ *                   type: number
+ *                   description: Total quantity of items in the cart
+ *       404:
+ *         description: Cart not found
+ *       500:
+ *         description: Internal server error
+ */
+router.get("/count", getCartCount);
 
 /**
  * @swagger

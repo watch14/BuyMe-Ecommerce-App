@@ -80,6 +80,36 @@ export const getCart = async (req, res, next) => {
   }
 };
 
+// Get Cart Count
+export const getCartCount = async (req, res, next) => {
+  try {
+    const { userId } = req.query;
+
+    // Find the user's cart
+    const cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      return next(CreateError(404, "Cart not found"));
+    }
+
+    // Calculate the total quantity of items in the cart
+    const totalQuantity = cart.products.reduce(
+      (acc, product) => acc + product.quantity,
+      0
+    );
+
+    return res.json(
+      CreateSuccess(200, "Cart count retrieved successfully", {
+        count: totalQuantity,
+      })
+    );
+  } catch (error) {
+    return next(
+      CreateError(500, "Internal server error for retrieving cart count")
+    );
+  }
+};
+
 // Empty Cart
 export const emptyCart = async (req, res, next) => {
   try {

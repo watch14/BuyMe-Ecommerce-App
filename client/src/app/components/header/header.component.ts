@@ -65,8 +65,8 @@ export class HeaderComponent implements OnInit{
   fetchCartCount() {
     this.authService.getCartCount().subscribe(
       (response) => {
-        if (response.success) {
-          this.cartCount = response.count; // Assuming response.count holds the cart count
+        if (response.status === 200) {
+          this.cartCount = response.data.count; // Assuming response.data.count holds the cart count
         } else {
           console.error('Error fetching cart count:', response.message);
         }
