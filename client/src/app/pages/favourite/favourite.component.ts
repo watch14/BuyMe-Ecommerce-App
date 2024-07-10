@@ -22,9 +22,6 @@ export class FavouriteComponent implements OnInit {
     this.userFavorites()
   }
 
-
- 
-
   
   userFavorites(){
     if(this.authService.isLoggedIn()){
@@ -32,11 +29,13 @@ export class FavouriteComponent implements OnInit {
         (response: any) => {
           console.log('Full favorites response:', response);
           console.log('Data property:', response.data);
-        }
-      )
+          this.products = response.data.productIds;
+          console.log('productIds:', response.data.productIds);
+        },
+        error => console.error('Error fetching favorites:', error)
+      );
     }
   }
-  
 
   toggleFavorite(product: any) {
     if (!this.authService.isLoggedIn()) {
