@@ -71,7 +71,7 @@ export class ShopComponent implements OnInit {
 
   toggleFavorite(product: any) {
     if (!this.authService.isLoggedIn()) {
-      // Handle case when user is not logged in
+      alert("You need to be logged in!");
       return;
     }
 
