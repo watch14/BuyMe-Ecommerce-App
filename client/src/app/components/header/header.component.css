@@ -303,3 +303,7 @@
 .search-results-item:last-child {
   border-bottom: none;
 }
+
+.favourite:hover {
+  cursor: pointer;
+}
