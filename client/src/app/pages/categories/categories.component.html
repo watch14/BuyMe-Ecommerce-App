@@ -1,0 +1,34 @@
+<div class="categories-container">
+    <h2 class="categories-title">CATEGORIES</h2>
+    <div class="categories-content">
+      <div class="category-item" *ngFor="let category of categories">
+        <img [src]="'../../../assets/categorys/' + category.image" [alt]="category.categoryName" (click)="toggleCategoryProducts(category)">
+        <div class="category-products" *ngIf="category.showProducts">
+          <div class="products-container">
+            <div *ngFor="let product of category.products" class="category-product">
+              <a [routerLink]="['/product', product._id]">
+                <div *ngIf="product.productPicture && product.productPicture.length > 0" class="category-gallery-item">
+                  <div class="category-image">
+                    <img [src]="product.productPicture[0]" alt="Product Image" class="category-product-image" />
+                  </div>
+                </div>
+                <div class="category-product-title">
+                  <p>{{ product.productName }}</p>
+                </div>
+                <div class="category-rating">
+                  <i *ngFor="let star of [1, 2, 3, 4, 5]" class="fa fa-star-o"></i>
+                  <span class="category-product-rate">{{ product.productRate }}</span>
+                </div>
+                <p>
+                  <span class="category-price">$ {{ product.productPrice }}</span>
+                </p>
+              </a>
+            </div>
+          </div>
+          <div *ngIf="!category.products || category.products.length === 0" class="no-products-found">
+            No products found for this category.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

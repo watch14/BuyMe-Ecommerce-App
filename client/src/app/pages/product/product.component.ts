@@ -19,6 +19,7 @@ export class ProductComponent implements OnInit {
   categoryName$: Observable<string> | undefined;
   quantity: number = 1; // Initial quantity
   isFavorite: boolean = false;
+  displayedCategories: any[] = [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
@@ -27,6 +28,7 @@ export class ProductComponent implements OnInit {
       this.productId = params['id'];
       this.fetchProduct();
     });
+    this.fetchRecommendedProducts(); // Fetch recommended products on init
   }
 
   fetchProduct() {
@@ -48,6 +50,44 @@ export class ProductComponent implements OnInit {
     return this.http.get<any>(apiUrl).pipe(map((response: any) => response.data.categoryName));
   }
 
+  fetchRecommendedProducts() {
+    const apiUrl = `${this.baseAPIUrl}category/`;
+    this.http.get<any>(apiUrl).subscribe(
+      (response: any) => {
+        const categories = response.data; // Ensure response.data contains categories array
+        console.log('Fetched categories:', categories);
+  
+        categories.forEach((category: { _id: string; products: any[]; categoryName: any; }) => {
+          this.fetchProductsByCategory(category._id).subscribe(
+            (products: any[]) => {
+              category.products = products; // Assign fetched products to category
+              console.log(`Fetched products for ${category.categoryName}:`, category.products);
+            },
+            (error: any) => {
+              console.error(`Error fetching products for ${category.categoryName}:`, error);
+            }
+          );
+        });
+  
+        this.displayedCategories = categories; // Assign categories with products to displayedCategories
+        console.log('Displayed Categories:', this.displayedCategories); // Check if categories and products are correctly assigned
+      },
+      (error: any) => {
+        console.error('Error fetching categories:', error);
+      }
+    );
+  }
+  
+  fetchProductsByCategory(categoryId: string): Observable<any[]> {
+    const apiUrl = `${this.baseAPIUrl}product/search?category=${categoryId}`;
+    return this.http.get<any>(apiUrl).pipe(
+      map((response: any) => response.data)
+    );
+  }
+  
+  
+  
+
   addToFavorites() {
     if (this.isFavorite) {
       // Remove from favorites
@@ -67,6 +107,15 @@ export class ProductComponent implements OnInit {
   decrementQuantity() {
     if (this.quantity > 1) {
       this.quantity--;
+    }
+  }
+
+  changeMainImage(index: number): void {
+    if (index >= 0 && index < this.product.productPicture.length) {
+      // Swap main image with clicked side image
+      const temp = this.product.productPicture[0];
+      this.product.productPicture[0] = this.product.productPicture[index];
+      this.product.productPicture[index] = temp;
     }
   }
 }

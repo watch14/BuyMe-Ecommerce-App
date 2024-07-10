@@ -1,22 +1,27 @@
 <div class="product-details" *ngIf="product">
   <div class="product-images">
-    <!-- Display product images -->
-    <img
-      *ngIf="product.productPicture && product.productPicture.length > 0"
-      [src]="product.productPicture[0]"
-      alt="Product Image"
-    />
-    <ng-container
-      *ngIf="product.productPicture && product.productPicture.length > 1"
-    >
+    <div class="card">
+      <!-- Main product image -->
       <img
-        *ngFor="let image of product.productPicture.slice(1)"
-        [src]="image"
+        class="main-image"
+        *ngIf="product.productPicture && product.productPicture.length > 0"
+        [src]="product.productPicture[0]"
         alt="Product Image"
       />
-    </ng-container>
+  
+      <!-- Side images -->
+      <div class="side-images" *ngIf="product.productPicture && product.productPicture.length > 1">
+        <img
+          class="side-image"
+          *ngFor="let image of product.productPicture.slice(1); let i = index"
+          [src]="image"
+          alt="Product Image"
+          (click)="changeMainImage(i + 1)"
+        />
+      </div>
+    </div>
   </div>
-
+  
   <div class="product-info">
     <h1>{{ product.productName }}</h1>
     <div class="product-description">
@@ -76,6 +81,68 @@
           ></span>
           <div class="ring"></div>
           <div class="ring2"></div>
+        </div>
+      </div>
+    </div>
+<!-- Delivery information -->
+<div class="delivery-info">
+  <div class="delivery-item">
+    <!-- Placeholder for custom Free Delivery icon -->
+    <div class="custom-icon free-delivery-icon">
+        <img src="../../../assets/icons/icon-delivery.svg" alt="Free Delivery Icon">
+    </div>
+    <div>
+      <strong>Free Delivery</strong>
+      <p>Enter your postal code for Delivery Availability</p>
+    </div>
+  </div>
+  <hr class="divider">
+  <div class="delivery-item">
+    <!-- Placeholder for custom Return Delivery icon -->
+    <div class="custom-icon return-delivery-icon">
+        <img src="../../../assets/icons/Icon-return.svg" alt="Return Delivery Icon">
+    </div>
+    <div>
+      <strong>Return Delivery</strong>
+      <p>Free 30 Days Delivery Returns. <a href="#">Details</a></p>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<!-- Recommended products section -->
+<div class="recommended-products">
+  <h2 class="recommended-title">YOU MIGHT ALSO LIKE</h2>
+  <div class="products-container">
+    <div *ngFor="let category of displayedCategories" class="recommended-category">
+      <h3>{{ category.categoryName }}</h3>
+      <div class="recommended-product-list">
+        <div *ngIf="category.products && category.products.length > 0">
+          <div *ngFor="let product of category.products" class="recommended-product">
+            <a [routerLink]="['/product', product._id]">
+              <div *ngIf="product.productPicture && product.productPicture.length > 0">
+                <div class="recommended-gallery-item">
+                  <div class="recommended-image">
+                    <img [src]="product.productPicture[0]" alt="Product Image" class="recommended-product-image" />
+                  </div>
+                </div>
+              </div>
+              <div class="recommended-product-title">
+                <p>{{ product.productName }}</p>
+              </div>
+              <div class="recommended-rating">
+                <i *ngFor="let star of [1, 2, 3, 4, 5]" class="fa fa-star-o"></i>
+                <span class="recommended-product-rate">{{ product.productRate }}</span>
+              </div>
+              <p>
+                <span class="recommended-price">${{ product.productPrice }}</span>
+              </p>
+            </a>
+          </div>
+        </div>
+        <div *ngIf="!category.products || category.products.length === 0" class="no-products-found">
+          No products found for this category.
         </div>
       </div>
     </div>

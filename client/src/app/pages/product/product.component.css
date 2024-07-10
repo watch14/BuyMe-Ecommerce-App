@@ -1,11 +1,56 @@
 .product-details {
   display: flex;
-  flex-direction: row; /* Ensure items are in a row */
+  flex-direction: column; /* Change from row to column for responsiveness */
   justify-content: center; /* Center horizontally */
-  align-items: flex-start; /* Align items to the top */
+  align-items: center; /* Align items to the top */
   width: 80%;
   margin: 50px auto; /* Adjust margin for vertical positioning */
 }
+
+@media (min-width: 1220px) {
+  .product-details {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/*Main & Side-Image css starts here*/
+
+.card {
+  position: relative;
+}
+
+.main-image {
+  display: block;
+  max-width: 100%;
+}
+
+.side-images {
+  position: absolute;
+  top: 10px; /* Adjust the top value as needed */
+  left: 10px; /* Adjust the right value as needed */
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.5s ease; /* Transition for opacity */
+}
+
+.side-image {
+  width: 100px;
+  height: 100px;
+  border: 1px solid rgb(233, 233, 233);
+  border-radius: 2px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.5s ease; /* Smooth transition for opacity */
+  transform: scale(0.5); /* Scale down the image to 50% of its original size */
+  transform-origin: center;
+}
+
+.side-image:hover {
+  opacity: 1; /* Brighten side-image on hover */
+}
+
+/*Main & Side-Image css ends here*/
 
 .product-images {
   flex: 1; /* Take up remaining space */
@@ -74,7 +119,7 @@
 .number {
   display: flex;
   align-items: center; /* Align items vertically centered */
-  gap: 15px;
+  gap: 8px;
 }
 
 .incdec {
@@ -245,4 +290,163 @@ input[type="number"]::-webkit-outer-spin-button {
 
 * {
   transition: all 0.32s ease;
+}
+
+.delivery-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  margin-top: 60px;
+  width: 60%;
+  padding: 20px; /* Add padding inside the block */
+  border: 2px solid #ccc; /* Border around the block */
+  border-radius: 25px; /* Optional: rounded corners */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: shadow effect */
+}
+
+.delivery-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.delivery-item i {
+  font-size: 24px;
+}
+
+.delivery-item div {
+  display: flex;
+  flex-direction: column;
+}
+
+.delivery-item strong {
+  font-size: 16px;
+}
+
+.delivery-item p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.delivery-item a {
+  text-decoration: none;
+}
+
+.delivery-item a:hover {
+  text-decoration: underline;
+}
+
+.custom-icon {
+  width: 50px; /* Adjust the size as needed */
+  height: 50px; /* Adjust the size as needed */
+}
+
+.custom-icon img {
+  width: 100%; /* Ensure the image fits the container */
+  height: 100%; /* Ensure the image fits the container */
+}
+
+.divider {
+  width: calc(100% + 40px); /* Ensures the line touches the borders */
+  margin: 10px -20px; /* Adjust margins to touch the borders */
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+.recommended-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+  margin-bottom: 70px;
+}
+
+.recommended-products {
+  max-width: 1440px;
+  width: 100%;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.products-container {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.recommended-category {
+  border-radius: 20px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.recommended-gallery-item {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.recommended-gallery-item .recommended-image {
+  width: 100%;
+  height: 0;
+  padding-top: 100%; /* 1:1 Aspect Ratio */
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px; /* Apply border-radius if needed */
+}
+
+.recommended-gallery-item .recommended-image img.recommended-product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  cursor: pointer;
+  transition: transform 0.5s ease-in-out;
+}
+
+.recommended-product-title {
+  padding-top: 15px;
+  font-size: 16px;
+  color: black;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.recommended-rating {
+  display: flex;
+  align-items: center;
+}
+
+.recommended-rating i {
+  color: #fa0;
+  line-height: 22px;
+  margin: 0 2px;
+  font-size: 14px;
+}
+
+.recommended-rating .recommended-product-rate {
+  margin-left: 8px;
+  font-size: 12px;
+  color: #fa0;
+  font-weight: bold;
+}
+
+.recommended-price {
+  font-size: 20px;
+  color: black;
+  font-weight: 700;
+}
+
+.no-products-found {
+  color: #999;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.recommended-product {
+  margin-bottom: 70px;
 }
