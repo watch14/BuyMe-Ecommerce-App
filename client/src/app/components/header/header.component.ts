@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit{
   authService = inject(AuthService)
   isLoggedIn: boolean = false
 
-  cartCount = 1;
+  cartCount = 0;
   showDropdown = false;
 
   productDropdown = false;
@@ -46,8 +46,7 @@ export class HeaderComponent implements OnInit{
     this.authService.isLoggedIn$.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
       if (isLoggedIn) {
-        // Fetch cart count or other user-specific data if necessary
-
+        this.fetchCartCount(); // Fetch cart count if logged in
       }
     });
 
@@ -63,7 +62,20 @@ export class HeaderComponent implements OnInit{
     });
   }
 
-
+  fetchCartCount() {
+    this.authService.getCartCount().subscribe(
+      (response) => {
+        if (response.success) {
+          this.cartCount = response.count; // Assuming response.count holds the cart count
+        } else {
+          console.error('Error fetching cart count:', response.message);
+        }
+      },
+      (error) => {
+        console.error('Error fetching cart count:', error);
+      }
+    );
+  }
 
   logOut(){
     localStorage.removeItem("user_id")
