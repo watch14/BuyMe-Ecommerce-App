@@ -18,14 +18,14 @@ export class ProductComponent implements OnInit {
   productId: string | undefined;
   product: any = {};
   categoryName$: Observable<string> | undefined;
-  quantity: number = 1; // Initial quantity
+  quantity: number = 1; 
   isFavorite: boolean = false;
   displayedCategories: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private authService: AuthService // Inject AuthService
+    private authService: AuthService 
   ) {}
 
   ngOnInit() {
