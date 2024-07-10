@@ -45,6 +45,7 @@
 .logo {
   width: 100px;
   height: auto;
+  cursor: pointer;
 }
 
 .headerLinks a {
