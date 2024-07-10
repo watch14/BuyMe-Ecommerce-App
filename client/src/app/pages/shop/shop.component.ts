@@ -92,6 +92,29 @@ export class ShopComponent implements OnInit {
     }
   }
 
+  addToCart(product: any) {
+    if (!this.authService.isLoggedIn()) {
+      alert('You need to be logged in to add items to the cart.');
+      return;
+    }
+
+    if (!product || !product._id) {
+      console.error('Invalid product');
+      return;
+    }
+
+    const quantity = 1; // Example quantity
+    const addToCartObservable = this.authService.addToCart(product._id, quantity);
+    if (addToCartObservable) {
+      addToCartObservable.subscribe(
+        () => {
+          console.log('Product added to cart');
+        },
+        error => console.error('Error adding product to cart:', error)
+      );
+    }
+  }
+
   nextSet() {
     this.skip += this.take;
     this.fetchProducts();

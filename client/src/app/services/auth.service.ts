@@ -46,4 +46,12 @@ export class AuthService {
     return this.http.get<any>(`${apiUrls.favoritApi}/user/${userId}`);
   }
 
+  addToCart(productId: string, quantity: number) {
+    const userId = localStorage.getItem("user_id");
+    if (!userId) {
+      alert("You need to be logged in to add items to the cart.");
+      return null;
+    }
+    return this.http.post<any>(`${apiUrls.cartApi}/add-to-cart`, { userId, productId, quantity });
+  }
 }

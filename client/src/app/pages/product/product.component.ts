@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-product',
@@ -21,7 +22,11 @@ export class ProductComponent implements OnInit {
   isFavorite: boolean = false;
   displayedCategories: any[] = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private authService: AuthService // Inject AuthService
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -116,6 +121,21 @@ export class ProductComponent implements OnInit {
       const temp = this.product.productPicture[0];
       this.product.productPicture[0] = this.product.productPicture[index];
       this.product.productPicture[index] = temp;
+    }
+  }
+
+
+ addToCart() {
+    const addToCartResponse = this.authService.addToCart(this.product._id, this.quantity);
+    if (addToCartResponse) {
+      addToCartResponse.subscribe(
+        (response) => {
+          console.log('Added to Cart:', response);
+        },
+        (error) => {
+          console.error('Error adding to cart:', error);
+        }
+      );
     }
   }
 }

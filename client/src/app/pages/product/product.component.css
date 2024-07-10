@@ -1,3 +1,11 @@
+.all {
+  max-width: 1440px;
+  width: 100%;
+  padding: 0 20px;
+  margin-inline: auto;
+  padding-top: 40px;
+}
+
 .product-details {
   display: flex;
   flex-direction: column; /* Change from row to column for responsiveness */

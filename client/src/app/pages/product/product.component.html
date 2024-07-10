@@ -1,148 +1,127 @@
-<div class="product-details" *ngIf="product">
-  <div class="product-images">
-    <div class="card">
-      <!-- Main product image -->
-      <img
-        class="main-image"
-        *ngIf="product.productPicture && product.productPicture.length > 0"
-        [src]="product.productPicture[0]"
-        alt="Product Image"
-      />
-  
-      <!-- Side images -->
-      <div class="side-images" *ngIf="product.productPicture && product.productPicture.length > 1">
-        <img
-          class="side-image"
-          *ngFor="let image of product.productPicture.slice(1); let i = index"
-          [src]="image"
-          alt="Product Image"
-          (click)="changeMainImage(i + 1)"
-        />
-      </div>
-    </div>
-  </div>
-  
-  <div class="product-info">
-    <h1>{{ product.productName }}</h1>
-    <div class="product-description">
-      <!-- Star rating -->
-      <p>
-        <span
-          *ngFor="let star of [1, 2, 3, 4, 5]"
-          class="fa fa-star"
-          [ngClass]="{ 'fa-star-o': star > product.productRate }"
-        ></span>
-        <span class="product-rate"
-          ><strong>{{ product.productRate }}</strong
-          >/5</span
-        >
-      </p>
-      <!-- Product price -->
-      <p class="product-price">${{ product.productPrice }}</p>
-      <!-- Product description -->
-      <p>{{ product.productDescription }}</p>
-      <!-- Product category -->
-      <p><strong>Category:</strong> {{ categoryName$ | async }}</p>
-      <!-- Product color -->
-      <p class="color-desc">
-        Colours:<span
-          class="color-circle"
-          [style.backgroundColor]="product.productColor"
-        ></span>
-        <span class="color-name">{{ product.productColor }}</span>
-      </p>
-    </div>
-    <!-- Quantity selection -->
-    <div class="number">
-      <div class="incdec">
-        <span class="minus"
-          ><button type="button" (click)="decrementQuantity()">-</button></span
-        >
-        <span class="num"
-          ><input
-            type="number"
-            id="quantity"
-            name="quantity"
-            [(ngModel)]="quantity"
-            min="1"
-        /></span>
-        <span class="plus"
-          ><button type="button" (click)="incrementQuantity()">+</button></span
-        >
-      </div>
-      <div class="buy">
-        <button type="button">Buy Now</button>
-      </div>
-      <div class="heart">
-        <div class="click" (click)="addToFavorites()">
-          <span
-            class="fa"
-            [ngClass]="{ 'fa-heart': isFavorite, 'fa-heart-o': !isFavorite }"
-          ></span>
-          <div class="ring"></div>
-          <div class="ring2"></div>
+<div class="all">
+  <div class="product-details" *ngIf="product">
+    <div class="product-images">
+      <div class="card">
+        <!-- Main product image -->
+        <img class="main-image" *ngIf="product.productPicture && product.productPicture.length > 0" [src]="product.productPicture[0]" alt="Product Image" />
+        <!-- Side images -->
+        <div class="side-images" *ngIf="product.productPicture && product.productPicture.length > 1">
+          <img class="side-image" *ngFor="let image of product.productPicture.slice(1); let i = index" [src]="image" alt="Product Image" (click)="changeMainImage(i + 1)" />
         </div>
       </div>
     </div>
-<!-- Delivery information -->
-<div class="delivery-info">
-  <div class="delivery-item">
-    <!-- Placeholder for custom Free Delivery icon -->
-    <div class="custom-icon free-delivery-icon">
-        <img src="../../../assets/icons/icon-delivery.svg" alt="Free Delivery Icon">
-    </div>
-    <div>
-      <strong>Free Delivery</strong>
-      <p>Enter your postal code for Delivery Availability</p>
-    </div>
-  </div>
-  <hr class="divider">
-  <div class="delivery-item">
-    <!-- Placeholder for custom Return Delivery icon -->
-    <div class="custom-icon return-delivery-icon">
-        <img src="../../../assets/icons/Icon-return.svg" alt="Return Delivery Icon">
-    </div>
-    <div>
-      <strong>Return Delivery</strong>
-      <p>Free 30 Days Delivery Returns. <a href="#">Details</a></p>
-    </div>
-  </div>
-</div>
-  </div>
-</div>
+    
+    <div class="product-info">
+      <h1>{{ product.productName }}</h1>
+      <div class="product-description">
+        <!-- New Star Rating Component -->
+        <div class="flex items-center mt-2.5 mb-5">
+          <div class="flex items-center space-x-1 rtl:space-x-reverse">
+            <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+              <svg *ngIf="i < product.productRate" class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg *ngIf="i >= product.productRate" class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+            </ng-container>
+          </div>
+          <span class="rating">{{ product.productRate }}</span>
+        </div>
 
-<!-- Recommended products section -->
-<div class="recommended-products">
-  <h2 class="recommended-title">YOU MIGHT ALSO LIKE</h2>
-  <div class="products-container">
-    <div *ngFor="let category of displayedCategories" class="recommended-category">
-      <h3>{{ category.categoryName }}</h3>
-      <div class="recommended-product-list">
-        <div *ngIf="category.products && category.products.length > 0">
-          <div *ngFor="let product of category.products" class="recommended-product">
-            <a [routerLink]="['/product', product._id]">
-              <div *ngIf="product.productPicture && product.productPicture.length > 0">
-                <div class="recommended-gallery-item">
-                  <div class="recommended-image">
-                    <img [src]="product.productPicture[0]" alt="Product Image" class="recommended-product-image" />
-                  </div>
-                </div>
-              </div>
-              <div class="recommended-product-title">
-                <p>{{ product.productName }}</p>
-              </div>
-              <div class="recommended-rating">
-                <i *ngFor="let star of [1, 2, 3, 4, 5]" class="fa fa-star-o"></i>
-                <span class="recommended-product-rate">{{ product.productRate }}</span>
-              </div>
-              <p>
-                <span class="recommended-price">${{ product.productPrice }}</span>
-              </p>
-            </a>
+        
+        <!-- Product price -->
+        <p class="product-price">${{ product.productPrice }}</p>
+        <!-- Product description -->
+        <p>{{ product.productDescription }}</p>
+        <!-- Product category -->
+        <p><strong>Category:</strong> {{ categoryName$ | async }}</p>
+        <!-- Product color -->
+        <p class="color-desc">
+          Colours:<span class="color-circle" [style.backgroundColor]="product.productColor"></span>
+          <span class="color-name">{{ product.productColor }}</span>
+        </p>
+      </div>
+      <!-- Quantity selection -->
+      <div class="number">
+        <div class="incdec">
+          <span class="minus"><button type="button" (click)="decrementQuantity()">-</button></span>
+          <span class="num"><input type="number" id="quantity" name="quantity" [(ngModel)]="quantity" min="1" /></span>
+          <span class="plus"><button type="button" (click)="incrementQuantity()">+</button></span>
+        </div>
+
+        <div class="buy">
+          <button type="button" (click)="addToCart()">Buy Now</button>
+        </div>
+
+        <div class="heart">
+          <div class="click" (click)="addToFavorites()">
+            <span class="fa" [ngClass]="{ 'fa-heart': isFavorite, 'fa-heart-o': !isFavorite }"></span>
+            <div class="ring"></div>
+            <div class="ring2"></div>
           </div>
         </div>
-        <div *ngIf="!category.products || category.products.length === 0" class="no-products-found">
-          No products found for this category.
+      </div>
+      <!-- Delivery information -->
+      <div class="delivery-info">
+        <div class="delivery-item">
+          <!-- Placeholder for custom Free Delivery icon -->
+          <div class="custom-icon free-delivery-icon">
+              <img src="../../../assets/icons/icon-delivery.svg" alt="Free Delivery Icon">
+          </div>
+          <div>
+            <strong>Free Delivery</strong>
+            <p>Enter your postal code for Delivery Availability</p>
+          </div>
+        </div>
+        <hr class="divider">
+        <div class="delivery-item">
+          <!-- Placeholder for custom Return Delivery icon -->
+          <div class="custom-icon return-delivery-icon">
+              <img src="../../../assets/icons/Icon-return.svg" alt="Return Delivery Icon">
+          </div>
+          <div>
+            <strong>Return Delivery</strong>
+            <p>Free 30 Days Delivery Returns. <a href="#">Details</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Recommended products section -->
+  <div class="recommended-products">
+    <h2 class="recommended-title">YOU MIGHT ALSO LIKE</h2>
+    <div class="products-container">
+      <div *ngFor="let category of displayedCategories" class="recommended-category">
+        <h3>{{ category.categoryName }}</h3>
+        <div class="recommended-product-list">
+          <div *ngIf="category.products && category.products.length > 0">
+            <div *ngFor="let product of category.products" class="recommended-product">
+              <a [routerLink]="['/product', product._id]">
+                <div *ngIf="product.productPicture && product.productPicture.length > 0">
+                  <div class="recommended-gallery-item">
+                    <div class="recommended-image">
+                      <img [src]="product.productPicture[0]" alt="Product Image" class="recommended-product-image" />
+                    </div>
+                  </div>
+                </div>
+                <div class="recommended-product-title">
+                  <p>{{ product.productName }}</p>
+                </div>
+                <div class="recommended-rating">
+                  <i *ngFor="let star of [1, 2, 3, 4, 5]" class="fa fa-star-o"></i>
+                  <span class="recommended-product-rate">{{ product.productRate }}</span>
+                </div>
+                <p>
+                  <span class="recommended-price">${{ product.productPrice }}</span>
+                </p>
+              </a>
+            </div>
+          </div>
+          <div *ngIf="!category.products || category.products.length === 0" class="no-products-found">
+            No products found for this category.
+          </div>
         </div>
       </div>
     </div>
