@@ -9,9 +9,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
   http = inject(HttpClient);
 
-  
 
   isLoggedIn$ = new BehaviorSubject<boolean>(this.isLoggedIn());
+
 
   registerService(registerOgj: any){
     return this.http.post<any>(`${apiUrls.AuthServiceApi}/register`, registerOgj);
@@ -31,6 +31,15 @@ export class AuthService {
 
   isLoggedIn(){
     return !!localStorage.getItem("user_id");
+  }
+
+  logOut() {
+    localStorage.removeItem("user_id");
+    this.isLoggedIn$.next(false);
+  }
+
+  logIn() {
+    this.isLoggedIn$.next(true);
   }
 
    addToFavorites(productId: string) {
@@ -59,7 +68,6 @@ export class AuthService {
 
   getUserCart() {
     const userId = localStorage.getItem("user_id");
-
     return this.http.get<any>(`${apiUrls.cartApi}/get-cart?userId=${userId}`);
 
   }
