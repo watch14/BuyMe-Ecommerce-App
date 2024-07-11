@@ -1,7 +1,7 @@
 /* For titles */
 @font-face {
   font-family: 'Galderglynn';
-  src: url('../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf') format('woff2'),
+  src: url('../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf') format('truetype'),
 }
 
 .product-details h1,
@@ -16,7 +16,7 @@
 /* For normal text */
 @font-face {
   font-family: 'Sarabun';
-  src: url('../../../assets/fonts/Sarabun/Sarabun-Medium.ttf') format('woff'),
+  src: url('../../../assets/fonts/Sarabun/Sarabun-Medium.ttf') format('truetype'),
 }
 
 

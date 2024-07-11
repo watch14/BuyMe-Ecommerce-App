@@ -1,85 +1,98 @@
-body {
-    font-family: Arial, Helvetica, sans-serif;
+/* For titles */
+@font-face {
+  font-family: "Galderglynn";
+  src: url("../../../assets/fonts/galderglynn-titling/galderglynn titling bd.otf")
+    format("truetype");
+}
+
+/* For normal text */
+@font-face {
+  font-family: "Sarabun";
+  src: url("../../../assets/fonts/Sarabun/Sarabun-Medium.ttf")
+    format("truetype");
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .title {
-    text-align: center;
-    margin-top: 80px;
+  text-align: center;
+  margin-top: 80px;
 }
 
 .title h1 {
-    font-size: 2.5em;
-    font-weight: bold;
+  font-family: "Galderglynn", sans-serif;
+  font-size: 2.5em;
+  font-weight: bold;
 }
 
 .container {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-    max-width: 800px;
-    margin: auto;
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    margin-top: 50px;
-    margin-bottom: 30px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  margin-top: 50px;
+  margin-bottom: 30px;
 }
 
 .container form {
-    max-width: 600px;
-    margin: auto;
+  font-family: "Sarabun", sans-serif;
+  max-width: 600px;
+  margin: auto;
 }
 
 .container form label {
-    font-weight: bold;
-    display: block;
+  font-weight: bold;
+  display: block;
 }
 
 .container form textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-top: 6px;
-    margin-bottom: 16px;
-    resize: vertical;
+  font-family: "Sarabun", sans-serif;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
 }
 
 .container form .form-group {
-    display: inline-block;
-    width: calc(33.33% - 20px);
-    margin-right: 20px;
-    vertical-align: top;
+  display: inline-block;
+  width: calc(33.33% - 20px);
+  margin-right: 20px;
+  vertical-align: top;
 }
 
 .container form input[type="text"],
 .container form input[type="email"],
 .container form input[type="tel"] {
-    width: calc(100% + 15px);
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    box-sizing: border-box;
-    margin-top: 6px;
-    margin-bottom: 16px;
-    resize: vertical;
+  width: calc(100% + 15px);
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
 }
 
 .container form input[type="submit"] {
-    background-color: #14B8A6;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    border-radius: 20px;
-    width: 200px;
+  background-color: #14b8a6;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  border-radius: 20px;
+  width: 200px;
 }
 
 .container form input[type="submit"]:hover {
-    background-color: #111827;
+  background-color: #111827;
 }

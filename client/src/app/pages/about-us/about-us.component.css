@@ -1,35 +1,50 @@
+@font-face {
+  font-family: "Galderglynn";
+  src: url("../../../assets/fonts/galderglynn-titling/galderglynn titling bd.otf")
+    format("truetype");
+}
+
+@font-face {
+  font-family: "Sarabun";
+  src: url("../../../assets/fonts/Sarabun/Sarabun-Medium.ttf")
+    format("truetype");
+}
+
 .about-section {
-    padding: 50px;
-    width: 80%;
-    margin: 0 auto;
+  font-family: "Sarabun", sans-serif;
+  padding: 50px;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .about-section h1 {
-    font-size: 36px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 50px;
+  font-family: "Galderglynn", sans-serif;
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 50px;
 }
 
 .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin: 30px 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 30px 0 0 0;
 }
 
-.image1, .image2 {
-    flex: 1;
-    padding: 10px;
+.image1,
+.image2 {
+  flex: 1;
+  padding: 10px;
 }
 
 img {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 
 .title {
-    margin-bottom: 10px;
-    font-weight: bold;
+  margin-bottom: 10px;
+  font-weight: bold;
 }

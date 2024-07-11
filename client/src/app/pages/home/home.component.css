@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'Galderglynn';
+  src: url('../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf') format('truetype'),
+}
+
+.title h1 {
+  font-family: 'Galderglynn', sans-serif;
+}
+
 .all {
     max-width: 1440px;
     width: 100%;

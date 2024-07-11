@@ -1,3 +1,30 @@
+/* For titles */
+@font-face {
+  font-family: 'Galderglynn';
+  src: url('../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf') format('truetype');
+}
+
+.title {
+  font-family: 'Galderglynn', sans-serif;
+  color: black;
+}
+
+/* For normal text */
+@font-face {
+  font-family: 'Sarabun';
+  src: url('../../../assets/fonts/Sarabun/Sarabun-Medium.ttf') format('truetype');
+}
+
+.product-name,
+.rating, /* Apply Sarabun font to product name and rating */
+.product-price,
+.no-products,
+.btns {
+  font-family: 'Sarabun', sans-serif;
+  font-weight: normal;
+}
+
+
 .all {
   max-width: 1440px;
   width: 100%;
