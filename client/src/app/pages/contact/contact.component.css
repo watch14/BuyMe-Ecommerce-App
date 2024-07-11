@@ -51,9 +51,9 @@ body {
 
 .container form .form-group {
     display: inline-block;
-    width: calc(33.33% - 20px); /* Adjust the width to fit three items in a row */
-    margin-right: 20px; /* Space between form groups */
-    vertical-align: top; /* Align form groups to the top */
+    width: calc(33.33% - 20px);
+    margin-right: 20px;
+    vertical-align: top;
 }
 
 .container form input[type="text"],
@@ -62,7 +62,7 @@ body {
     width: calc(100% + 15px);
     padding: 12px;
     border: 1px solid #ccc;
-    border-radius: 20px; /* Add border-radius */
+    border-radius: 20px;
     box-sizing: border-box;
     margin-top: 6px;
     margin-bottom: 16px;
@@ -70,7 +70,7 @@ body {
 }
 
 .container form input[type="submit"] {
-    background-color: #40b9a5;
+    background-color: #14B8A6;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -81,5 +81,5 @@ body {
 }
 
 .container form input[type="submit"]:hover {
-    background-color: #305a57;
+    background-color: #111827;
 }

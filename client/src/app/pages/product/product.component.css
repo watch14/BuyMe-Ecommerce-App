@@ -145,7 +145,7 @@
 }
 
 .incdec .plus button {
-  background-color: #14b8a6;
+  background-color: #14B8A6;
   color: white;
 }
 
@@ -199,7 +199,7 @@ input[type="number"]::-webkit-outer-spin-button {
   padding: 10px 40px; /* Adjust padding for size */
   font-size: 16px; /* Adjust font size */
   color: #fff; /* Text color */
-  background-color: #14b8a6; /* Button background color */
+  background-color: #14B8A6; /* Button background color */
   border: none; /* Remove border */
   border-radius: 5px; /* Rounded corners */
   cursor: pointer; /* Pointer cursor on hover */
@@ -208,7 +208,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .buy button:hover {
-  background-color: #0f8677; /* Darker background on hover */
+  background-color: #111827; /* Darker background on hover */
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
 }
 
