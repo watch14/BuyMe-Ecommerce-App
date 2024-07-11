@@ -1,14 +1,14 @@
 <div class="product-details" *ngIf="product">
   <div class="product-images">
+    <!-- Main product image -->
     <div class="card">
-      <!-- Main product image -->
       <img
         class="main-image"
         *ngIf="product.productPicture && product.productPicture.length > 0"
         [src]="product.productPicture[0]"
         alt="Product Image"
       />
-  
+      
       <!-- Side images -->
       <div class="side-images" *ngIf="product.productPicture && product.productPicture.length > 1">
         <img
@@ -21,6 +21,10 @@
       </div>
     </div>
   </div>
+  
+  
+  
+  
   
   <div class="product-info">
     <h1>{{ product.productName }}</h1>

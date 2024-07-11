@@ -18,17 +18,21 @@
 
 .card {
   position: relative;
+  background-color: blue;
+  flex: 0 0 auto;
+  margin: auto;
 }
 
 .main-image {
   display: block;
   max-width: 100%;
+  margin: 0 auto;
 }
 
 .side-images {
   position: absolute;
-  top: 10px; /* Adjust the top value as needed */
-  left: 10px; /* Adjust the right value as needed */
+  top: 0;
+  left: -220px; /* Adjust the left value as needed to position the side images */
   display: flex;
   flex-direction: column;
   transition: opacity 0.5s ease; /* Transition for opacity */
@@ -36,13 +40,13 @@
 
 .side-image {
   width: 100px;
-  height: 100px;
+  height: auto; /* Maintain aspect ratio */
   border: 1px solid rgb(233, 233, 233);
   border-radius: 2px;
   cursor: pointer;
   opacity: 0.8;
   transition: opacity 0.5s ease; /* Smooth transition for opacity */
-  transform: scale(0.5); /* Scale down the image to 50% of its original size */
+  transform: scale(1); /* Keep the image at its original size */
   transform-origin: center;
 }
 
@@ -53,8 +57,13 @@
 /*Main & Side-Image css ends here*/
 
 .product-images {
+  display: flex;
+  justify-content: center; /* Center main image within product-images */
+  align-items: center; /* Center items vertically */
   flex: 1; /* Take up remaining space */
   padding: 30px; /* Add padding for space inside */
+  background-color: red;
+  position: relative; /* Needed for the absolute positioning of side images */
 }
 
 .product-images img {
@@ -63,6 +72,7 @@
   display: block; /* Ensure images do not have extra space below */
   margin: 0 auto; /* Center images horizontally */
 }
+
 
 .product-info {
   flex: 1; /* Take up remaining space */
