@@ -18,24 +18,26 @@ import { loadStripe, Stripe } from '@stripe/stripe-js'; // Import Stripe.js
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
   products: any[] = [];
-  stripe: Stripe | null = null; // Define the Stripe instance
+  stripe: Stripe | null = null;
 
-  constructor(private authService: AuthService, private router: Router, private http: HttpClient) {} // Inject HttpClient
+  constructor(private authService: AuthService, private router: Router, private http: HttpClient) {}
 
   ngOnInit(): void {
     if (!this.authService.isLoggedIn()) {
-      // Redirect to login page if not logged in
       alert("You need to be logged in to access the Cart.");
-      this.router.navigate(['/login']); // Adjust the route as necessary
+      this.router.navigate(['/login']);
       return;
     }
 
     this.loadStripe();
+    this.loadCart();
+  }
+
+  loadCart(): void {
     this.authService.getUserCart().subscribe(
       (response: any) => {
         if (response.status === 200) {
-          console.log('Cart response:', response);
-          this.cartItems = response.data.products; // Adjust the path based on the response structure
+          this.cartItems = response.data.products;
           this.fetchProductDetails();
         } else {
           console.error('Failed to fetch cart items:', response.message);
@@ -48,16 +50,15 @@ export class CartComponent implements OnInit {
   }
 
   fetchProductDetails(): void {
+    this.products = [];
     this.cartItems.forEach(item => {
-      const productId = item.productId?._id || item.productId; // Adjusted to access _id directly from productId
-      console.log('Fetching details for productId:', productId); // Add logging here
+      const productId = item.productId?._id || item.productId;
       if (productId) {
         this.authService.getProductDetails(productId).subscribe(
           (productResponse: any) => {
-            console.log('Product response:', productResponse); // Log the product response
             this.products.push({
-              ...productResponse.data, // Ensure data is correctly merged
-              quantity: item.quantity // Ensure quantity is correctly merged
+              ...productResponse.data,
+              quantity: item.quantity
             });
           },
           (error: any) => {
@@ -70,8 +71,32 @@ export class CartComponent implements OnInit {
     });
   }
 
+  removeFromCart(productId: string): void {
+    this.authService.removeFromCart(productId).subscribe(
+      (response: any) => {
+        if (response.status === 200) {
+          this.loadCart();
+        } else {
+          console.error('Failed to remove item from cart:', response.message);
+        }
+      },
+      (error: any) => {
+        console.error('Error removing item from cart:', error);
+      }
+    );
+  }
+
+  getTotalPrice(): number {
+    return this.products.reduce((total, product) => total + product.productPrice * product.quantity, 0);
+  }
+  
+  continueShopping(): void {
+    this.router.navigate(['/shop']); // Adjust the route as necessary
+  }
+
+
   async loadStripe() {
-    this.stripe = await loadStripe('pk_test_51PbNu1AJZrW6cjlxFDYLGslRYgdfev77tIzfARL1NQMrT1zFoEFqFFO3vDKPThqifH1GYf2nWHwJhVST2EiitWoT00XQw3j5VT'); // Replace with your Stripe public key
+    this.stripe = await loadStripe('pk_test_51PbNu1AJZrW6cjlxFDYLGslRYgdfev77tIzfARL1NQMrT1zFoEFqFFO3vDKPThqifH1GYf2nWHwJhVST2EiitWoT00XQw3j5VT');
   }
 
   initiateCheckout(): void {
@@ -101,4 +126,6 @@ export class CartComponent implements OnInit {
       console.error('Stripe.js has not loaded yet.');
     }
   }
+
+
 }

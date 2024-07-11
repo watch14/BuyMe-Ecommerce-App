@@ -12,11 +12,12 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './success.component.css'
 })
 
-export class SuccessComponent implements OnInit{
+export class SuccessComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private authService: AuthService // Inject AuthService
   ) {}
 
   ngOnInit(): void {
@@ -35,8 +36,8 @@ export class SuccessComponent implements OnInit{
       (response: any) => {
         if (response.success) {
           // Call the backend API to empty the cart
+          this.emptyCart(); // Call emptyCart method after successful payment verification
           console.log(response.message);
-          
         } else {
           console.error('Payment verification failed:', response.message);
           this.router.navigate(['/not-found']);
@@ -49,5 +50,24 @@ export class SuccessComponent implements OnInit{
     );
   }
 
-
+  emptyCart(): void {
+    const userId = localStorage.getItem("user_id");
+    if (userId) {
+      this.authService.emptyCart(userId).subscribe(
+        (response: any) => {
+          if (response.success) {
+            console.log('Cart emptied successfully');
+            this.authService.updateCartCount(); // Ensure the cart count is updated
+          } else {
+            console.error('Failed to empty cart:', response.message);
+          }
+        },
+        (error: any) => {
+          console.error('Error emptying cart:', error);
+        }
+      );
+    } else {
+      console.error('User ID not found in localStorage');
+    }
+  }
 }

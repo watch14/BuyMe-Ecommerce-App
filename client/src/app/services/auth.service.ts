@@ -110,6 +110,12 @@ export class AuthService {
     }
   }
 
+  emptyCart(userId: string): Observable<any> {
+    return this.http.post<any>(`${apiUrls.cartApi}/empty-cart`, { userId }).pipe(
+      tap(() => this.updateCartCount())
+    );
+  }
+
   createCheckoutSession(): Observable<any> {
     const userId = localStorage.getItem("user_id");
     return this.http.post<any>(`${apiUrls.paymentApi}/create-checkout-session`, { userId });
