@@ -25,7 +25,7 @@ export class SuccessComponent implements OnInit{
       if (sessionId) {
         this.verifyPayment(sessionId);
       } else {
-        this.router.navigate(['/payment-error']); // Redirect if no session ID is found
+        this.router.navigate(['/not-found']); // Redirect if no session ID is found
       }
     });
   }
@@ -39,12 +39,12 @@ export class SuccessComponent implements OnInit{
           
         } else {
           console.error('Payment verification failed:', response.message);
-          this.router.navigate(['/payment-error']);
+          this.router.navigate(['/not-found']);
         }
       },
       (error: any) => {
         console.error('Error verifying payment:', error);
-        this.router.navigate(['/payment-error']);
+        this.router.navigate(['/not-found']);
       }
     );
   }
