@@ -5,7 +5,6 @@ import Receipt from "../models/Receipt.js";
 import User from "../models/User.js";
 import { CreateSuccess } from "../utils/success.js";
 import { CreateError } from "../utils/error.js";
-
 import { sendEmail } from "../utils/mailer.js";
 import dotenv from "dotenv";
 
@@ -69,6 +68,7 @@ router.post("/create-checkout-session", async (req, res, next) => {
       mode: "payment",
       success_url: `${process.env.CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.CLIENT_URL}/cancel`,
+      client_reference_id: userId, // Add this line
     });
 
     res
@@ -91,7 +91,6 @@ router.get("/payment-success", async (req, res, next) => {
 
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
-    const customer = await stripe.customers.retrieve(session.customer);
 
     const cart = await Cart.findOne({
       userId: session.client_reference_id,
@@ -164,7 +163,7 @@ router.get("/payment-success", async (req, res, next) => {
         CreateSuccess(200, "Payment successful and receipt created", newReceipt)
       );
   } catch (error) {
-    console.error(error);
+    console.error("Error verifying payment session:", error);
     return next(
       CreateError(
         500,
