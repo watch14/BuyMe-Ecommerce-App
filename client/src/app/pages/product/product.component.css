@@ -15,22 +15,33 @@
 /*Main & Side-Image css starts here*/
 
 .card {
-  position: relative;
-  flex: 0 0 auto;
-  margin: auto;
-  width: 100%;
-  height: 100%;
+  position: relative; /* Ensure relative positioning */
+  max-width: 100%; /* Allow the card to shrink with the viewport */
+  max-height: 100%; /* Allow the card to shrink with the viewport */
 }
+
+
+
 
 .main-image {
   display: block;
-  width: 80%; /* Fixed width */
-  max-width: 600px; /* Maximum width to maintain on smaller screens */
-  height: auto; /* Automatically adjust height */
-  object-fit: cover; /* Maintain aspect ratio and cover the set dimensions */
+  width: 100%;
+  height: auto; /* Allow the height to adjust based on the image's intrinsic aspect ratio */
+  max-height: 700px; /* Set a maximum height to limit image size */
+  object-fit: cover; /* Ensure the image covers the set dimensions */
   margin: 0 auto;
-  border-radius: 8px; /* Consistent border radius */
+  border-radius: 8px;
 }
+
+
+
+@media (max-width: 1220px) {
+  .main-image {
+    max-width: 100%; /* Ensure it fills its container */
+    height: auto; /* Allow height to adjust based on container width */
+  }
+}
+
 
 
 .side-images {
@@ -64,21 +75,28 @@
   display: grid;
   grid-template-columns: 1fr;
   justify-items: center;
-  align-items: start;
+  align-items: flex-start; /* Align items to the start (top) */
   gap: 20px;
   padding: 30px;
-  position: relative;
   width: 100%;
 }
 
-.product-images img {
-  max-width: 100%; /* Ensure image does not exceed its container width */
-  height: auto; /* Allow image height to adjust based on container width */
-  object-fit: contain; /* Maintain aspect ratio and fit inside container */
-  display: block; /* Ensure images do not have extra space below */
-  margin: 0 auto; /* Center images horizontally */
-  border-radius: 8px; /* Optional: Add border radius */
+@media (max-width: 1220px) {
+  .product-images {
+    padding: 15px; /* Adjust padding for smaller screens */
+  }
 }
+
+.product-images img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+  align-self: flex-start; /* Ensure images stay aligned to the top */
+}
+
 
 /* Media query for smaller screens */
 @media (max-width: 1220px) {
@@ -111,6 +129,7 @@
   flex: 1; /* Take up remaining space */
   padding: 30px; /* Add padding for space inside */
   align-self: start;
+  margin: 0 auto; /* Center the entire div horizontally */
 }
 
 /* Media query for smaller screens */
@@ -121,6 +140,7 @@
     box-sizing: border-box; /* Include padding in max-width */
   }
 }
+
 
 .product-description .fa-star {
   color: gold; /* Set the color of the filled star to gold */
