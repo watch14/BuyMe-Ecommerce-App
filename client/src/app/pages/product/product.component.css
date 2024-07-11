@@ -30,8 +30,6 @@
   font-weight: normal; /* Ensure normal weight */
 }
 
-
-
 .product-details {
   display: grid;
   grid-template-columns: 1fr 1fr; /* Two equal columns */
