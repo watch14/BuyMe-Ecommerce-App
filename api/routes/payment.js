@@ -5,6 +5,7 @@ import Receipt from "../models/Receipt.js";
 import User from "../models/User.js";
 import { CreateSuccess } from "../utils/success.js";
 import { CreateError } from "../utils/error.js";
+
 import { sendEmail } from "../utils/mailer.js";
 import dotenv from "dotenv";
 
@@ -159,9 +160,11 @@ router.get("/payment-success", async (req, res, next) => {
 
     res
       .status(200)
-      .json(
-        CreateSuccess(200, "Payment successful and receipt created", newReceipt)
-      );
+      .json({
+        success: true,
+        message: "Payment successful and receipt created",
+        data: newReceipt,
+      });
   } catch (error) {
     console.error("Error verifying payment session:", error);
     return next(

@@ -12,10 +12,11 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit{
 
-  authService = inject(AuthService)
-  isLoggedIn: boolean = false
+export class HeaderComponent implements OnInit {
+
+  authService = inject(AuthService);
+  isLoggedIn: boolean = false;
 
   cartCount = 0;
   showDropdown = false;
@@ -34,7 +35,6 @@ export class HeaderComponent implements OnInit{
       : '../../../assets/icons/Wishlist.svg';
   }
 
-
   constructor(
     private renderer: Renderer2,
     private elementRef: ElementRef,
@@ -46,8 +46,12 @@ export class HeaderComponent implements OnInit{
     this.authService.isLoggedIn$.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
       if (isLoggedIn) {
-        this.fetchCartCount(); // Fetch cart count if logged in
+        this.authService.updateCartCount(); // Fetch cart count if logged in
       }
+    });
+
+    this.authService.cartCount$.subscribe(count => {
+      this.cartCount = count;
     });
 
     // Set the initial isLoggedIn state based on the current login status
@@ -62,25 +66,8 @@ export class HeaderComponent implements OnInit{
     });
   }
 
-  fetchCartCount() {
-    this.authService.getCartCount().subscribe(
-      (response) => {
-        if (response.status === 200) {
-          this.cartCount = response.data.count; // Assuming response.data.count holds the cart count
-        } else {
-          console.error('Error fetching cart count:', response.message);
-        }
-      },
-      (error) => {
-        console.error('Error fetching cart count:', error);
-      }
-    );
-  }
-
   logOut(){
-    localStorage.removeItem("user_id")
-    this.authService.isLoggedIn$.next(false)
-
+    this.authService.logOut();
   }
 
   fetchProducts(query?: string): void {
@@ -136,5 +123,4 @@ export class HeaderComponent implements OnInit{
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
   }
-
 }

@@ -12,7 +12,6 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './success.component.css'
 })
 
-
 export class SuccessComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +25,7 @@ export class SuccessComponent implements OnInit {
       if (sessionId) {
         this.verifyPayment(sessionId);
       } else {
-        this.router.navigate(['/cancel']); // Redirect if no session ID is found
+        this.router.navigate(['/payment-error']); // Redirect if no session ID is found
       }
     });
   }
@@ -36,35 +35,19 @@ export class SuccessComponent implements OnInit {
       (response: any) => {
         if (response.success) {
           // Call the backend API to empty the cart
-          this.emptyCart();
           console.log(response.message);
+          
+        } else {
+          console.error('Payment verification failed:', response.message);
+          this.router.navigate(['/payment-error']);
         }
       },
       (error: any) => {
         console.error('Error verifying payment:', error);
-        // Optionally redirect to an error page
-        this.router.navigate(['/cancel']);
+        this.router.navigate(['/payment-error']);
       }
     );
   }
 
-  emptyCart(): void {
-    const userId = localStorage.getItem("user_id");
-    if (userId) {
-      this.http.post(`${apiUrls.cartApi}/empty-cart`, { userId }).subscribe(
-        (response: any) => {
-          if (response.success) {
-            console.log('Cart emptied successfully');
-          } else {
-            console.error('Failed to empty cart:', response.message);
-          }
-        },
-        (error: any) => {
-          console.error('Error emptying cart:', error);
-        }
-      );
-    } else {
-      console.error('User ID not found in localStorage');
-    }
-  }
+
 }
