@@ -35,6 +35,7 @@ export class ShopComponent implements OnInit {
           ...product,
           isFavorite: false
         }));
+        this.hasMoreProducts = response.data.length === this.take;
         this.loadUserFavorites();
       },
       (error: any) => {
@@ -50,7 +51,6 @@ export class ShopComponent implements OnInit {
           console.log('Full favorites response:', response);
           console.log('Data property:', response.data);
 
-          // Access productIds inside the data property
           const favoriteProductIds = response.data?.productIds;
 
           if (Array.isArray(favoriteProductIds)) {
