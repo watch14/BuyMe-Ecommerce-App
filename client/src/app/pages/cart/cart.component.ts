@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router'; // Import Router for navigation
+import { Router } from '@angular/router';
+import { loadStripe, Stripe } from '@stripe/stripe-js'; // Import Stripe.js
 
 @Component({
   selector: 'app-cart',
@@ -14,20 +14,23 @@ import { Router } from '@angular/router'; // Import Router for navigation
   styleUrl: './cart.component.css',
 })
 
+
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
   products: any[] = [];
+  stripe: Stripe | null = null; // Define the Stripe instance
 
-  constructor(private authService: AuthService, private router: Router) {} // Inject Router
+  constructor(private authService: AuthService, private router: Router, private http: HttpClient) {} // Inject HttpClient
 
   ngOnInit(): void {
     if (!this.authService.isLoggedIn()) {
       // Redirect to login page if not logged in
-      alert("You need to be logged to access the Cart.");
+      alert("You need to be logged in to access the Cart.");
       this.router.navigate(['/login']); // Adjust the route as necessary
       return;
     }
 
+    this.loadStripe();
     this.authService.getUserCart().subscribe(
       (response: any) => {
         if (response.status === 200) {
@@ -65,5 +68,37 @@ export class CartComponent implements OnInit {
         console.error('Product ID is undefined for item:', item);
       }
     });
+  }
+
+  async loadStripe() {
+    this.stripe = await loadStripe('pk_test_51PbNu1AJZrW6cjlxFDYLGslRYgdfev77tIzfARL1NQMrT1zFoEFqFFO3vDKPThqifH1GYf2nWHwJhVST2EiitWoT00XQw3j5VT'); // Replace with your Stripe public key
+  }
+
+  initiateCheckout(): void {
+    this.authService.createCheckoutSession().subscribe(
+      (response: any) => {
+        if (response.status === 200) {
+          const sessionId = response.data.id;
+          this.redirectToCheckout(sessionId);
+        } else {
+          console.error('Failed to create checkout session:', response.message);
+        }
+      },
+      (error: any) => {
+        console.error('Error creating checkout session:', error);
+      }
+    );
+  }
+
+  redirectToCheckout(sessionId: string): void {
+    if (this.stripe) {
+      this.stripe.redirectToCheckout({ sessionId }).then((result: any) => {
+        if (result.error) {
+          console.error('Error redirecting to checkout:', result.error.message);
+        }
+      });
+    } else {
+      console.error('Stripe.js has not loaded yet.');
+    }
   }
 }

@@ -81,5 +81,10 @@ export class AuthService {
     return this.http.get<any>(`${apiUrls.ProductApi}/${productId}`);
   }
 
-
+  // Method to create checkout session
+  createCheckoutSession(): Observable<any> {
+    const userId = localStorage.getItem("user_id");
+    return this.http.post<any>(`${apiUrls.paymentApi}/create-checkout-session`, { userId });
+  }
+  
 }

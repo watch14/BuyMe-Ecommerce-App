@@ -15,6 +15,8 @@ import { CartComponent } from './pages/cart/cart.component';
 import { ForgetPasswordComponent } from './pages/forget-password/forget-password.component';
 import { FavouriteComponent } from './pages/favourite/favourite.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
+import { SuccessComponent } from './components/success/success.component';
+import { CancelComponent } from './components/cancel/cancel.component';
 
 export const routes: Routes = [
     {'path': '', component:HomeComponent},
@@ -37,6 +39,11 @@ export const routes: Routes = [
     {'path': 'about-us', component:AboutUsComponent},
 
     {'path': 'not-found', component:NotFoundComponent},
+
+    { 'path': 'success', component:SuccessComponent },
+    { 'path': 'cancel', component:CancelComponent }, 
+
+    { 'path': '**', redirectTo: '/not-found' } 
     
 
 
