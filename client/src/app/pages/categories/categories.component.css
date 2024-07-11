@@ -1,3 +1,14 @@
+/* For titles */
+@font-face {
+  font-family: 'Galderglynn';
+  src: url('../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf') format('truetype'),
+}
+
+.categories-title {
+  font-family: 'Galderglynn', sans-serif; /* Use Galderglynn font for titles */
+  color: black; /* Set color to black */
+}
+
 .categories-container {
   text-align: center;
   width: 70%;
