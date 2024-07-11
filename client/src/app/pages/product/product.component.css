@@ -1,3 +1,37 @@
+/* For titles */
+@font-face {
+  font-family: 'Galderglynn';
+  src: url('../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf') format('woff2'),
+}
+
+.product-details h1,
+.product-description h2,
+.delivery-title,
+.recommended-title,
+.recommended-product-title {
+  font-family: 'Galderglynn', sans-serif; /* Use Galderglynn font for titles */
+  color: black; /* Set color to black */
+}
+
+/* For normal text */
+@font-face {
+  font-family: 'Sarabun';
+  src: url('../../../assets/fonts/Sarabun/Sarabun-Medium.ttf') format('woff'),
+}
+
+
+.product-details p,
+.product-description p,
+.product-info p,
+.recommended-price,
+.recommended-rating,
+.delivery-item p {
+  font-family: 'Sarabun', sans-serif; /* Use Sarabun font for normal text */
+  font-weight: normal; /* Ensure normal weight */
+}
+
+
+
 .product-details {
   display: grid;
   grid-template-columns: 1fr 1fr; /* Two equal columns */
