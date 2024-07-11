@@ -20,6 +20,9 @@ import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import cookieParser from "cookie-parser";
 
+import Stripe from "stripe";
+import paymentRouter from "./routes/payment.js";
+
 const app = express();
 const port = 3000;
 app.use(
@@ -52,6 +55,9 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // dotenv secure mongodb link
 dotenv.config();
 
+//stripe payment online
+const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
+
 // to accept JSON format
 app.use(express.json());
 
@@ -69,6 +75,8 @@ app.use("/api/product", ProductRouter);
 app.use("/api/favorite", favoriteRoutes);
 app.use("/api/sort", sortRoutes);
 app.use("/api/receipts", receiptRoutes);
+
+app.use("/api/payment", paymentRouter);
 
 // Response handler
 app.use((obj, req, res, next) => {
