@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { apiUrls } from '../../api.urls';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-success',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './success.component.html',
   styleUrl: './success.component.css'
 })
 
-export class SuccessComponent implements OnInit {
+export class SuccessComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
