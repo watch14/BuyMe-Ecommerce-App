@@ -1,3 +1,7 @@
+* {
+  font-family: "Sarabun";
+}
+
 /* For titles */
 @font-face {
   font-family: "Galderglynn";
@@ -58,16 +62,19 @@ h1 {
   border-radius: 8px;
   border: #ffffff solid 1px;
   width: 170px;
+  color: #757575;
 }
 
 .filters select:hover {
   border: #111827 solid 1px;
 }
+
 .price-range {
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
+
 ngx-slider {
   width: 200px;
   display: block;
