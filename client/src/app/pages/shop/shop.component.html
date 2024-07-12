@@ -10,9 +10,9 @@
         </div>
         <div class="px-5 pb-5">
           <div class="product-title">
-            <p class="product-name">
+            <h5 class="product-name">
               <a [routerLink]="['/product', prod._id]">{{ prod.productName }}</a>
-            </p>
+            </h5>
           </div>
           <div class="flex items-center mt-2.5 mb-5">
             <div class="flex items-center space-x-1 rtl:space-x-reverse">
@@ -45,6 +45,7 @@
               class="favorit"
               (click)="toggleFavorite(prod)"
             >
+            <button (click)="addToCart(prod)" class="add-to-cart-btn">Add to Cart</button>
           </div>
         </div>
       </li>
