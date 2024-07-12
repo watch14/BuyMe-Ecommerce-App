@@ -43,8 +43,6 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-<<<<<<< HEAD
-=======
     this.authService.isLoggedIn$.subscribe(isLoggedIn => {
       this.isLoggedIn = isLoggedIn;
       if (isLoggedIn) {
@@ -58,7 +56,6 @@ export class HeaderComponent implements OnInit {
 
     // Set the initial isLoggedIn state based on the current login status
     this.isLoggedIn = this.authService.isLoggedIn();
->>>>>>> main
 
     this.renderer.listen('document', 'click', (event: Event) => {
       if (!this.elementRef.nativeElement.contains(event.target)) {
@@ -75,11 +72,6 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> main
   logOut(){
     this.authService.logOut();
   }

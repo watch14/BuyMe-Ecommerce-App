@@ -34,21 +34,7 @@ export class ShopComponent implements OnInit {
           ...product,
           isFavorite: false,
         }));
-<<<<<<< HEAD
-
-        // Determine if there are more products to fetch
-        if (fetchedProducts.length < this.take) {
-          this.hasMoreProducts = false; // No more products to fetch
-        } else {
-          this.hasMoreProducts = true; // There may be more products to fetch
-        }
-
-        // Update products array with fetched products
-        this.products = fetchedProducts;
-
-=======
         this.hasMoreProducts = response.data.length === this.take;
->>>>>>> main
         this.loadUserFavorites();
       },
       (error: any) => {

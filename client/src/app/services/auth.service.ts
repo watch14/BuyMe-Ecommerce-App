@@ -1,12 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { apiUrls } from '../api.urls';
-<<<<<<< HEAD
-import { BehaviorSubject } from 'rxjs';
-=======
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
->>>>>>> main
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +14,8 @@ export class AuthService {
   isLoggedIn$ = new BehaviorSubject<boolean>(this.isLoggedIn());
   cartCount$ = new BehaviorSubject<number>(0);
 
-<<<<<<< HEAD
-  registerService(registerOgj: any){
-    return this.http.post<any>(`${apiUrls.AuthServiceApi}/register`, registerOgj);
-=======
   registerService(registerObj: any){
     return this.http.post<any>(`${apiUrls.AuthServiceApi}/register`, registerObj);
->>>>>>> main
   }
 
   loginService(loginObj: any) {
@@ -43,9 +34,6 @@ export class AuthService {
     return !!localStorage.getItem("user_id");
   }
 
-<<<<<<< HEAD
-   addToFavorites(productId: string) {
-=======
   logOut() {
     localStorage.removeItem("user_id");
     this.isLoggedIn$.next(false);
@@ -58,7 +46,6 @@ export class AuthService {
   }
 
   addToFavorites(productId: string) {
->>>>>>> main
     const userId = localStorage.getItem("user_id");
     return this.http.post<any>(`${apiUrls.favoritApi}`, { userId, productId });
   }
@@ -73,9 +60,6 @@ export class AuthService {
     return this.http.get<any>(`${apiUrls.favoritApi}/user/${userId}`);
   }
 
-<<<<<<< HEAD
-}
-=======
   addToCart(productId: string, quantity: number) {
     const userId = localStorage.getItem("user_id");
     if (!userId) {
@@ -137,4 +121,3 @@ export class AuthService {
     return this.http.post<any>(`${apiUrls.paymentApi}/create-checkout-session`, { userId });
   }
 }
->>>>>>> main

@@ -2,13 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-<<<<<<< HEAD
-import { Observable } from 'rxjs';
-=======
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { loadStripe, Stripe } from '@stripe/stripe-js'; // Import Stripe.js
->>>>>>> main
 
 @Component({
   selector: 'app-cart',
@@ -17,11 +13,6 @@ import { loadStripe, Stripe } from '@stripe/stripe-js'; // Import Stripe.js
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
-export class CartComponent {
-
-<<<<<<< HEAD
-}
-=======
 
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
@@ -137,4 +128,3 @@ export class CartComponent implements OnInit {
 
 
 }
->>>>>>> main
