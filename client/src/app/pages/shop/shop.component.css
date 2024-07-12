@@ -145,6 +145,10 @@ ngx-slider {
   font-weight: 400;
 }
 
+.rating {
+  color: rgba(0, 0, 0, 0.6);
+}
+
 .image-container {
   width: 100%;
   position: relative;
@@ -172,11 +176,15 @@ ngx-slider {
   text-align: center;
   font-weight: 500;
   font-size: 14px;
-  transition: background 0.3s;
+  transition: background 0.4s;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .add-to-cart-btn:hover {
-  background: var(--Teal, #16c4af);
+  background: var(--dark-blue, #111827);
 }
 
 .nextback {
