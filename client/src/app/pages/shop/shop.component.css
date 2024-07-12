@@ -62,6 +62,29 @@ h1 {
 .filters select:hover {
   border: #111827 solid 1px;
 }
+.price-range {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+ngx-slider {
+  width: 200px; /* Adjust width as needed */
+  display: block;
+  margin: 20px 0;
+}
+
+ngx-slider .ngx-slider-bar {
+  height: 10px; /* Adjust height as needed */
+}
+
+ngx-slider .ngx-slider-pointer {
+  width: 20px; /* Adjust size as needed */
+  height: 20px; /* Adjust size as needed */
+}
+
+ngx-slider .ngx-slider-selection {
+  background-color: #007bff; /* Adjust color as needed */
+}
 
 :root {
   --dark-blue: #111827;

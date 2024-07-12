@@ -3,15 +3,17 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { Options, Ng5SliderModule } from 'ng5-slider';
+import { FormsModule } from '@angular/forms';
+import { SliderModule } from './slider.module';
 
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, RouterModule],
+  imports: [HttpClientModule, CommonModule, RouterModule, FormsModule, SliderModule],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.css',
 })
-
 
 export class ShopComponent implements OnInit {
   readonly baseUrl = 'http://localhost:3000/api/product/search';
@@ -21,6 +23,18 @@ export class ShopComponent implements OnInit {
   hasMoreProducts = true;
   selectedCategory: string = '';
   selectedPriceOrder: string = '';
+  minPrice: number = 10;
+  maxPrice: number = 3000;
+  priceRange: number[] = [this.minPrice, this.maxPrice];
+
+  options: Options = {
+    floor: 0,
+    ceil: 3000,
+    step: 10,
+    translate: (value: number): string => {
+      return '$' + value;
+    }
+  };
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -29,7 +43,7 @@ export class ShopComponent implements OnInit {
   }
 
   fetchProducts() {
-    let url = `${this.baseUrl}?skip=${this.skip}&take=${this.take}`;
+    let url = `${this.baseUrl}?skip=${this.skip}&take=${this.take}&minPrice=${this.priceRange[0]}&maxPrice=${this.priceRange[1]}`;
 
     if (this.selectedCategory) {
       url += `&category=${this.selectedCategory}`;
@@ -150,5 +164,10 @@ export class ShopComponent implements OnInit {
     this.selectedPriceOrder = priceOrder;
     this.skip = 0; // Reset pagination
     this.sortProductsByPrice();
+  }
+
+  onPriceChange() {
+    this.skip = 0; // Reset pagination
+    this.fetchProducts();
   }
 }
