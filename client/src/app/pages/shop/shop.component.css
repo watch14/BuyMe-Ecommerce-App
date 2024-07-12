@@ -57,6 +57,7 @@ h1 {
   font-size: 16px;
   border-radius: 8px;
   border: #ffffff solid 1px;
+  width: 170px;
 }
 
 .filters select:hover {
@@ -68,22 +69,29 @@ h1 {
   justify-content: flex-end;
 }
 ngx-slider {
-  width: 200px; /* Adjust width as needed */
+  width: 200px;
   display: block;
   margin: 20px 0;
 }
 
-ngx-slider .ngx-slider-bar {
-  height: 10px; /* Adjust height as needed */
+ngx-slider {
+  background-color: #11b6a3;
+  color: #11b6a3;
 }
 
-ngx-slider .ngx-slider-pointer {
-  width: 20px; /* Adjust size as needed */
-  height: 20px; /* Adjust size as needed */
-}
+::ng-deep {
+  .ngx-slider .ngx-slider-bar {
+    background-color: #14b8a6; /* Change bar background color */
+  }
 
-ngx-slider .ngx-slider-selection {
-  background-color: #007bff; /* Adjust color as needed */
+  .ngx-slider .ngx-slider-pointer {
+    background-color: #14b8a6; /* Change pointer color */
+    border: 2px solid #14b8a6; /* Change border color */
+  }
+
+  .ngx-slider .ngx-slider-selection {
+    background-color: #14b8a6; /* Change selection color */
+  }
 }
 
 :root {
