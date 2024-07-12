@@ -1,6 +1,25 @@
 <div class="all">
+
   <div *ngIf="products.length > 0">
     <h1 class="title">Products</h1>
+
+       <!-- Filter Options -->
+   <div class="filters">
+    <select #categoryFilter (change)="filterByCategory(categoryFilter.value)">
+      <option value="">All Categories</option>
+      <option value="6687cb2b42b33badb0a3aa4d">Controller</option>
+      <option value="6687cb3342b33badb0a3aa4f">Keyboard</option>
+      <option value="6687cb3942b33badb0a3aa51">Mouse</option>
+      <option value="6687cb4142b33badb0a3aa53">PC</option>
+      <option value="6687cb4642b33badb0a3aa55">Monitor</option>
+    </select>
+    <select #priceFilter (change)="filterByPrice(priceFilter.value)">
+      <option value="">Sort by Price</option>
+      <option value="asc">Price: Low to High</option>
+      <option value="desc">Price: High to Low</option>
+    </select>
+  </div>
+
     <ul class="pdcs grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <li class="product" *ngFor="let prod of products">
         <div class="image-container">

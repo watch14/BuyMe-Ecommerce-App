@@ -1,18 +1,20 @@
 /* For titles */
 @font-face {
-  font-family: 'Galderglynn';
-  src: url('../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf') format('truetype');
+  font-family: "Galderglynn";
+  src: url("../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf")
+    format("truetype");
 }
 
 .title {
-  font-family: 'Galderglynn', sans-serif;
+  font-family: "Galderglynn", sans-serif;
   color: black;
 }
 
 /* For normal text */
 @font-face {
-  font-family: 'Sarabun';
-  src: url('../../../assets/fonts/Sarabun/Sarabun-Medium.ttf') format('truetype');
+  font-family: "Sarabun";
+  src: url("../../../assets/fonts/Sarabun/Sarabun-Medium.ttf")
+    format("truetype");
 }
 
 .product-name,
@@ -20,7 +22,7 @@
 .product-price,
 .no-products,
 .btns {
-  font-family: 'Sarabun', sans-serif;
+  font-family: "Sarabun", sans-serif;
   font-weight: normal;
 }
 
@@ -41,7 +43,24 @@ h1 {
   font-style: normal;
   font-weight: 900;
   line-height: 68px; /* 242.857% */
-  padding-bottom: 20px;
+}
+
+.filters {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.filters select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: #ffffff solid 1px;
+}
+
+.filters select:hover {
+  border: #111827 solid 1px;
 }
 
 :root {

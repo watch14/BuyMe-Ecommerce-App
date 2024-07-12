@@ -19,6 +19,8 @@ export class ShopComponent implements OnInit {
   take = 4;
   products: any[] = [];
   hasMoreProducts = true;
+  selectedCategory: string = '';
+  selectedPriceOrder: string = '';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -27,7 +29,11 @@ export class ShopComponent implements OnInit {
   }
 
   fetchProducts() {
-    const url = `${this.baseUrl}?skip=${this.skip}&take=${this.take}`;
+    let url = `${this.baseUrl}?skip=${this.skip}&take=${this.take}`;
+
+    if (this.selectedCategory) {
+      url += `&category=${this.selectedCategory}`;
+    }
 
     this.http.get<any>(url).subscribe(
       (response: any) => {
@@ -35,6 +41,7 @@ export class ShopComponent implements OnInit {
           ...product,
           isFavorite: false
         }));
+        this.sortProductsByPrice();
         this.hasMoreProducts = response.data.length === this.take;
         this.loadUserFavorites();
       },
@@ -44,13 +51,18 @@ export class ShopComponent implements OnInit {
     );
   }
 
+  sortProductsByPrice() {
+    if (this.selectedPriceOrder === 'asc') {
+      this.products.sort((a, b) => a.productPrice - b.productPrice);
+    } else if (this.selectedPriceOrder === 'desc') {
+      this.products.sort((a, b) => b.productPrice - a.productPrice);
+    }
+  }
+
   loadUserFavorites() {
     if (this.authService.isLoggedIn()) {
       this.authService.getUserFavorites().subscribe(
         (response: any) => {
-          console.log('Full favorites response:', response);
-          console.log('Data property:', response.data);
-
           const favoriteProductIds = response.data?.productIds;
 
           if (Array.isArray(favoriteProductIds)) {
@@ -126,5 +138,17 @@ export class ShopComponent implements OnInit {
       this.skip = 0;
     }
     this.fetchProducts();
+  }
+
+  filterByCategory(categoryId: string) {
+    this.selectedCategory = categoryId;
+    this.skip = 0; // Reset pagination
+    this.fetchProducts();
+  }
+
+  filterByPrice(priceOrder: string) {
+    this.selectedPriceOrder = priceOrder;
+    this.skip = 0; // Reset pagination
+    this.sortProductsByPrice();
   }
 }
