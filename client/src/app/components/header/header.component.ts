@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   authService = inject(AuthService);
   isLoggedIn: boolean = false;
 
-  cartCount = 1;
+  cartCount = 0;
   showDropdown = false;
 
   productDropdown = false;
@@ -60,15 +60,9 @@ export class HeaderComponent implements OnInit {
     this.renderer.listen('document', 'click', (event: Event) => {
       if (!this.elementRef.nativeElement.contains(event.target)) {
         this.showDropdown = false;
-        this.productDropdown = false; 
+        this.productDropdown = false;
         this.isUserClicked = false;
-
-        this.authService.isLoggedIn$.subscribe(res=>{
-          this.isLoggedIn = this.authService.isLoggedIn();
-        })
       }
-
-
     });
   }
 
