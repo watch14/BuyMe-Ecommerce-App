@@ -34,6 +34,7 @@ export class ShopComponent implements OnInit {
           ...product,
           isFavorite: false,
         }));
+<<<<<<< HEAD
 
         // Determine if there are more products to fetch
         if (fetchedProducts.length < this.take) {
@@ -45,6 +46,9 @@ export class ShopComponent implements OnInit {
         // Update products array with fetched products
         this.products = fetchedProducts;
 
+=======
+        this.hasMoreProducts = response.data.length === this.take;
+>>>>>>> main
         this.loadUserFavorites();
       },
       (error: any) => {
@@ -60,7 +64,6 @@ export class ShopComponent implements OnInit {
           console.log('Full favorites response:', response);
           console.log('Data property:', response.data);
 
-          // Access productIds inside the data property
           const favoriteProductIds = response.data?.productIds;
 
           if (Array.isArray(favoriteProductIds)) {

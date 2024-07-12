@@ -49,7 +49,7 @@
         </div>
       </li>
     </ul>
-    <div class="nextback" *ngIf="products.length > 0">
+    <div class="nextback">
       <button class="btns" (click)="prevSet()" [disabled]="skip === 0" [style.display]="skip === 0 ? 'none' : 'block'">Previous</button>
       <button class="btns" (click)="nextSet()" [disabled]="!hasMoreProducts" [style.display]="!hasMoreProducts ? 'none' : 'block'">Next</button>
     </div>

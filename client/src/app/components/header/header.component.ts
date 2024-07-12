@@ -12,10 +12,11 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit{
 
-  authService = inject(AuthService)
-  isLoggedIn: boolean = false
+export class HeaderComponent implements OnInit {
+
+  authService = inject(AuthService);
+  isLoggedIn: boolean = false;
 
   cartCount = 1;
   showDropdown = false;
@@ -34,7 +35,6 @@ export class HeaderComponent implements OnInit{
       : '../../../assets/icons/Wishlist.svg';
   }
 
-
   constructor(
     private renderer: Renderer2,
     private elementRef: ElementRef,
@@ -43,6 +43,22 @@ export class HeaderComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
+<<<<<<< HEAD
+=======
+    this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn;
+      if (isLoggedIn) {
+        this.authService.updateCartCount(); // Fetch cart count if logged in
+      }
+    });
+
+    this.authService.cartCount$.subscribe(count => {
+      this.cartCount = count;
+    });
+
+    // Set the initial isLoggedIn state based on the current login status
+    this.isLoggedIn = this.authService.isLoggedIn();
+>>>>>>> main
 
     this.renderer.listen('document', 'click', (event: Event) => {
       if (!this.elementRef.nativeElement.contains(event.target)) {
@@ -59,12 +75,13 @@ export class HeaderComponent implements OnInit{
     });
   }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> main
   logOut(){
-    localStorage.removeItem("user_id")
-    this.authService.isLoggedIn$.next(false)
-
+    this.authService.logOut();
   }
 
   fetchProducts(query?: string): void {
@@ -120,5 +137,4 @@ export class HeaderComponent implements OnInit{
   toggleDropdown(): void {
     this.showDropdown = !this.showDropdown;
   }
-
 }

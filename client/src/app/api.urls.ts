@@ -6,4 +6,11 @@ export const apiUrls = {
 
     favoritApi: 'http://localhost:3000/api/favorite'
 
+<<<<<<< HEAD
+=======
+    cartApi: 'http://localhost:3000/api/cart',
+
+    paymentApi: 'http://localhost:3000/api/payment'
+    
+>>>>>>> main
 }

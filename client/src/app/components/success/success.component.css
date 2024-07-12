@@ -1,0 +1,31 @@
+.text-center {
+  color: var(--dark-blue, #111827);
+  font-family: Sarabun;
+  font-style: normal;
+}
+#cont {
+  max-width: 1440px;
+  width: 100%;
+  height: 100%;
+  padding: 20px 20px;
+}
+
+#col {
+  border-radius: 20px;
+}
+
+#button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #40b9a5;
+  color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  cursor: pointer;
+  width: 200px;
+  margin-inline: auto;
+}
+
+#button:hover {
+  background-color: #3cc9b1;
+}
