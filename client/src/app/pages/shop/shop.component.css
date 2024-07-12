@@ -163,23 +163,20 @@ ngx-slider {
   border-radius: 15px;
 }
 
-.view-details-button {
-  padding: 10px 48px;
-  gap: 10px;
-  flex-shrink: 0;
-  border-radius: 4px;
+.add-to-cart-btn {
+  padding: 10px 14px;
+  border-radius: 20px;
   background: var(--Teal, #14b8a6);
   color: white;
-  font-family: "Sarabun", sans-serif;
+  font-family: "Sarabun";
   text-align: center;
-  display: block;
   font-weight: 500;
   font-size: 14px;
   transition: background 0.3s;
 }
 
-.view-details-button:hover {
-  background: var(--Teal, #11b6a3);
+.add-to-cart-btn:hover {
+  background: var(--Teal, #16c4af);
 }
 
 .nextback {
@@ -207,4 +204,39 @@ ngx-slider {
 .btns:hover {
   background-color: var(--Teal, #11b6a3);
   color: white; /* Change text color on hover */
+}
+
+/* Example styles for favorite icon */
+.heart .fa {
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.heart .fa-heart {
+  color: red;
+}
+
+.heart .fa-heart-o {
+  color: grey;
+}
+
+/* Styles for delivery info section */
+.delivery-info {
+  margin-top: 20px;
+}
+
+.delivery-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.custom-icon {
+  margin-right: 10px;
+}
+
+.divider {
+  border: 1px solid #e5e7eb;
+  margin: 10px 0;
 }

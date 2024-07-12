@@ -1,28 +1,29 @@
 /* For titles */
 @font-face {
-  font-family: 'Galderglynn';
-  src: url('../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf') format('truetype'),
+  font-family: "Galderglynn";
+  src: url("../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf")
+    format("truetype");
 }
 
 .product-details h1,
 .product-description h2,
 .delivery-title {
-  font-family: 'Galderglynn', sans-serif; /* Use Galderglynn font for titles */
+  font-family: "Galderglynn", sans-serif; /* Use Galderglynn font for titles */
   color: black; /* Set color to black */
 }
 
 /* For normal text */
 @font-face {
-  font-family: 'Sarabun';
-  src: url('../../../assets/fonts/Sarabun/Sarabun-Medium.ttf') format('truetype'),
+  font-family: "Sarabun";
+  src: url("../../../assets/fonts/Sarabun/Sarabun-Medium.ttf")
+    format("truetype");
 }
-
 
 .product-details p,
 .product-description p,
 .product-info p,
 .delivery-item p {
-  font-family: 'Sarabun', sans-serif; /* Use Sarabun font for normal text */
+  font-family: "Sarabun", sans-serif; /* Use Sarabun font for normal text */
   font-weight: normal; /* Ensure normal weight */
 }
 
@@ -275,6 +276,10 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .click span:active {
   transform: scale(0.93, 0.93) translateY(2px);
+}
+
+.heart img {
+  height: 100%;
 }
 
 .click .fa-heart {
