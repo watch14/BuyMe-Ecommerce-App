@@ -1,36 +1,57 @@
-.container {
+/* For titles */
+@font-face {
+    font-family: 'Galderglynn';
+    src: url('../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf') format('truetype');
+  }
+  
+  .title h1 {
+    font-family: 'Galderglynn', sans-serif; /* Apply Galderglynn font to title */
+    font-weight: normal; /* Ensure normal font weight */
+    font-size: 2.5em; /* Adjust font size */
+  }
+  
+  /* For normal text */
+  @font-face {
+    font-family: 'Sarabun';
+    src: url('../../../assets/fonts/Sarabun/Sarabun-Medium.ttf') format('truetype');
+  }
+  
+  .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 70vh;
     text-align: center;
-}
-
-.title h1 {
-    font-size: 2.5em;
-    font-weight: bold;
-}
-
-.error {
+    margin: auto;
+  }
+  
+  .error {
     margin-top: 20px;
-}
-
-.error p {
-    font-size: 1.2em;
-}
-
-.error button {
+  }
+  
+  .error p,
+  .error button {
+    font-family: 'Sarabun', sans-serif; /* Apply Sarabun font to error message and button */
+    font-weight: normal; /* Ensure normal font weight */
+  }
+  
+  .error p {
+    font-size: 1.2em; /* Adjust font size */
+  }
+  
+  .error button {
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #40b9a5;
+    background-color: #14B8A6;
     color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 25px;
     cursor: pointer;
-}
-
-.error button:hover {
-    background-color: #e0e0e0;
-    color: black;
-}
+  }
+  
+  .error button:hover {
+    background-color: #111827;
+    color: white;
+  }
+  
