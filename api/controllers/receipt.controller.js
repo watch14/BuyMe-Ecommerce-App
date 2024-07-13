@@ -47,7 +47,7 @@ export const createReceipt = async (req, res, next) => {
       return next(CreateError(400, "Cart products not found or empty"));
     }
 
-    // Calculate total price and tax
+    // Calculate total price and totalPricePlusTax
     const totalPrice = cart.products.reduce((total, product) => {
       // Ensure product and productId exist before accessing productPrice
       if (product.productId && product.productId.productPrice) {
@@ -56,7 +56,7 @@ export const createReceipt = async (req, res, next) => {
       return total; // Return total unchanged if product or productPrice is null
     }, 0);
 
-    const tax = totalPrice * 0.18; // Assuming tax calculation based on totalPrice
+    const totalPricePlusTax = totalPrice * 1; // Assuming totalPricePlusTax calculation based on totalPrice
 
     // Create a new receipt
     const newReceipt = new Receipt({
@@ -69,7 +69,7 @@ export const createReceipt = async (req, res, next) => {
           price: item.productId.productPrice || 0,
         })),
       totalPrice,
-      tax,
+      totalPricePlusTax,
       receiptNumber: generateReceiptNumber(),
     });
 
@@ -179,7 +179,9 @@ export const updateReceipt = async (req, res, next) => {
 
     const updatedReceipt = await Receipt.findByIdAndUpdate(
       receiptId,
-      { $set: { productList, totalPrice, tax: totalPrice * 0.18 } },
+      {
+        $set: { productList, totalPrice, totalPricePlusTax: totalPrice * 0.18 },
+      },
       { new: true }
     );
 
