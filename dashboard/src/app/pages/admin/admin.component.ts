@@ -28,6 +28,7 @@ export class AdminComponent implements OnInit {
   showUsers: boolean = false;
   private userApiUrl = 'http://localhost:3000/api/user';
   private productApiUrl = 'http://localhost:3000/api/product/search';
+  private updateProductApiUrl = 'http://localhost:3000/api/product';
 
   constructor(private http: HttpClient, private dialog: MatDialog) { }
 
@@ -92,7 +93,9 @@ export class AdminComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Update the product in the backend
+        const productId = product._id; // Get the product ID
+        
+        // Prepare form data
         const formData = new FormData();
         formData.append('productName', result.productName);
         formData.append('productPrice', result.productPrice);
@@ -101,7 +104,8 @@ export class AdminComponent implements OnInit {
           formData.append('productImage', result.productImage);
         }
 
-        this.http.put(`${this.productApiUrl}/${product._id}`, formData).subscribe(
+        // Send PUT request to update the product using the updateProductApiUrl
+        this.http.put(`${this.updateProductApiUrl}/${productId}`, formData).subscribe(
           (response: any) => {
             if (response.success) {
               // Update the local product list

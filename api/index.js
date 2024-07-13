@@ -25,19 +25,12 @@ import paymentRouter from "./routes/payment.js";
 
 const app = express();
 const port = 3000;
-const allowedOrigins = ["http://localhost:4200", "http://localhost:5000"];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // Allow requests with no origin, like mobile apps or curl requests
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  },
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: "http://localhost:4200",
+    credentials: true,
+  })
+);
 // Swagger options
 const swaggerOptions = {
   swaggerDefinition: {
