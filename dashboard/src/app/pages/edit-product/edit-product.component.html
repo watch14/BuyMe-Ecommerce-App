@@ -1,23 +1,25 @@
-<h2 mat-dialog-title>Edit Product</h2>
+<h2>Edit Product</h2>
 <form [formGroup]="editProductForm" (ngSubmit)="save()">
-  <mat-form-field>
-    <mat-label>Product Name</mat-label>
-    <input matInput formControlName="productName">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Product Price</mat-label>
-    <input matInput type="number" formControlName="productPrice">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Product Category</mat-label>
-    <input matInput formControlName="productCategory">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Product Image</mat-label>
-    <input matInput type="file" (change)="onFileChange($event)">
-  </mat-form-field>
-  <div mat-dialog-actions>
-    <button mat-button type="button" (click)="close()">Cancel</button>
-    <button mat-button type="submit" [disabled]="!editProductForm.valid">Save</button>
+  <div>
+    <label>Product Name</label>
+    <input type="text" formControlName="productName" required>
+  </div>
+  <div>
+    <label>Product Price</label>
+    <input type="number" formControlName="productPrice" required>
+  </div>
+  <div>
+    <label>Select Category</label>
+    <select formControlName="productCategory" required>
+      <option *ngFor="let category of categories" [value]="category._id">{{ category.categoryName }}</option>
+    </select>
+  </div>
+  <div>
+    <label>Product Image</label>
+    <input type="file" (change)="onFileChange($event)" accept="image/*">
+  </div>
+  <div>
+    <button type="button" (click)="close()">Cancel</button>
+    <button type="submit" [disabled]="!editProductForm.valid">Save</button>
   </div>
 </form>

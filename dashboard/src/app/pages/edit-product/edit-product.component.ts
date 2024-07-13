@@ -23,22 +23,41 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   styleUrl: './edit-product.component.css'
 })
 export class EditProductComponent implements OnInit {
-  editProductForm: FormGroup;
+  editProductForm!: FormGroup;
+  categories: any[] = []; // Array to store fetched categories
 
   constructor(
     private fb: FormBuilder,
+    private http: HttpClient,
     public dialogRef: MatDialogRef<EditProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
+  ) {}
+
+  ngOnInit(): void {
+    this.initForm(); // Initialize form controls
+    this.fetchCategories(); // Fetch categories on component initialization
+  }
+
+  initForm() {
     this.editProductForm = this.fb.group({
-      productName: [data.productName, Validators.required],
-      productPrice: [data.productPrice, [Validators.required, Validators.min(0)]],
-      productCategory: [data.productCategory, Validators.required],
+      productName: [this.data?.productName || '', Validators.required],
+      productPrice: [this.data?.productPrice || '', [Validators.required, Validators.min(0)]],
+      productCategory: [this.data?.productCategory || '', Validators.required],
       productImage: [null]
     });
   }
 
-  ngOnInit(): void {}
+  fetchCategories() {
+    this.http.get<any>('http://localhost:3000/api/category/').subscribe(
+      response => {
+        console.log('Categories API Response:', response); // Log the response to inspect its structure
+        this.categories = response.data; // Assigning categories array from API response's data field
+      },
+      error => {
+        console.error('Error fetching categories: ', error);
+      }
+    );
+  }
 
   onFileChange(event: any) {
     const file = event.target.files[0];
