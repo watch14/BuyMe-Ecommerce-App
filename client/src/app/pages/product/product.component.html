@@ -1,90 +1,93 @@
-<div class="product-details" *ngIf="product">
-  <div class="product-images">
-    <div class="card">
-      <img class="main-image" *ngIf="product.productPicture && product.productPicture.length > 0" [src]="product.productPicture[0]" alt="Product Image" />
-      <div class="side-images" *ngIf="product.productPicture && product.productPicture.length > 1">
-        <img class="side-image" *ngFor="let image of product.productPicture.slice(1); let i = index" [src]="image" alt="Product Image" (click)="changeMainImage(i + 1)" />
-      </div>
-    </div>
-  </div>
-  
-  <div class="product-info">
-    <h1>{{ product.productName }}</h1>
-    <div class="product-description">
-      <div class="flex items-center mt-2.5 mb-5">
-        <div class="flex items-center space-x-1 rtl:space-x-reverse">
-          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
-            <svg *ngIf="i < product.productRate" class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-              <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-            </svg>
-            <svg *ngIf="i >= product.productRate" class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-              <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-            </svg>
-          </ng-container>
-        </div>
-        <span class="rating">{{ product.productRate }}</span>
-      </div>
-      
-      <p class="product-price">${{ product.productPrice }}</p>
-      <p>{{ product.productDescription }}</p>
-      <p><strong>Category:</strong> {{ categoryName$ | async }}</p>
-      <p class="color-desc">
-        Colours:<span class="color-circle" [style.backgroundColor]="product.productColor"></span>
-        <span class="color-name">{{ product.productColor }}</span>
-      </p>
-    </div>
-    
-    <div class="number">
-      <div class="incdec">
-        <span class="minus"><button type="button" (click)="decrementQuantity()">-</button></span>
-        <span class="num"><input type="number" id="quantity" name="quantity" [(ngModel)]="quantity" min="1" /></span>
-        <span class="plus"><button type="button" (click)="incrementQuantity()">+</button></span>
-      </div>
-      
-      <div class="buy">
-        <button type="button" (click)="addToCart()">Buy Now</button>
-      </div>
-      
-      <div class="heart">
-        <div class="click" (click)="toggleFavorite()">
-          <img 
-            *ngIf="isFavorite" 
-            src="../../../assets/icons/Wishlist-red.svg" 
-            alt="Wishlist Icon"
-            class="favorit"
-          >
-          <img 
-            *ngIf="!isFavorite" 
-            src="../../../assets/icons/Wishlist.svg" 
-            alt="Wishlist Icon"
-            class="favorit"
-          >
-          <div class="ring"></div>
-          <div class="ring2"></div>
+<div class="all">
+  <div class="product-details" *ngIf="product">
+    <div class="product-images">
+      <div class="card">
+        <img class="main-image" *ngIf="product.productPicture && product.productPicture.length > 0" [src]="product.productPicture[0]" alt="Product Image" />
+        <div class="side-images" *ngIf="product.productPicture && product.productPicture.length > 1">
+          <img class="side-image" *ngFor="let image of product.productPicture.slice(1); let i = index" [src]="image" alt="Product Image" (click)="changeMainImage(i + 1)" />
         </div>
       </div>
     </div>
     
-    <div class="delivery-info">
-      <div class="delivery-item">
-        <div class="custom-icon free-delivery-icon">
-          <img src="../../../assets/icons/icon-delivery.svg" alt="Free Delivery Icon">
+    <div class="product-info">
+      <h1>{{ product.productName }}</h1>
+      <div class="product-description">
+        <div class="flex items-center mt-2.5 mb-5">
+          <div class="flex items-center space-x-1 rtl:space-x-reverse">
+            <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+              <svg *ngIf="i < product.productRate" class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg *ngIf="i >= product.productRate" class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+            </ng-container>
+          </div>
+          <span class="rating">{{ product.productRate }}</span>
         </div>
-        <div>
-          <strong>Free Delivery</strong>
-          <p>Enter your postal code for Delivery Availability</p>
+        
+        <p>{{ product.productDescription }}</p>
+        <p class="color-desc">
+          Colours:<span class="color-circle" [style.backgroundColor]="product.productColor"></span>
+          <span class="color-name">{{ product.productColor }}</span>
+        </p>
+        <p class="product-price">${{ product.productPrice }}</p>
+      </div>
+      
+      <div class="number">
+        <div class="incdec">
+          <span class="minus"><button type="button" (click)="decrementQuantity()">-</button></span>
+          <span class="num"><input type="number" id="quantity" name="quantity" [(ngModel)]="quantity" min="1" /></span>
+          <span class="plus"><button type="button" (click)="incrementQuantity()">+</button></span>
+        </div>
+        
+        <div class="buy">
+          <button type="button" (click)="addToCart()">Buy Now</button>
+        </div>
+        
+        <div class="heart">
+          <div class="click" (click)="toggleFavorite()">
+            <img 
+              *ngIf="isFavorite" 
+              src="../../../assets/icons/Wishlist-red.svg" 
+              alt="Wishlist Icon"
+              class="favorit"
+            >
+            <img 
+              *ngIf="!isFavorite" 
+              src="../../../assets/icons/Wishlist.svg" 
+              alt="Wishlist Icon"
+              class="favorit"
+            >
+            <div class="ring"></div>
+            <div class="ring2"></div>
+          </div>
         </div>
       </div>
-      <hr class="divider">
-      <div class="delivery-item">
-        <div class="custom-icon return-delivery-icon">
-          <img src="../../../assets/icons/Icon-return.svg" alt="Return Delivery Icon">
+      
+      <div class="delivery-info">
+        <div class="delivery-item">
+          <div class="custom-icon free-delivery-icon">
+            <img src="../../../assets/icons/icon-delivery.svg" alt="Free Delivery Icon">
+          </div>
+          <div>
+            <strong>Free Delivery</strong>
+            <p>Enter your postal code for Delivery Availability</p>
+          </div>
         </div>
-        <div>
-          <strong>Return Delivery</strong>
-          <p>Free 30 Days Delivery Returns. <a href="#">Details</a></p>
+        <hr class="divider">
+        <div class="delivery-item">
+          <div class="custom-icon return-delivery-icon">
+            <img src="../../../assets/icons/Icon-return.svg" alt="Return Delivery Icon">
+          </div>
+          <div>
+            <strong>Return Delivery</strong>
+            <p>Free 30 Days Delivery Returns. <a href="#">Details</a></p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<app-shop [take]="4"></app-shop>

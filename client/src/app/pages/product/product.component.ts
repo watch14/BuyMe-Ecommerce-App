@@ -6,11 +6,12 @@ import { map, Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { apiUrls } from '../../api.urls';
+import { ShopComponent } from '../shop/shop.component';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, RouterModule, FormsModule],
+  imports: [HttpClientModule, CommonModule, RouterModule, FormsModule, ShopComponent],
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
 })
