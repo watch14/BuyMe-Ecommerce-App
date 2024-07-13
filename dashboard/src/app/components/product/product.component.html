@@ -1,0 +1,46 @@
+<div class="product-list">
+  <button (click)="fetchProducts()">Show Products</button>
+  <div *ngIf="products.length > 0">
+    <ul>
+      <li *ngFor="let product of products">
+        <div>
+          <span>{{ product.productName }} - ${{ product.productPrice }}</span>
+          <button (click)="startEditProduct(product)">Edit</button>
+          <button (click)="deleteProduct(product._id)">Delete</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="editingProduct">
+  <h2>Edit Product</h2>
+  <form [formGroup]="editProductForm" (ngSubmit)="save()">
+    <div>
+      <label>Product Name</label>
+      <input type="text" formControlName="productName" required>
+    </div>
+    <div>
+      <label>Product Price</label>
+      <input type="number" formControlName="productPrice" required>
+    </div>
+    <div>
+      <label>Select Category</label>
+      <select formControlName="productCategory" required>
+        <option value="6687cb2b42b33badb0a3aa4d">Controller</option>
+        <option value="6687cb3342b33badb0a3aa4f">Keyboard</option>
+        <option value="6687cb3942b33badb0a3aa51">Mouse</option>
+        <option value="6687cb4142b33badb0a3aa53">PC</option>
+        <option value="6687cb4642b33badb0a3aa55">Monitor</option>
+      </select>
+    </div>
+    <div>
+      <label>Product Image</label>
+      <input type="file" (change)="onFileChange($event)" accept="image/*">
+    </div>
+    <div>
+      <button type="button" (click)="cancelEdit()">Cancel</button>
+      <button type="submit" [disabled]="!editProductForm.valid">Save</button>
+    </div>
+  </form>
+</div>
