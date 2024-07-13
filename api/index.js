@@ -22,6 +22,7 @@ import cookieParser from "cookie-parser";
 
 import Stripe from "stripe";
 import paymentRouter from "./routes/payment.js";
+import orderRouter from "./routes/order.js";
 
 const app = express();
 const port = 3000;
@@ -77,6 +78,8 @@ app.use("/api/sort", sortRoutes);
 app.use("/api/receipts", receiptRoutes);
 
 app.use("/api/payment", paymentRouter);
+
+app.use("/api/orders", orderRouter);
 
 // Response handler
 app.use((obj, req, res, next) => {

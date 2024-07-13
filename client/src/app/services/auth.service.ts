@@ -110,11 +110,17 @@ export class AuthService {
     }
   }
 
+  // Method to get cart by user ID
+  getCartByUserId(userId: string): Observable<any> {
+    return this.http.get(`${apiUrls.cartApi}/get-cart`, { params: { userId } });
+  }
+  
   emptyCart(userId: string): Observable<any> {
     return this.http.post<any>(`${apiUrls.cartApi}/empty-cart`, { userId }).pipe(
       tap(() => this.updateCartCount())
     );
   }
+
 
   createCheckoutSession(): Observable<any> {
     const userId = localStorage.getItem("user_id");
