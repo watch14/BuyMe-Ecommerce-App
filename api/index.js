@@ -27,13 +27,18 @@ import orderRouter from "./routes/order.js";
 const app = express();
 const port = 3000;
 
-const allowedOrigins = ["http://localhost:4200", "http://localhost:5000"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:4200",
+  "http://localhost:5000",
+];
 
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
+      console.error(`Blocked by CORS: ${origin}`);
       callback(new Error("Not allowed by CORS"));
     }
   },
