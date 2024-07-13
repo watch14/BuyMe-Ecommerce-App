@@ -71,7 +71,7 @@ router.post("/create", createProduct);
  * @swagger
  * /api/product/search:
  *   get:
- *     summary: Search products by name or description with optional filters and pagination
+ *     summary: Search products by name or description with optional filters, pagination, and sorting
  *     tags: [Products]
  *     parameters:
  *       - in: query
@@ -115,6 +115,12 @@ router.post("/create", createProduct);
  *           maximum: 100
  *           default: 10
  *         description: Number of records to return for pagination (max 100)
+ *       - in: query
+ *         name: sort
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *         description: Sort products by price in ascending (asc) or descending (desc) order
  *     responses:
  *       200:
  *         description: Products retrieved successfully

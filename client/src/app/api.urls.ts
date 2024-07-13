@@ -5,6 +5,8 @@ export const apiUrls = {
 
     ProductApi: 'http://localhost:3000/api/product',
 
+    productSearchApi : 'http://localhost:3000/api/product/search',
+
     favoritApi: 'http://localhost:3000/api/favorite',
 
     cartApi: 'http://localhost:3000/api/cart',

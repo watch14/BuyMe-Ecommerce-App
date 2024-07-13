@@ -1,24 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { apiUrls } from './../../api.urls';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';import { Observable } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { Options, Ng5SliderModule } from 'ng5-slider';
+import { FormsModule } from '@angular/forms';
+import { SliderModule } from './slider.module';
 
 @Component({
   selector: 'app-shop',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, RouterModule],
+  imports: [HttpClientModule, CommonModule, RouterModule, FormsModule, SliderModule],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.css',
 })
 
-
 export class ShopComponent implements OnInit {
-  readonly baseUrl = 'http://localhost:3000/api/product/search';
+  @Input() take: number = 8;
+  baseUrl = apiUrls.productSearchApi;
   skip = 0;
-  take = 4;
   products: any[] = [];
   hasMoreProducts = true;
+  selectedCategory: string = '';
+  selectedPriceOrder: string = '';
+  minPrice: number = 10;
+  maxPrice: number = 3000;
+  priceRange: number[] = [this.minPrice, this.maxPrice];
+
+  options: Options = {
+    floor: 0,
+    ceil: 3000,
+    step: 10,
+    translate: (value: number): string => {
+      return '$' + value;
+    }
+  };
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -27,8 +44,16 @@ export class ShopComponent implements OnInit {
   }
 
   fetchProducts() {
-    const url = `${this.baseUrl}?skip=${this.skip}&take=${this.take}`;
-
+    let url = `${this.baseUrl}?skip=${this.skip}&take=${this.take}&minPrice=${this.priceRange[0]}&maxPrice=${this.priceRange[1]}`;
+  
+    if (this.selectedCategory) {
+      url += `&category=${this.selectedCategory}`;
+    }
+  
+    if (this.selectedPriceOrder) {
+      url += `&sort=${this.selectedPriceOrder}`;
+    }
+  
     this.http.get<any>(url).subscribe(
       (response: any) => {
         this.products = response.data.map((product: any) => ({
@@ -43,14 +68,20 @@ export class ShopComponent implements OnInit {
       }
     );
   }
+  
+
+  sortProductsByPrice() {
+    if (this.selectedPriceOrder === 'asc') {
+      this.products.sort((a, b) => a.productPrice - b.productPrice);
+    } else if (this.selectedPriceOrder === 'desc') {
+      this.products.sort((a, b) => b.productPrice - a.productPrice);
+    }
+  }
 
   loadUserFavorites() {
     if (this.authService.isLoggedIn()) {
       this.authService.getUserFavorites().subscribe(
         (response: any) => {
-          console.log('Full favorites response:', response);
-          console.log('Data property:', response.data);
-
           const favoriteProductIds = response.data?.productIds;
 
           if (Array.isArray(favoriteProductIds)) {
@@ -125,6 +156,23 @@ export class ShopComponent implements OnInit {
     if (this.skip < 0) {
       this.skip = 0;
     }
+    this.fetchProducts();
+  }
+
+  filterByCategory(categoryId: string) {
+    this.selectedCategory = categoryId;
+    this.skip = 0; // Reset pagination
+    this.fetchProducts();
+  }
+
+  filterByPrice(priceOrder: string) {
+    this.selectedPriceOrder = priceOrder;
+    this.skip = 0; // Reset pagination
+    this.fetchProducts();
+  }
+
+  onPriceChange() {
+    this.skip = 0; // Reset pagination
     this.fetchProducts();
   }
 }

@@ -1,6 +1,36 @@
 <div class="all">
-  <div *ngIf="products.length > 0">
+  <!-- <div *ngIf="products.length > 0"></div> -->
+  <div >
     <h1 class="title">Products</h1>
+
+       <!-- Filter Options -->
+       <div class="filters">
+
+        <div class="price-range">
+          <ngx-slider [(value)]="priceRange[0]" [(highValue)]="priceRange[1]" [options]="options" (userChangeEnd)="onPriceChange()"></ngx-slider>
+        </div>
+
+        <select #categoryFilter (change)="filterByCategory(categoryFilter.value)">
+          <option value="">All Categories</option>
+          <option value="6687cb2b42b33badb0a3aa4d">Controller</option>
+          <option value="6687cb3342b33badb0a3aa4f">Keyboard</option>
+          <option value="6687cb3942b33badb0a3aa51">Mouse</option>
+          <option value="6687cb4142b33badb0a3aa53">PC</option>
+          <option value="6687cb4642b33badb0a3aa55">Monitor</option>
+        </select>
+
+        <select #priceFilter (change)="filterByPrice(priceFilter.value)">
+          <option value="">Sort by Price</option>
+          <option value="asc">Price: Low to High</option>
+          <option value="desc">Price: High to Low</option>
+        </select>
+
+
+      </div>
+
+  
+
+
     <ul class="pdcs grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <li class="product" *ngFor="let prod of products">
         <div class="image-container">
@@ -25,12 +55,14 @@
                 </svg>
               </ng-container>
             </div>
-            <span class="rating">{{ prod.productRate }}</span>
+            <span class="rating">{{ prod.productRate }}/5</span>
           </div>
 
           <!-- Price and Favorite Icon -->
           <div class="flex items-center justify-between">
             <span class="product-price">${{ prod.productPrice }}</span>
+            <button  (click)="addToCart(prod)" class="add-to-cart-btn">Add to Cart</button>
+
             <img 
               *ngIf="prod.isFavorite" 
               src="../../../assets/icons/Wishlist-red.svg" 
@@ -45,7 +77,6 @@
               class="favorit"
               (click)="toggleFavorite(prod)"
             >
-            <button (click)="addToCart(prod)" class="add-to-cart-btn">Add to Cart</button>
           </div>
         </div>
       </li>
@@ -55,7 +86,8 @@
       <button class="btns" (click)="nextSet()" [disabled]="!hasMoreProducts" [style.display]="!hasMoreProducts ? 'none' : 'block'">Next</button>
     </div>
   </div>
-  <div *ngIf="products.length === 0">
+
+  <!-- <div *ngIf="products.length === 0">
     <p class="no-products">No products available.</p>
-  </div>
+  </div> -->
 </div>

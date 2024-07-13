@@ -1,18 +1,24 @@
+* {
+  font-family: "Sarabun";
+}
+
 /* For titles */
 @font-face {
-  font-family: 'Galderglynn';
-  src: url('../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf') format('truetype');
+  font-family: "Galderglynn";
+  src: url("../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf")
+    format("truetype");
 }
 
 .title {
-  font-family: 'Galderglynn', sans-serif;
+  font-family: "Galderglynn", sans-serif;
   color: black;
 }
 
 /* For normal text */
 @font-face {
-  font-family: 'Sarabun';
-  src: url('../../../assets/fonts/Sarabun/Sarabun-Medium.ttf') format('truetype');
+  font-family: "Sarabun";
+  src: url("../../../assets/fonts/Sarabun/Sarabun-Medium.ttf")
+    format("truetype");
 }
 
 .product-name,
@@ -20,7 +26,7 @@
 .product-price,
 .no-products,
 .btns {
-  font-family: 'Sarabun', sans-serif;
+  font-family: "Sarabun", sans-serif;
   font-weight: normal;
 }
 
@@ -41,7 +47,58 @@ h1 {
   font-style: normal;
   font-weight: 900;
   line-height: 68px; /* 242.857% */
-  padding-bottom: 20px;
+}
+
+.filters {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.filters select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: #ffffff solid 1px;
+  width: 170px;
+  color: #757575;
+}
+
+.filters select:hover {
+  border: #111827 solid 1px;
+}
+
+.price-range {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+ngx-slider {
+  width: 200px;
+  display: block;
+  margin: 20px 0;
+}
+
+ngx-slider {
+  background-color: #11b6a3;
+  color: #11b6a3;
+}
+
+::ng-deep {
+  .ngx-slider .ngx-slider-bar {
+    background-color: #14b8a6; /* Change bar background color */
+  }
+
+  .ngx-slider .ngx-slider-pointer {
+    background-color: #14b8a6; /* Change pointer color */
+    border: 2px solid #14b8a6; /* Change border color */
+  }
+
+  .ngx-slider .ngx-slider-selection {
+    background-color: #14b8a6; /* Change selection color */
+  }
 }
 
 :root {
@@ -88,6 +145,10 @@ h1 {
   font-weight: 400;
 }
 
+.rating {
+  color: rgba(0, 0, 0, 0.6);
+}
+
 .image-container {
   width: 100%;
   position: relative;
@@ -106,23 +167,24 @@ h1 {
   border-radius: 15px;
 }
 
-.view-details-button {
-  padding: 10px 48px;
-  gap: 10px;
-  flex-shrink: 0;
-  border-radius: 4px;
+.add-to-cart-btn {
+  padding: 10px 14px;
+  border-radius: 20px;
   background: var(--Teal, #14b8a6);
   color: white;
-  font-family: "Sarabun", sans-serif;
+  font-family: "Sarabun";
   text-align: center;
-  display: block;
   font-weight: 500;
   font-size: 14px;
-  transition: background 0.3s;
+  transition: background 0.4s;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.view-details-button:hover {
-  background: var(--Teal, #11b6a3);
+.add-to-cart-btn:hover {
+  background: var(--dark-blue, #111827);
 }
 
 .nextback {
@@ -150,4 +212,39 @@ h1 {
 .btns:hover {
   background-color: var(--Teal, #11b6a3);
   color: white; /* Change text color on hover */
+}
+
+/* Example styles for favorite icon */
+.heart .fa {
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.heart .fa-heart {
+  color: red;
+}
+
+.heart .fa-heart-o {
+  color: grey;
+}
+
+/* Styles for delivery info section */
+.delivery-info {
+  margin-top: 20px;
+}
+
+.delivery-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.custom-icon {
+  margin-right: 10px;
+}
+
+.divider {
+  border: 1px solid #e5e7eb;
+  margin: 10px 0;
 }

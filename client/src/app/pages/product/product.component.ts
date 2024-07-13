@@ -5,67 +5,109 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { apiUrls } from '../../api.urls';
+import { ShopComponent } from '../shop/shop.component';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, RouterModule, FormsModule],
+  imports: [HttpClientModule, CommonModule, RouterModule, FormsModule, ShopComponent],
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
 })
-export class ProductComponent implements OnInit {
-  readonly baseAPIUrl = 'http://localhost:3000/api/';
-  productId: string | undefined;
-  product: any = {};
-  categoryName$: Observable<string> | undefined;
-  quantity: number = 1; 
-  isFavorite: boolean = false;
-  displayedCategories: any[] = [];
 
-  constructor(
-    private route: ActivatedRoute,
-    private http: HttpClient,
-    private authService: AuthService 
-  ) {}
+export class ProductComponent implements OnInit {
+  product: any;
+  isFavorite: boolean = false;
+  quantity: number = 1;
+  categoryName$!: Observable<string>;
+  productUrl = apiUrls.ProductApi;
+
+  constructor(private http: HttpClient, private authService: AuthService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
-      this.productId = params['id'];
-      this.fetchProduct();
-    });
+    this.loadProduct();
+    this.loadUserFavorites();
   }
 
-  fetchProduct() {
-    const apiUrl = `${this.baseAPIUrl}product/${this.productId}`;
-    this.http.get<any>(apiUrl).subscribe(
-      (response: any) => {
-        this.product = response.data; 
-        console.log('Fetched product:', this.product);
-        this.categoryName$ = this.getCategoryName(this.product.categoryId);
-      },
-      (error: any) => {
-        console.error('Error fetching product:', error);
-      }
-    );
-  }
-
-  getCategoryName(categoryId: string): Observable<string> {
-    const apiUrl = `${this.baseAPIUrl}category/${categoryId}`;
-    return this.http.get<any>(apiUrl).pipe(map((response: any) => response.data.categoryName));
-  }
-
- 
-
-  addToFavorites() {
-    if (this.isFavorite) {
-      // Remove from favorites
-      this.isFavorite = false;
-      // Perform any necessary API calls or local operations for removing from favorites
-    } else {
-      // Add to favorites
-      this.isFavorite = true;
-      // Perform any necessary API calls or local operations for adding to favorites
+  loadProduct() {
+    const productId = this.route.snapshot.paramMap.get('id'); // Get the product ID from the route parameters
+    if (productId) {
+      this.http.get<any>(`${this.productUrl}/${productId}`).subscribe(
+        (response: any) => {
+          this.product = response.data;
+        },
+        error => console.error('Error fetching product details:', error)
+      );
     }
+  }
+
+  loadUserFavorites() {
+    if (this.authService.isLoggedIn()) {
+      this.authService.getUserFavorites().subscribe(
+        (response: any) => {
+          const favoriteProductIds = response.data?.productIds;
+
+          if (Array.isArray(favoriteProductIds)) {
+            this.isFavorite = favoriteProductIds.some(favProduct => favProduct._id === this.product._id);
+          } else {
+            console.error('Favorites productIds is not an array or undefined:', favoriteProductIds);
+          }
+        },
+        error => console.error('Error fetching user favorites:', error)
+      );
+    }
+  }
+
+  toggleFavorite() {
+    if (!this.authService.isLoggedIn()) {
+      alert("You need to be logged in!");
+      return;
+    }
+
+    if (this.isFavorite) {
+      this.authService.removeFromFavorites(this.product._id).subscribe(
+        () => {
+          this.isFavorite = false;
+        },
+        error => console.error('Error removing from favorites:', error)
+      );
+    } else {
+      this.authService.addToFavorites(this.product._id).subscribe(
+        () => {
+          this.isFavorite = true;
+        },
+        error => console.error('Error adding to favorites:', error)
+      );
+    }
+  }
+
+  addToCart() {
+    if (!this.authService.isLoggedIn()) {
+      alert('You need to be logged in to add items to the cart.');
+      return;
+    }
+
+    if (!this.product || !this.product._id) {
+      console.error('Invalid product');
+      return;
+    }
+
+    const addToCartObservable = this.authService.addToCart(this.product._id, this.quantity);
+    if (addToCartObservable) {
+      addToCartObservable.subscribe(
+        () => {
+          console.log('Product added to cart');
+        },
+        error => console.error('Error adding product to cart:', error)
+      );
+    }
+  }
+
+  changeMainImage(index: number) {
+    const temp = this.product.productPicture[0];
+    this.product.productPicture[0] = this.product.productPicture[index];
+    this.product.productPicture[index] = temp;
   }
 
   incrementQuantity() {
@@ -75,30 +117,6 @@ export class ProductComponent implements OnInit {
   decrementQuantity() {
     if (this.quantity > 1) {
       this.quantity--;
-    }
-  }
-
-  changeMainImage(index: number): void {
-    if (index >= 0 && index < this.product.productPicture.length) {
-      // Swap main image with clicked side image
-      const temp = this.product.productPicture[0];
-      this.product.productPicture[0] = this.product.productPicture[index];
-      this.product.productPicture[index] = temp;
-    }
-  }
-
-
- addToCart() {
-    const addToCartResponse = this.authService.addToCart(this.product._id, this.quantity);
-    if (addToCartResponse) {
-      addToCartResponse.subscribe(
-        (response) => {
-          console.log('Added to Cart:', response);
-        },
-        (error) => {
-          console.error('Error adding to cart:', error);
-        }
-      );
     }
   }
 }

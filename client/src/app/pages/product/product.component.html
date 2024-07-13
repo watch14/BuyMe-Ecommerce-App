@@ -1,23 +1,10 @@
+<div class="all">
   <div class="product-details" *ngIf="product">
     <div class="product-images">
-      <!-- Main product image -->
       <div class="card">
-        <img
-          class="main-image"
-          *ngIf="product.productPicture && product.productPicture.length > 0"
-          [src]="product.productPicture[0]"
-          alt="Product Image"
-        />
-        
-        <!-- Side images -->
+        <img class="main-image" *ngIf="product.productPicture && product.productPicture.length > 0" [src]="product.productPicture[0]" alt="Product Image" />
         <div class="side-images" *ngIf="product.productPicture && product.productPicture.length > 1">
-          <img
-            class="side-image"
-            *ngFor="let image of product.productPicture.slice(1); let i = index"
-            [src]="image"
-            alt="Product Image"
-            (click)="changeMainImage(i + 1)"
-          />
+          <img class="side-image" *ngFor="let image of product.productPicture.slice(1); let i = index" [src]="image" alt="Product Image" (click)="changeMainImage(i + 1)" />
         </div>
       </div>
     </div>
@@ -25,7 +12,6 @@
     <div class="product-info">
       <h1>{{ product.productName }}</h1>
       <div class="product-description">
-        <!-- New Star Rating Component -->
         <div class="flex items-center mt-2.5 mb-5">
           <div class="flex items-center space-x-1 rtl:space-x-reverse">
             <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
@@ -39,48 +25,50 @@
           </div>
           <span class="rating">{{ product.productRate }}</span>
         </div>
-
         
-        <!-- Product price -->
-        <p class="product-price">${{ product.productPrice }}</p>
-        <!-- Product description -->
         <p>{{ product.productDescription }}</p>
-        <!-- Product category -->
-        <p><strong>Category:</strong> {{ categoryName$ | async }}</p>
-        <!-- Product color -->
         <p class="color-desc">
           Colours:<span class="color-circle" [style.backgroundColor]="product.productColor"></span>
           <span class="color-name">{{ product.productColor }}</span>
         </p>
+        <p class="product-price">${{ product.productPrice }}</p>
       </div>
-
-      <!-- Quantity selection -->
+      
       <div class="number">
         <div class="incdec">
           <span class="minus"><button type="button" (click)="decrementQuantity()">-</button></span>
           <span class="num"><input type="number" id="quantity" name="quantity" [(ngModel)]="quantity" min="1" /></span>
           <span class="plus"><button type="button" (click)="incrementQuantity()">+</button></span>
         </div>
-
+        
         <div class="buy">
           <button type="button" (click)="addToCart()">Buy Now</button>
         </div>
-
+        
         <div class="heart">
-          <div class="click" (click)="addToFavorites()">
-            <span class="fa" [ngClass]="{ 'fa-heart': isFavorite, 'fa-heart-o': !isFavorite }"></span>
+          <div class="click" (click)="toggleFavorite()">
+            <img 
+              *ngIf="isFavorite" 
+              src="../../../assets/icons/Wishlist-red.svg" 
+              alt="Wishlist Icon"
+              class="favorit"
+            >
+            <img 
+              *ngIf="!isFavorite" 
+              src="../../../assets/icons/Wishlist.svg" 
+              alt="Wishlist Icon"
+              class="favorit"
+            >
             <div class="ring"></div>
             <div class="ring2"></div>
           </div>
         </div>
       </div>
-
-      <!-- Delivery information -->
+      
       <div class="delivery-info">
         <div class="delivery-item">
-          <!-- Placeholder for custom Free Delivery icon -->
           <div class="custom-icon free-delivery-icon">
-              <img src="../../../assets/icons/icon-delivery.svg" alt="Free Delivery Icon">
+            <img src="../../../assets/icons/icon-delivery.svg" alt="Free Delivery Icon">
           </div>
           <div>
             <strong>Free Delivery</strong>
@@ -89,9 +77,8 @@
         </div>
         <hr class="divider">
         <div class="delivery-item">
-          <!-- Placeholder for custom Return Delivery icon -->
           <div class="custom-icon return-delivery-icon">
-              <img src="../../../assets/icons/Icon-return.svg" alt="Return Delivery Icon">
+            <img src="../../../assets/icons/Icon-return.svg" alt="Return Delivery Icon">
           </div>
           <div>
             <strong>Return Delivery</strong>
@@ -99,7 +86,8 @@
           </div>
         </div>
       </div>
-      
     </div>
   </div>
-  
+</div>
+
+<app-shop [take]="4"></app-shop>
