@@ -4,7 +4,7 @@ import { EditProductComponent } from './pages/edit-product/edit-product.componen
 import { UsersComponent } from './components/users/users.component';
 
 export const routes: Routes = [
-    {'path': 'admin', component:AdminComponent},
+    {'path': '', component:AdminComponent},
     {'path': 'edit-product', component:EditProductComponent},
     {'path': 'users', component:UsersComponent},
 ];
