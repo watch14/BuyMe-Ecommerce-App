@@ -18,7 +18,7 @@ interface ApiResponse {
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UserComponent implements OnInit {
+export class UsersComponent implements OnInit {
   userCount: number = 0;
   users: any[] = [];
   showUsers: boolean = false;
