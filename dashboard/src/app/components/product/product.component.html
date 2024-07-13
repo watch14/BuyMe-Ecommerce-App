@@ -35,8 +35,8 @@
       </select>
     </div>
     <div>
-      <label>Product Image</label>
-      <input type="file" (change)="onFileChange($event)" accept="image/*">
+      <label>Product Rate</label>
+      <input type="number" formControlName="productRate" required>
     </div>
     <div>
       <button type="button" (click)="cancelEdit()">Cancel</button>
@@ -44,3 +44,4 @@
     </div>
   </form>
 </div>
+

@@ -5,11 +5,26 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+interface Product {
+  _id: string;
+  productName: string;
+  productPrice: number;
+  categoryId: string;
+  productPicture: string[];
+  productColor: string;
+  productDescription: string;
+  productRate: number;
+  productStock: number;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
 interface ApiResponse {
   success: boolean;
   status: number;
   message: string;
-  data: any[];
+  data: Product | Product[];
 }
 
 @Component({
@@ -20,18 +35,18 @@ interface ApiResponse {
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  products: any[] = [];
-  editingProduct: any = null;
+  products: Product[] = [];
+  editingProduct: Product | null = null;
   editProductForm: FormGroup;
-  private productApiUrl = 'http://localhost:3000/api/product/search';
+  private productApiUrl = 'http://localhost:3000/api/product/search?skip=0&take=100';
   private updateProductApiUrl = 'http://localhost:3000/api/product';
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private dialog: MatDialog) {
+  constructor(private http: HttpClient, private fb: FormBuilder) {
     this.editProductForm = this.fb.group({
       productName: ['', Validators.required],
       productPrice: ['', [Validators.required, Validators.min(0)]],
       productCategory: ['', Validators.required],
-      productImage: [null]
+      productRate: ['', Validators.required] // Add productRate field to form
     });
   }
 
@@ -43,7 +58,7 @@ export class ProductComponent implements OnInit {
     this.http.get<ApiResponse>(this.productApiUrl).subscribe(
       (response) => {
         if (response.success) {
-          this.products = response.data;
+          this.products = Array.isArray(response.data) ? response.data : [response.data];
         }
       },
       (error) => {
@@ -52,13 +67,13 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  startEditProduct(product: any): void {
+  startEditProduct(product: Product): void {
     this.editingProduct = product;
     this.editProductForm.patchValue({
       productName: product.productName,
       productPrice: product.productPrice,
-      productCategory: product.productCategory,
-      productImage: null
+      productCategory: product.categoryId,
+      productRate: product.productRate // Update form with product rate
     });
   }
 
@@ -67,34 +82,35 @@ export class ProductComponent implements OnInit {
     this.editProductForm.reset();
   }
 
-  onFileChange(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.editProductForm.patchValue({
-        productImage: file
-      });
-    }
-  }
-
   save(): void {
     if (!this.editProductForm.valid) return;
 
-    const formData = new FormData();
-    formData.append('productName', this.editProductForm.get('productName')?.value);
-    formData.append('productPrice', this.editProductForm.get('productPrice')?.value);
-    formData.append('productCategory', this.editProductForm.get('productCategory')?.value);
-    if (this.editProductForm.get('productImage')?.value) {
-      formData.append('productImage', this.editProductForm.get('productImage')?.value);
-    }
+    const updatedProduct: Product = {
+      _id: this.editingProduct?._id || '',
+      productName: this.editProductForm.get('productName')?.value,
+      productPrice: this.editProductForm.get('productPrice')?.value,
+      categoryId: this.editProductForm.get('productCategory')?.value,
+      productPicture: this.editingProduct?.productPicture || [],
+      productColor: this.editingProduct?.productColor || '',
+      productDescription: this.editingProduct?.productDescription || '',
+      productRate: this.editProductForm.get('productRate')?.value, // Update product rate
+      productStock: this.editingProduct?.productStock || 0,
+      createdAt: this.editingProduct?.createdAt || '',
+      updatedAt: this.editingProduct?.updatedAt || '',
+      __v: this.editingProduct?.__v || 0
+    };
 
-    const productId = this.editingProduct._id;
+    const productId = updatedProduct._id;
 
-    this.http.put(`${this.updateProductApiUrl}/${productId}`, formData).subscribe(
-      (response: any) => {
+    if (!productId) return; // Ensure productId exists
+
+    this.http.put<ApiResponse>(`${this.updateProductApiUrl}/${productId}`, updatedProduct).subscribe(
+      (response) => {
         if (response.success) {
-          const index = this.products.findIndex(p => p._id === productId);
+          const updatedProduct = response.data as Product;
+          const index = this.products.findIndex(p => p._id === updatedProduct._id);
           if (index !== -1) {
-            this.products[index] = response.data;
+            this.products[index] = updatedProduct;
           }
           this.cancelEdit();
         }
@@ -106,8 +122,8 @@ export class ProductComponent implements OnInit {
   }
 
   deleteProduct(productId: string): void {
-    this.http.delete(`${this.updateProductApiUrl}/${productId}`).subscribe(
-      (response: any) => {
+    this.http.delete<ApiResponse>(`${this.updateProductApiUrl}/${productId}`).subscribe(
+      (response) => {
         if (response.success) {
           this.products = this.products.filter(product => product._id !== productId);
         }
