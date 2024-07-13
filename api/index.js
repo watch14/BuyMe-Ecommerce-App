@@ -1,5 +1,5 @@
 import express from "express";
-import mongoose, { version } from "mongoose";
+import mongoose from "mongoose";
 import dotenv from "dotenv";
 
 import roleRoute from "./routes/role.js";
@@ -26,12 +26,22 @@ import orderRouter from "./routes/order.js";
 
 const app = express();
 const port = 3000;
-app.use(
-  cors({
-    origin: "http://localhost:4200",
-    credentials: true,
-  })
-);
+
+const allowedOrigins = ["http://localhost:4200", "http://localhost:5000"];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 // Swagger options
 const swaggerOptions = {
   swaggerDefinition: {
@@ -39,7 +49,7 @@ const swaggerOptions = {
     info: {
       title: "Auth",
       version: "1.0.0",
-      description: "User Authentification",
+      description: "User Authentication",
     },
     servers: [
       {
@@ -56,7 +66,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // dotenv secure mongodb link
 dotenv.config();
 
-//stripe payment online
+// Stripe payment online
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 
 // to accept JSON format
@@ -78,26 +88,34 @@ app.use("/api/sort", sortRoutes);
 app.use("/api/receipts", receiptRoutes);
 
 app.use("/api/payment", paymentRouter);
-
 app.use("/api/orders", orderRouter);
 
 // Response handler
 app.use((obj, req, res, next) => {
   const statusCode = obj.status || 500;
-  const message = obj.message || "Somethong went wrong!";
+  const message = obj.message || "Something went wrong!";
   return res.status(statusCode).json({
-    success: [200, 201, 204].some((x) => x === obj.status) ? true : false,
+    success: [200, 201, 204].includes(obj.status),
     status: statusCode,
     message: message,
     data: obj.data,
   });
 });
 
+// Error handling for CORS
+app.use((err, req, res, next) => {
+  if (err.message === "Not allowed by CORS") {
+    res.status(500).json({ message: "CORS error: Not allowed by CORS" });
+  } else {
+    next(err);
+  }
+});
+
 // DB connection
 const connectMongoDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URL_ONLINE);
-    console.log("Conncted to MongoDB!");
+    console.log("Connected to MongoDB!");
   } catch (error) {
     throw error;
   }
@@ -107,7 +125,6 @@ app.listen(port, async () => {
   try {
     await connectMongoDB();
     console.log(`App Connected to Back-end on port: ${port}
-
           http://localhost:${port}/`);
   } catch (error) {
     console.error("Failed to connect to MongoDB:", error);
