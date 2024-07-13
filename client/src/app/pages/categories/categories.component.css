@@ -10,13 +10,15 @@ h3 {
   font-family: "Galderglynn", sans-serif; /* Use Galderglynn font for titles */
   display: flex;
   justify-content: center;
+  padding: 20px 0;
+  font-size: 24px;
 }
 
 .categories-container,
 #col {
   max-width: 1440px;
   border-radius: 20px;
-  margin: 20px;
+
   margin-inline: auto;
   padding: 20px;
   box-sizing: border-box; /* Ensure padding is included in the element's width and height */
@@ -30,7 +32,6 @@ h3 {
 
 .category-item {
   width: 18%;
-  margin: 10px;
   margin-bottom: 10px;
   cursor: pointer;
   position: relative;
@@ -51,8 +52,7 @@ h3 {
 .selected-category-products h3 {
   text-align: center;
   font-size: 24px;
-  margin-bottom: 20px;
-  margin-top: 50px;
+  margin-top: 28px;
 }
 
 :root {
@@ -65,7 +65,7 @@ h3 {
   border: 0px solid #e5e7eb;
   border-radius: 15px;
   overflow: hidden;
-  margin-top: 70px;
+  margin-top: 20px;
 }
 
 .product-title h5,
