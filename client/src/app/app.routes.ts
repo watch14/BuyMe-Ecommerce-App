@@ -17,6 +17,7 @@ import { FavouriteComponent } from './pages/favourite/favourite.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { SuccessComponent } from './components/success/success.component';
 import { CancelComponent } from './components/cancel/cancel.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 export const routes: Routes = [
     {'path': '', component:HomeComponent},
@@ -26,6 +27,7 @@ export const routes: Routes = [
     {'path': 'reset/:token', component:ResetPasswordComponent},
 
     {'path': 'admin-dashboard', component:AdminDashboardComponent},
+    {'path': 'admin', component:AdminComponent},
 
     {'path': 'shop', component:ShopComponent},
     {'path': 'product/:id', component:ProductComponent},

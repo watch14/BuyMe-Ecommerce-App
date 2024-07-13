@@ -12,6 +12,7 @@ import { ChartjsComponent } from '@coreui/angular-chartjs';
 import { RouterLink } from '@angular/router';
 import { IconDirective } from '@coreui/icons-angular';
 import { RowComponent, ColComponent, WidgetStatAComponent, TemplateIdDirective, ThemeDirective, DropdownComponent, ButtonDirective, DropdownToggleDirective, DropdownMenuDirective, DropdownItemDirective, DropdownDividerDirective } from '@coreui/angular';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-widgets-dropdown',
@@ -22,6 +23,7 @@ import { RowComponent, ColComponent, WidgetStatAComponent, TemplateIdDirective, 
     imports: [RowComponent, ColComponent, WidgetStatAComponent, TemplateIdDirective, IconDirective, ThemeDirective, DropdownComponent, ButtonDirective, DropdownToggleDirective, DropdownMenuDirective, DropdownItemDirective, RouterLink, DropdownDividerDirective, ChartjsComponent]
 })
 export class WidgetsDropdownComponent implements OnInit, AfterContentInit {
+users: any;
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef
