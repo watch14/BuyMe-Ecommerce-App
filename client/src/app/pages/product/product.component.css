@@ -1,3 +1,7 @@
+* {
+  font-family: "Sarabun";
+}
+
 /* For titles */
 @font-face {
   font-family: "Galderglynn";
@@ -40,8 +44,10 @@
   flex-direction: column; /* Change from row to column for responsiveness */
   justify-content: center; /* Center horizontally */
   align-items: center; /* Align items to the top */
-  width: 80%;
-  margin: 50px auto; /* Adjust margin for vertical positioning */
+  max-width: 1440px;
+  width: 100%;
+  padding: 20px;
+  margin-inline: auto;
 }
 
 @media (min-width: 1220px) {
@@ -51,7 +57,7 @@
   }
 }
 
-/*Main & Side-Image css starts here*/
+/* Main & Side-Image css starts here */
 
 .card {
   position: relative;
@@ -59,7 +65,10 @@
 
 .main-image {
   display: block;
-  max-width: 100%;
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* Ensure the image covers the entire container */
+  border-radius: 20px; /* Add border-radius */
 }
 
 .side-images {
@@ -75,19 +84,20 @@
   width: 100px;
   height: 100px;
   border: 1px solid rgb(233, 233, 233);
-  border-radius: 2px;
+  border-radius: 20px; /* Add border-radius */
   cursor: pointer;
   opacity: 0.8;
   transition: opacity 0.5s ease; /* Smooth transition for opacity */
   transform: scale(0.5); /* Scale down the image to 50% of its original size */
   transform-origin: center;
+  object-fit: cover; /* Ensure the image covers the entire container */
 }
 
 .side-image:hover {
   opacity: 1; /* Brighten side-image on hover */
 }
 
-/*Main & Side-Image css ends here*/
+/* Main & Side-Image css ends here */
 
 .product-images {
   flex: 1; /* Take up remaining space */
@@ -99,6 +109,8 @@
   max-height: 600px; /* Set a maximum height for consistency */
   display: block; /* Ensure images do not have extra space below */
   margin: 0 auto; /* Center images horizontally */
+  object-fit: cover; /* Ensure the image covers the entire container */
+  border-radius: 20px; /* Add border-radius */
 }
 
 .product-info {
