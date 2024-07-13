@@ -44,8 +44,6 @@
   flex-direction: column; /* Change from row to column for responsiveness */
   justify-content: center; /* Center horizontally */
   align-items: center; /* Align items to the top */
-  max-width: 1440px;
-  width: 100%;
   padding: 20px;
   margin-inline: auto;
 }
@@ -362,7 +360,6 @@ input[type="number"]::-webkit-outer-spin-button {
   gap: 10px;
   margin-bottom: 20px;
   margin-top: 40px;
-  width: 60%;
   padding: 20px; /* Add padding inside the block */
   border: 2px solid #ccc; /* Border around the block */
   border-radius: 25px; /* Optional: rounded corners */
