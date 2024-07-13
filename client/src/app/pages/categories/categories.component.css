@@ -1,24 +1,25 @@
 /* For titles */
 @font-face {
-  font-family: 'Galderglynn';
-  src: url('../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf') format('truetype'),
+  font-family: "Galderglynn";
+  src: url("../../../assets/fonts/galderglynn-titling/galderglynn\ titling\ bd.otf")
+    format("truetype");
 }
 
-.categories-title {
-  font-family: 'Galderglynn', sans-serif; /* Use Galderglynn font for titles */
-  color: black; /* Set color to black */
+h2,
+h3 {
+  font-family: "Galderglynn", sans-serif; /* Use Galderglynn font for titles */
+  display: flex;
+  justify-content: center;
 }
 
-.categories-container {
-  text-align: center;
-  width: 70%;
-  margin: 0 auto;
+.categories-container,
+#col {
+  max-width: 1440px;
+  border-radius: 20px;
+  margin: 20px;
+  margin-inline: auto;
   padding: 20px;
-}
-
-.categories-title {
-  margin-top: 40px;
-  margin-bottom: 40px;
+  box-sizing: border-box; /* Ensure padding is included in the element's width and height */
 }
 
 .categories-content {
@@ -45,10 +46,6 @@
 
 .selected-category-products {
   padding-top: 40px;
-  max-width: 1440px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 20px;
 }
 
 .selected-category-products h3 {
@@ -165,4 +162,20 @@
 .btns:hover {
   background-color: var(--Teal, #11b6a3);
   color: white;
+}
+
+#button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #40b9a5;
+  color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  cursor: pointer;
+  width: 200px;
+  margin-inline: auto;
+}
+
+#button:hover {
+  background-color: #3cc9b1;
 }
