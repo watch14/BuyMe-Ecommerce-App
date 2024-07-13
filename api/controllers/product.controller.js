@@ -60,10 +60,10 @@ export const updateProduct = async (req, res, next) => {
   }
 };
 
-// Controller function to get all products with optional search, price range, category filters, stock filter, and pagination
+// Controller function to get all products with optional search, price range, category filters, stock filter, pagination, and sorting
 export const getAllProducts = async (req, res, next) => {
   try {
-    const { q, minPrice, maxPrice, category, filterByStock, skip, take } =
+    const { q, minPrice, maxPrice, category, filterByStock, skip, take, sort } =
       req.query; // Extract query parameters
 
     let query = {}; // Initialize query object
@@ -104,8 +104,18 @@ export const getAllProducts = async (req, res, next) => {
     const skipCount = skip ? parseInt(skip, 10) : 0; // Default to 0 if skip is not provided
     const takeCount = take ? parseInt(take, 10) : 10; // Default to 10 if take is not provided
 
-    // Find products based on constructed query with pagination
-    const products = await Product.find(query).skip(skipCount).limit(takeCount);
+    // Construct the sorting object based on the sort parameter
+    let sortQuery = {};
+    if (sort) {
+      const sortOrder = sort === "asc" ? 1 : -1;
+      sortQuery = { productPrice: sortOrder };
+    }
+
+    // Find products based on constructed query with pagination and sorting
+    const products = await Product.find(query)
+      .skip(skipCount)
+      .limit(takeCount)
+      .sort(sortQuery);
 
     // Respond with success message and products
     return next(

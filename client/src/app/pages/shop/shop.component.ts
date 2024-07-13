@@ -1,3 +1,4 @@
+import { apiUrls } from './../../api.urls';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -16,9 +17,9 @@ import { SliderModule } from './slider.module';
 })
 
 export class ShopComponent implements OnInit {
-  readonly baseUrl = 'http://localhost:3000/api/product/search';
+  baseUrl = apiUrls.productSearchApi
   skip = 0;
-  take = 4;
+  take = 8;
   products: any[] = [];
   hasMoreProducts = true;
   selectedCategory: string = '';
@@ -43,19 +44,27 @@ export class ShopComponent implements OnInit {
   }
 
   fetchProducts() {
+    // Construct the URL for the API request
     let url = `${this.baseUrl}?skip=${this.skip}&take=${this.take}&minPrice=${this.priceRange[0]}&maxPrice=${this.priceRange[1]}`;
-
+  
     if (this.selectedCategory) {
       url += `&category=${this.selectedCategory}`;
     }
-
+  
+    if (this.selectedPriceOrder) {
+      url += `&sort=${this.selectedPriceOrder}`;
+    }
+  
+    // Log the constructed URL for debugging
+    console.log('Fetching products with URL:', url);
+  
+    // Make the API request to fetch products
     this.http.get<any>(url).subscribe(
       (response: any) => {
         this.products = response.data.map((product: any) => ({
           ...product,
           isFavorite: false
         }));
-        this.sortProductsByPrice();
         this.hasMoreProducts = response.data.length === this.take;
         this.loadUserFavorites();
       },
@@ -64,6 +73,7 @@ export class ShopComponent implements OnInit {
       }
     );
   }
+  
 
   sortProductsByPrice() {
     if (this.selectedPriceOrder === 'asc') {
@@ -163,7 +173,7 @@ export class ShopComponent implements OnInit {
   filterByPrice(priceOrder: string) {
     this.selectedPriceOrder = priceOrder;
     this.skip = 0; // Reset pagination
-    this.sortProductsByPrice();
+    this.fetchProducts();
   }
 
   onPriceChange() {
