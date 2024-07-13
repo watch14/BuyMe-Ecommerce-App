@@ -26,13 +26,13 @@
           <span class="rating">{{ product.productRate }}</span>
         </div>
         
-        <p class="product-price">${{ product.productPrice }}</p>
         <p>{{ product.productDescription }}</p>
-        <p><strong>Category:</strong> {{ categoryName$ | async }}</p>
         <p class="color-desc">
           Colours:<span class="color-circle" [style.backgroundColor]="product.productColor"></span>
           <span class="color-name">{{ product.productColor }}</span>
         </p>
+        <p class="product-price">${{ product.productPrice }}</p>
+
       </div>
       
       <div class="number">

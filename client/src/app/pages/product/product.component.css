@@ -114,8 +114,16 @@
 }
 
 .product-info {
+  display: flex;
+  flex-direction: column;
   flex: 1; /* Take up remaining space */
   padding: 30px; /* Add padding for space inside */
+}
+
+.product-description {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .product-description .fa-star {
@@ -133,8 +141,9 @@
   color: #666; /* Set color of the "/5" to grey */
 }
 
-.product-description p.product-price {
+.product-description .product-price {
   font-size: 24px; /* Increase font size for the price */
+  padding-bottom: 12px;
 }
 
 .product-description .color-desc {
@@ -161,13 +170,14 @@
 
 .product-description p:nth-last-child(2) {
   border-bottom: 1px solid #ccc; /* Grey border color */
-  padding-bottom: 10px; /* Optional: Adjust padding for spacing */
+  padding-bottom: 20px; /* Optional: Adjust padding for spacing */
   margin-bottom: 20px; /* Optional: Adjust margin for spacing */
 }
 
 .number {
   display: flex;
-  align-items: center; /* Align items vertically centered */
+  align-items: center;
+  justify-content: space-between;
   gap: 8px;
 }
 
@@ -254,6 +264,7 @@ input[type="number"]::-webkit-outer-spin-button {
   cursor: pointer; /* Pointer cursor on hover */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
   transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transitions */
+  width: 100%;
 }
 
 .buy button:hover {
@@ -350,18 +361,20 @@ input[type="number"]::-webkit-outer-spin-button {
   flex-direction: column;
   gap: 10px;
   margin-bottom: 20px;
-  margin-top: 60px;
+  margin-top: 40px;
   width: 60%;
   padding: 20px; /* Add padding inside the block */
   border: 2px solid #ccc; /* Border around the block */
   border-radius: 25px; /* Optional: rounded corners */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: shadow effect */
+  width: 100%;
+  opacity: 70%;
 }
 
 .delivery-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .delivery-item i {
