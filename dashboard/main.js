@@ -1,6 +1,22 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
-const url = require("url");
 const path = require("path");
+const crypto = require("crypto");
+const fs = require("fs");
+require("dotenv").config({ path: path.join(__dirname, ".env") }); // Load environment variables from .env file
+
+const hashPassword = (password) => {
+  return crypto.createHash("sha256").update(password).digest("hex");
+};
+
+const storedHashedPassword = hashPassword(process.env.PASSWORD);
+
+// Debugging: Log the loaded and hashed password
+if (!process.env.PASSWORD) {
+  console.error("ERROR: PASSWORD environment variable is not defined.");
+} else {
+  console.log("Loaded Password:", process.env.PASSWORD);
+  console.log("Hashed Password:", storedHashedPassword);
+}
 
 let mainWindow;
 let passwordWindow;
@@ -30,13 +46,9 @@ function createMainWindow() {
   });
 
   mainWindow.loadURL(
-    url.format({
-      pathname: path.join(__dirname, `/dist/dashboard/browser/index.html`),
-      protocol: "file:",
-      slashes: true,
-    })
+    `file://${path.join(__dirname, "/dist/dashboard/browser/index.html")}`
   );
-  mainWindow.webContents.openDevTools();
+
   mainWindow.on("closed", function () {
     mainWindow = null;
   });
@@ -44,9 +56,17 @@ function createMainWindow() {
 
 app.on("ready", createPasswordWindow);
 
-ipcMain.on("login-success", () => {
-  passwordWindow.close();
-  createMainWindow();
+ipcMain.on("check-password", (event, inputPassword) => {
+  console.log("Input Password:", inputPassword); // Debugging line
+  if (
+    storedHashedPassword &&
+    hashPassword(inputPassword) === storedHashedPassword
+  ) {
+    createMainWindow();
+    passwordWindow.close();
+  } else {
+    event.sender.send("login-failed");
+  }
 });
 
 app.on("window-all-closed", function () {
