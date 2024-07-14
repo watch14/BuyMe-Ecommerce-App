@@ -1,7 +1,7 @@
 import { NgChartsModule } from 'ng2-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ReceiptService } from '../../service/receipt.service';
 import { ChartConfiguration, ChartType } from 'chart.js';
 
@@ -38,7 +38,7 @@ interface ApiResponse<T> {
 })
 export class ChartComponent implements OnInit {
   receipts: Receipt[] = [];
-  
+
   salesChartData: ChartConfiguration['data'] = {
     datasets: [
       {
@@ -48,12 +48,12 @@ export class ChartComponent implements OnInit {
         borderColor: '#14B8A6',
         borderWidth: 2,
         fill: true,
-        tension: 0.4,
+        tension: 0.4, // Curved line
       }
     ],
     labels: []
   };
-  
+
   salesChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     plugins: {
@@ -132,11 +132,9 @@ export class ChartComponent implements OnInit {
       {
         data: [],
         label: 'Total Products Sold',
-        backgroundColor: 'rgba(209, 213, 219, 0.5)',
-        borderColor: '#D1D5DB',
-        borderWidth: 2,
-        fill: true,
-        tension: 0.4,
+        backgroundColor: '#0d6efd',
+        borderColor: '#0d6efd',
+        borderWidth: 1,
       }
     ],
     labels: []
@@ -213,9 +211,9 @@ export class ChartComponent implements OnInit {
       }
     }
   };
-  productsChartType: ChartType = 'line';
+  productsChartType: ChartType = 'bar'; // Set chart type to bar
 
-  constructor(private receiptService: ReceiptService) {}
+  constructor(private receiptService: ReceiptService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.getAllReceipts();
@@ -253,6 +251,7 @@ export class ChartComponent implements OnInit {
             })
           );
           this.prepareChartData();
+          this.cdr.detectChanges(); // Manually trigger change detection
         } else {
           console.error('Unexpected response format:', response);
         }
@@ -281,6 +280,8 @@ export class ChartComponent implements OnInit {
 
     this.productsChartData.labels = sortedDates;
     this.productsChartData.datasets[0].data = sortedDates.map(date => salesData[date].totalProducts);
+
+    this.cdr.detectChanges(); // Manually trigger change detection
   }
 
   calculateTotalSales(): number {
