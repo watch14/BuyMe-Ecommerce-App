@@ -1,0 +1,38 @@
+<div class="orders-container">
+  <h2>All Receipts</h2>
+  <p>Total Price of All Receipts: <strong>{{ totalPrice | currency }}</strong></p>
+  <table class="receipts-table">
+    <thead>
+      <tr>
+        <th>Receipt Number</th>
+        <th>User Name</th>
+        <th>Product List</th>
+        <th (click)="sortReceiptsBy('totalPrice')" style="cursor: pointer;">
+          Total Price <span class="sort-icon">{{ getSortIcon('totalPrice') }}</span>
+        </th>
+        <th (click)="sortReceiptsBy('date')" style="cursor: pointer;">
+          Date <span class="sort-icon">{{ getSortIcon('date') }}</span>
+        </th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let receipt of receipts">
+        <td>{{ receipt.receiptNumber }}</td>
+        <td>{{ receipt.userName }}</td>
+        <td>
+          <ul class="product-list">
+            <li *ngFor="let product of receipt.productList">
+              {{ product.productName }} - {{ product.quantity }} x {{ product.price | currency }}
+            </li>
+          </ul>
+        </td>
+        <td>{{ receipt.totalPrice | currency }}</td>
+        <td>{{ formatDate(receipt.createdAt) }}</td>
+        <td class="actions">
+          <button class="btn btn-delete" (click)="confirmDelete(receipt._id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
