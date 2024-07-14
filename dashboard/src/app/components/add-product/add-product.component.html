@@ -1,0 +1,124 @@
+<div class="div">
+  <button class="btns" (click)="openAddProductModal()">Add New Product</button>
+</div>
+
+<!-- Modal HTML -->
+<div class="modal" [ngClass]="{ open: showModal }">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+
+    <form #productForm="ngForm" (ngSubmit)="uploadFiles()">
+      <h2>Add Product</h2>
+
+      <div>
+        <label for="productName">Product Name:</label>
+        <input
+          id="productName"
+          name="productName"
+          type="text"
+          [(ngModel)]="product.productName"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="categoryId">Category ID:</label>
+        <input
+          id="categoryId"
+          name="categoryId"
+          type="text"
+          [(ngModel)]="product.categoryId"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="productPrice">Price:</label>
+        <input
+          id="productPrice"
+          name="productPrice"
+          [(ngModel)]="product.productPrice"
+          type="number"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="productColor">Color:</label>
+        <input
+          id="productColor"
+          name="productColor"
+          type="text"
+          [(ngModel)]="product.productColor"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="productDescription">Description:</label>
+        <textarea
+          id="productDescription"
+          name="productDescription"
+          [(ngModel)]="product.productDescription"
+          required
+        ></textarea>
+      </div>
+
+      <div>
+        <label for="productRate">Rate:</label>
+        <input
+          id="productRate"
+          name="productRate"
+          [(ngModel)]="product.productRate"
+          type="number"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="productStock">Stock:</label>
+        <input
+          id="productStock"
+          name="productStock"
+          [(ngModel)]="product.productStock"
+          type="number"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="fileInput">Product Images:</label>
+        <input
+          type="file"
+          id="fileInput"
+          (change)="handleFileInput($event)"
+          multiple
+        />
+      </div>
+
+      <div class="upload-loader" *ngIf="isUploading">
+        <mat-spinner diameter="40"></mat-spinner>
+        <span>Loading images...</span>
+      </div>
+
+      <div *ngIf="imagePreviews.length > 0">
+        <h4>Selected Images:</h4>
+        <div
+          *ngFor="let preview of imagePreviews; let i = index"
+          class="image-preview-container"
+        >
+          <img [src]="preview.url" class="image-preview" />
+          <button (click)="removeImage(i)" class="remove-button">X</button>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        (click)="uploadFiles()"
+        [disabled]="imagePreviews.length === 0 || isUploading"
+      >
+        {{ isUploading ? "Adding Product..." : "Add Product" }}
+      </button>
+    </form>
+  </div>
+</div>
