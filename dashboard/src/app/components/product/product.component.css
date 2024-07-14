@@ -1,0 +1,223 @@
+/* add-product.component.css */
+.div {
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+}
+/* Styling for the modal */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* 10% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, adjust as needed */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Open class for showing the modal */
+.open {
+  display: block;
+}
+
+/* add-product.component.css */
+
+/* General styles for the page */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+h2 {
+  font-size: 2.5em; /* Larger heading for emphasis */
+  color: #333;
+  margin-bottom: 20px;
+}
+
+h4 {
+  font-size: 1.8em; /* Slightly larger heading */
+  color: #333;
+  margin-bottom: 10px;
+}
+
+form {
+  margin-bottom: 30px; /* Increased margin for form sections */
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+div {
+  margin-bottom: 20px; /* Increased spacing between sections */
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px; /* Slightly increased margin */
+  color: #555; /* Darkened label color */
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+input[type="file"] {
+  margin-top: 10px;
+}
+
+button {
+  padding: 12px 12px;
+  font-size: 1em;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:hover:not([disabled]) {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.image-preview-container {
+  position: relative;
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.image-preview {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.remove-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #dc3545; /* Red delete button */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.remove-button:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="number"],
+  textarea {
+    width: 100%;
+  }
+}
+
+/* add-product.component.css */
+
+.success-message {
+  background-color: #dff0d8; /* Success message background color */
+  color: #3c763d; /* Success message text color */
+  border: 1px solid #d6e9c6; /* Success message border color */
+  padding: 10px;
+  margin-top: 20px;
+  border-radius: 4px;
+}
+
+/* Styles for Success Snackbar */
+.snackbar-success .larger-snack-bar {
+  background-color: #4caf50; /* Green */
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Styles for Error Snackbar */
+.snackbar-error,
+.larger-snack-bar,
+.blue-snackbar {
+  background-color: #f44336; /* Red */
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}
+
+.blue-snackbar {
+  background: #2196f3;
+}
+
+/* Larger size for snack bar */
+.larger-snack-bar {
+  font-size: 20px;
+  min-width: 300px; /* Adjust width as needed */
+}
+
+/* Loading indicator styles */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.loading-indicator mat-progress-spinner {
+  margin-right: 10px;
+}

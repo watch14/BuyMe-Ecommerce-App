@@ -8,7 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
-interface Product {
+interface Producte {
   productName: string;
   categoryId: string; 
   productPrice: number;
@@ -35,7 +35,7 @@ export class AddProductComponent {
   isUploading = false;
   showModal = false;
   imagePreviews: { file: File, url: string }[] = [];
-  product: Product = {
+  product: Producte = {
     productName: '',
     categoryId: '',
     productPrice: 0,
