@@ -69,6 +69,7 @@ interface ApiResponse {
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
 })
+
 export class ProductComponent implements OnInit {
   products: Product[] = [];
   editingProduct: Product | null = null;
@@ -76,6 +77,8 @@ export class ProductComponent implements OnInit {
   private productApiUrl =
     'http://localhost:3000/api/product/search?skip=0&take=100';
   private updateProductApiUrl = 'http://localhost:3000/api/product';
+
+  totalProducts: number = 0;
 
   constructor(
     private http: HttpClient,
@@ -123,6 +126,7 @@ export class ProductComponent implements OnInit {
           this.products = Array.isArray(response.data)
             ? response.data
             : [response.data];
+          this.totalProducts = this.products.length; // Set the total product count here
         }
       },
       (error) => {
@@ -198,6 +202,7 @@ export class ProductComponent implements OnInit {
             this.products = this.products.filter(
               (product) => product._id !== productId
             );
+            this.totalProducts = this.products.length; // Update the total product count here
             this.showSuccessMessage('Product deleted successfully!');
           }
         },

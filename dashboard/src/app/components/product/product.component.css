@@ -265,3 +265,10 @@ button[type="submit"]:hover {
     flex-direction: column;
   }
 }
+
+.total-products {
+  font-size: 18px;
+  padding: 20px 0;
+  color: #111827;
+  border-radius: 5px;
+}
