@@ -1,12 +1,17 @@
 {
   "name": "dashboard",
-  "version": "0.0.0",
+  "main": "main.js",
+  "version": "0.0.1",
+  "authors": "ma",
+  "description": "dash",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "electron": "ng build --base-href ./ && electron .",
+    "dist": "ng build --base-href ./ && electron-builder"
   },
   "private": true,
   "dependencies": {
@@ -15,12 +20,15 @@
     "@angular/common": "^18.1.0",
     "@angular/compiler": "^18.1.0",
     "@angular/core": "^18.1.0",
+    "@angular/fire": "^18.0.1",
     "@angular/forms": "^18.1.0",
     "@angular/material": "^18.1.0",
     "@angular/platform-browser": "^18.1.0",
     "@angular/platform-browser-dynamic": "^18.1.0",
     "@angular/router": "^18.1.0",
     "chart.js": "^3.9.1",
+    "dotenv": "^16.4.5",
+    "firebase": "^10.12.3",
     "ng2-charts": "^3.1.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -31,6 +39,8 @@
     "@angular/cli": "^18.1.0",
     "@angular/compiler-cli": "^18.1.0",
     "@types/jasmine": "~5.1.0",
+    "electron": "^31.2.0",
+    "electron-builder": "^24.13.3",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -38,5 +48,17 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.5.2"
+  },
+  "build": {
+    "appId": "BuyMe.Dashboard",
+    "productName": "BuyMe Admin Dashboard",
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "files": [
+      "**/*",
+      "dist/dashboard/browser/**",
+      ".env"
+    ]
   }
 }

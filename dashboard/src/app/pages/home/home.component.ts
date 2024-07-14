@@ -17,7 +17,7 @@ import { ChartComponent } from '../../components/chart/chart.component';
             ProductComponent,
             RouterModule,
             OrdersComponent,
-            ChartComponent
+            ChartComponent,
 
   ],
   templateUrl: './home.component.html',

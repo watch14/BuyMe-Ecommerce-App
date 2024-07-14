@@ -1,21 +1,27 @@
 {
   "name": "coreui-free-angular-admin-template",
   "version": "5.2.5",
-  "copyright": "Copyright 2024 creativeLabs Łukasz Holeczek",
-  "license": "MIT",
-  "author": "The CoreUI Team (https://github.com/orgs/coreui/people) and contributors",
-  "homepage": "https://coreui.io/angular",
-  "config": {
-    "theme": "default",
-    "coreui_library_short_version": "5.2",
-    "coreui_library_docs_url": "https://coreui.io/angular/docs/"
-  },
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "electron": "ng build --configuration production && electron .",
+    "electron:build": "ng build --configuration production && electron-builder"
+  },
+  "build": {
+    "appId": "com.example.myapp",
+    "files": [
+      "dist/**/*",
+      "main.js"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "private": true,
   "dependencies": {
@@ -51,6 +57,9 @@
     "@types/jasmine": "^5.1.4",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.14.10",
+    "electron": "^31.2.0",
+    "electron-builder": "^24.13.3",
+    "electron-packager": "^17.1.2",
     "jasmine-core": "^5.1.2",
     "karma": "^6.4.3",
     "karma-chrome-launcher": "^3.2.0",

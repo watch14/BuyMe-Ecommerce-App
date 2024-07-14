@@ -193,11 +193,11 @@ export class ChartComponent implements OnInit {
       return acc;
     }, {} as Record<string, { totalSales: number; totalProducts: number }>);
 
-    this.salesChartData.labels = Object.keys(salesData);
-    this.salesChartData.datasets[0].data = Object.values(salesData).map(data => data.totalSales);
-    this.salesChartData.datasets[1].data = Object.values(salesData).map(data => data.totalProducts);
+    const sortedDates = Object.keys(salesData).sort((a, b) => new Date(a).getTime() - new Date(b).getTime());
 
-   
+    this.salesChartData.labels = sortedDates;
+    this.salesChartData.datasets[0].data = sortedDates.map(date => salesData[date].totalSales);
+    this.salesChartData.datasets[1].data = sortedDates.map(date => salesData[date].totalProducts);
   }
 
   calculateTotalSales(): number {
