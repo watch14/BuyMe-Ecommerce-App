@@ -61,15 +61,15 @@
 
 /* Specific card styles */
 .column:nth-child(1) .card {
-    background-color: #007bff; /* Blue */
+    background-color: #0d6efd; /* Blue */
 }
 
 .column:nth-child(2) .card {
-    background-color: #ffc108; /* Yellow */
+    background-color: #ffc107; /* Yellow */
 }
 
 .column:nth-child(3) .card {
-    background-color: #28a745; /* Green */
+    background-color: #dc3545; /* Green */
 }
 
 /* Align h3 and p to start (left) of .card */
