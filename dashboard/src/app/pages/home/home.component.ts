@@ -6,6 +6,7 @@ import { ProductComponent } from '../../components/product/product.component';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from "../../app.component";
 import { OrdersComponent } from '../../components/orders/orders.component';
+import { ChartComponent } from '../../components/chart/chart.component';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,8 @@ import { OrdersComponent } from '../../components/orders/orders.component';
             UsersComponent,
             ProductComponent,
             RouterModule,
-            OrdersComponent
+            OrdersComponent,
+            ChartComponent
 
   ],
   templateUrl: './home.component.html',
