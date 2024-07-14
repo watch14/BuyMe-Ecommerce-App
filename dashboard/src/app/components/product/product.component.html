@@ -13,35 +13,38 @@
   </div>
 </div>
 
-<div *ngIf="editingProduct">
-  <h2>Edit Product</h2>
-  <form [formGroup]="editProductForm" (ngSubmit)="save()">
-    <div>
-      <label>Product Name</label>
-      <input type="text" formControlName="productName" required>
-    </div>
-    <div>
-      <label>Product Price</label>
-      <input type="number" formControlName="productPrice" required>
-    </div>
-    <div>
-      <label>Select Category</label>
-      <select formControlName="productCategory" required>
-        <option value="6687cb2b42b33badb0a3aa4d">Controller</option>
-        <option value="6687cb3342b33badb0a3aa4f">Keyboard</option>
-        <option value="6687cb3942b33badb0a3aa51">Mouse</option>
-        <option value="6687cb4142b33badb0a3aa53">PC</option>
-        <option value="6687cb4642b33badb0a3aa55">Monitor</option>
-      </select>
-    </div>
-    <div>
-      <label>Product Rate</label>
-      <input type="number" formControlName="productRate" required>
-    </div>
-    <div>
-      <button type="button" (click)="cancelEdit()">Cancel</button>
-      <button type="submit" [disabled]="!editProductForm.valid">Save</button>
-    </div>
-  </form>
+<!-- The Modal -->
+<div id="editModal" class="modal" [ngStyle]="{'display': editingProduct ? 'block' : 'none'}">
+  <div class="modal-content">
+    <span class="close" (click)="cancelEdit()">&times;</span>
+    <h2>Edit Product</h2>
+    <form [formGroup]="editProductForm" (ngSubmit)="save()">
+      <div>
+        <label>Product Name</label>
+        <input type="text" formControlName="productName" required>
+      </div>
+      <div>
+        <label>Product Price</label>
+        <input type="number" formControlName="productPrice" required>
+      </div>
+      <div>
+        <label>Select Category</label>
+        <select formControlName="productCategory" required>
+          <option value="6687cb2b42b33badb0a3aa4d">Controller</option>
+          <option value="6687cb3342b33badb0a3aa4f">Keyboard</option>
+          <option value="6687cb3942b33badb0a3aa51">Mouse</option>
+          <option value="6687cb4142b33badb0a3aa53">PC</option>
+          <option value="6687cb4642b33badb0a3aa55">Monitor</option>
+        </select>
+      </div>
+      <div>
+        <label>Product Rate</label>
+        <input type="number" formControlName="productRate" required>
+      </div>
+      <div>
+        <button type="button" (click)="cancelEdit()">Cancel</button>
+        <button type="submit" [disabled]="!editProductForm.valid">Save</button>
+      </div>
+    </form>
+  </div>
 </div>
-
