@@ -4,16 +4,16 @@
   <table class="receipts-table">
     <thead>
       <tr>
-        <th>Receipt Number</th>
-        <th>User Name</th>
-        <th>Product List</th>
-        <th (click)="sortReceiptsBy('totalPrice')" style="cursor: pointer;">
+        <th style="width: 10%;">Receipt Number</th>
+        <th style="width: 15%;">User Name</th>
+        <th style="width: 35%;">Product List</th>
+        <th (click)="sortReceiptsBy('totalPrice')" style="cursor: pointer; width: 15%;">
           Total Price <span class="sort-icon">{{ getSortIcon('totalPrice') }}</span>
         </th>
-        <th (click)="sortReceiptsBy('date')" style="cursor: pointer;">
+        <th (click)="sortReceiptsBy('date')" style="cursor: pointer; width: 15%;">
           Date <span class="sort-icon">{{ getSortIcon('date') }}</span>
         </th>
-        <th>Actions</th>
+        <th style="width: 10%;">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -23,11 +23,12 @@
         <td>
           <ul class="product-list">
             <li *ngFor="let product of receipt.productList">
-              {{ product.productName }} - {{ product.quantity }} x {{ product.price | currency }}
+              {{ product.productName }} - <strong>{{ product.quantity }} x {{ product.price | currency }}</strong>
+            <br><br>
             </li>
           </ul>
         </td>
-        <td>{{ receipt.totalPrice | currency }}</td>
+        <td><h6>{{ receipt.totalPrice | currency }}</h6></td>
         <td>{{ formatDate(receipt.createdAt) }}</td>
         <td class="actions">
           <button class="btn btn-delete" (click)="confirmDelete(receipt._id)">Delete</button>

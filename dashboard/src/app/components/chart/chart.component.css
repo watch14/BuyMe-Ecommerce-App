@@ -1,11 +1,17 @@
+.cont {
+  padding: 0 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
 .chart-block {
-  background-color: #f0f0f0; /* White background */
+  background-color: #f0f0f0;
   padding: 20px;
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   margin: 20px;
-  max-width: 800px;
-  height: auto;
+  width: 50%;
   margin-inline: auto;
 }
 
@@ -15,7 +21,6 @@
 
 .chart-summary {
   display: flex;
-  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }

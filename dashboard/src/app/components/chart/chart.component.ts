@@ -38,6 +38,7 @@ interface ApiResponse<T> {
 })
 export class ChartComponent implements OnInit {
   receipts: Receipt[] = [];
+  
   salesChartData: ChartConfiguration['data'] = {
     datasets: [
       {
@@ -47,20 +48,12 @@ export class ChartComponent implements OnInit {
         borderColor: '#14B8A6',
         borderWidth: 2,
         fill: true,
-        tension: 0.4, // Curved lines
-      },
-      {
-        data: [],
-        label: 'Total Products Sold',
-        backgroundColor: 'rgba(209, 213, 219, 0.5)',
-        borderColor: '#D1D5DB',
-        borderWidth: 2,
-        fill: true,
-        tension: 0.4, // Curved lines
+        tension: 0.4,
       }
     ],
     labels: []
   };
+  
   salesChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     plugins: {
@@ -68,19 +61,19 @@ export class ChartComponent implements OnInit {
         position: 'top',
         labels: {
           font: {
-            family: 'Arial, sans-serif', // Set the font family here
+            family: 'Arial, sans-serif',
           },
-          color: '#111827' // Set the font color here
+          color: '#111827'
         }
       },
       title: {
         display: true,
-        text: 'Sales and Products Sold by Date',
+        text: 'Sales by Date',
         font: {
-          family: 'Arial, sans-serif', // Set the font family here
+          family: 'Arial, sans-serif',
           size: 18,
         },
-        color: '#111827' // Set the title color here
+        color: '#111827'
       },
       tooltip: {
         enabled: true,
@@ -97,42 +90,130 @@ export class ChartComponent implements OnInit {
           display: true,
           text: 'Date',
           font: {
-            family: 'Arial, sans-serif', // Set the font family here
+            family: 'Arial, sans-serif',
           },
-          color: '#111827' // Set the title color here
+          color: '#111827'
         },
         ticks: {
           font: {
-            family: 'Arial, sans-serif', // Set the font family here
+            family: 'Arial, sans-serif',
           },
-          color: '#111827', // Set the tick color here
+          color: '#111827',
         },
         grid: {
-          color: '#D1D5DB' // Set the grid line color here
+          color: '#D1D5DB'
         }
       },
       y: {
         title: {
           display: true,
-          text: 'Total Amount',
+          text: 'Total Sales Amount',
           font: {
-            family: 'Arial, sans-serif', // Set the font family here
+            family: 'Arial, sans-serif',
           },
-          color: '#111827' // Set the title color here
+          color: '#111827'
         },
         ticks: {
           font: {
-            family: 'Arial, sans-serif', // Set the font family here
+            family: 'Arial, sans-serif',
           },
-          color: '#111827', // Set the tick color here
+          color: '#111827',
         },
         grid: {
-          color: '#D1D5DB' // Set the grid line color here
+          color: '#D1D5DB'
         }
       }
     }
   };
   salesChartType: ChartType = 'line';
+
+  productsChartData: ChartConfiguration['data'] = {
+    datasets: [
+      {
+        data: [],
+        label: 'Total Products Sold',
+        backgroundColor: 'rgba(209, 213, 219, 0.5)',
+        borderColor: '#D1D5DB',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4,
+      }
+    ],
+    labels: []
+  };
+
+  productsChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: {
+          font: {
+            family: 'Arial, sans-serif',
+          },
+          color: '#111827'
+        }
+      },
+      title: {
+        display: true,
+        text: 'Total Products Sold by Date',
+        font: {
+          family: 'Arial, sans-serif',
+          size: 18,
+        },
+        color: '#111827'
+      },
+      tooltip: {
+        enabled: true,
+        backgroundColor: '#D1D5DB',
+        titleColor: '#FFFFFF',
+        bodyColor: '#FFFFFF',
+        borderColor: '#111827',
+        borderWidth: 1
+      }
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Date',
+          font: {
+            family: 'Arial, sans-serif',
+          },
+          color: '#111827'
+        },
+        ticks: {
+          font: {
+            family: 'Arial, sans-serif',
+          },
+          color: '#111827',
+        },
+        grid: {
+          color: '#D1D5DB'
+        }
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Total Products Sold',
+          font: {
+            family: 'Arial, sans-serif',
+          },
+          color: '#111827'
+        },
+        ticks: {
+          font: {
+            family: 'Arial, sans-serif',
+          },
+          color: '#111827',
+        },
+        grid: {
+          color: '#D1D5DB'
+        }
+      }
+    }
+  };
+  productsChartType: ChartType = 'line';
 
   constructor(private receiptService: ReceiptService) {}
 
@@ -171,7 +252,7 @@ export class ChartComponent implements OnInit {
               return receipt;
             })
           );
-          this.prepareSalesChartData();
+          this.prepareChartData();
         } else {
           console.error('Unexpected response format:', response);
         }
@@ -182,7 +263,7 @@ export class ChartComponent implements OnInit {
     );
   }
 
-  prepareSalesChartData(): void {
+  prepareChartData(): void {
     const salesData = this.receipts.reduce((acc, receipt) => {
       const date = new Date(receipt.createdAt).toLocaleDateString();
       if (!acc[date]) {
@@ -197,10 +278,16 @@ export class ChartComponent implements OnInit {
 
     this.salesChartData.labels = sortedDates;
     this.salesChartData.datasets[0].data = sortedDates.map(date => salesData[date].totalSales);
-    this.salesChartData.datasets[1].data = sortedDates.map(date => salesData[date].totalProducts);
+
+    this.productsChartData.labels = sortedDates;
+    this.productsChartData.datasets[0].data = sortedDates.map(date => salesData[date].totalProducts);
   }
 
   calculateTotalSales(): number {
     return this.receipts.reduce((total, receipt) => total + receipt.totalPrice, 0);
+  }
+
+  calculateTotalProducts(): number {
+    return this.receipts.reduce((total, receipt) => total + receipt.productList.reduce((sum, product) => sum + product.quantity, 0), 0);
   }
 }
