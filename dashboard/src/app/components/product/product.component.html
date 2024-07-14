@@ -1,173 +1,255 @@
-<div class="div">
-  <button class="btns" (click)="openAddProductModal()">Add New Product</button>
-</div>
+<div class="products-container">
+  <h2>Products</h2>
+  <div class="div">
+    <button class="btn" (click)="openAddProductModal()">Add New Product +</button>
 
-<!-- Modal HTML -->
-<div class="modal" [ngClass]="{ open: showModal }">
-  <div class="modal-content">
-    <span class="close" (click)="closeModal()">&times;</span>
+    <!-- Add Product Modal -->
+    <div class="modal" [ngClass]="{ open: showModal }">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
 
-    <form #productForm="ngForm" (ngSubmit)="uploadFiles()">
-      <h2>Add Product</h2>
+        <form #productForm="ngForm" (ngSubmit)="uploadFiles()">
+          <h2>Add Product</h2>
 
-      <div>
-        <label for="productName">Product Name:</label>
-        <input
-          id="productName"
-          name="productName"
-          type="text"
-          [(ngModel)]="product.productName"
-          required
-        />
+          <div>
+            <label for="productName">Product Name:</label>
+            <input
+              id="productName"
+              name="productName"
+              type="text"
+              [(ngModel)]="product.productName"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="categoryId">Category ID:</label>
+            <select
+              id="categoryId"
+              name="categoryId"
+              [(ngModel)]="product.categoryId"
+              required
+            >
+              <option value="">All Categories</option>
+              <option value="6687cb2b42b33badb0a3aa4d">Controller</option>
+              <option value="6687cb3342b33badb0a3aa4f">Keyboard</option>
+              <option value="6687cb3942b33badb0a3aa51">Mouse</option>
+              <option value="6687cb4142b33badb0a3aa53">PC</option>
+              <option value="6687cb4642b33badb0a3aa55">Monitor</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="productPrice">Price:</label>
+            <input
+              id="productPrice"
+              name="productPrice"
+              [(ngModel)]="product.productPrice"
+              type="number"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="productColor">Color:</label>
+            <input
+              id="productColor"
+              name="productColor"
+              type="text"
+              [(ngModel)]="product.productColor"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="productDescription">Description:</label>
+            <textarea
+              id="productDescription"
+              name="productDescription"
+              [(ngModel)]="product.productDescription"
+              required
+            ></textarea>
+          </div>
+
+          <div>
+            <label for="productRate">Rate:</label>
+            <input
+              id="productRate"
+              name="productRate"
+              [(ngModel)]="product.productRate"
+              type="number"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="productStock">Stock:</label>
+            <input
+              id="productStock"
+              name="productStock"
+              [(ngModel)]="product.productStock"
+              type="number"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="fileInput">Product Images:</label>
+            <input
+              type="file"
+              id="fileInput"
+              (change)="handleFileInput($event)"
+              multiple
+            />
+          </div>
+
+          <div class="upload-loader" *ngIf="isUploading">
+            <mat-spinner diameter="40"></mat-spinner>
+            <span>Loading images...</span>
+          </div>
+
+          <div *ngIf="imagePreviews.length > 0">
+            <h4>Selected Images:</h4>
+            <div
+              *ngFor="let preview of imagePreviews; let i = index"
+              class="image-preview-container"
+            >
+              <img [src]="preview.url" class="image-preview" />
+              <button (click)="removeImage(i)" class="remove-button">X</button>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            [disabled]="imagePreviews.length === 0 || isUploading"
+            class="btn"
+          >
+            {{ isUploading ? "Adding Product..." : "Add Product" }}
+          </button>
+        </form>
       </div>
-
-      <div>
-        <label for="categoryId">Category ID:</label>
-        <input
-          id="categoryId"
-          name="categoryId"
-          type="text"
-          [(ngModel)]="product.categoryId"
-          required
-        />
-      </div>
-
-      <div>
-        <label for="productPrice">Price:</label>
-        <input
-          id="productPrice"
-          name="productPrice"
-          [(ngModel)]="product.productPrice"
-          type="number"
-          required
-        />
-      </div>
-
-      <div>
-        <label for="productColor">Color:</label>
-        <input
-          id="productColor"
-          name="productColor"
-          type="text"
-          [(ngModel)]="product.productColor"
-          required
-        />
-      </div>
-
-      <div>
-        <label for="productDescription">Description:</label>
-        <textarea
-          id="productDescription"
-          name="productDescription"
-          [(ngModel)]="product.productDescription"
-          required
-        ></textarea>
-      </div>
-
-      <div>
-        <label for="productRate">Rate:</label>
-        <input
-          id="productRate"
-          name="productRate"
-          [(ngModel)]="product.productRate"
-          type="number"
-          required
-        />
-      </div>
-
-      <div>
-        <label for="productStock">Stock:</label>
-        <input
-          id="productStock"
-          name="productStock"
-          [(ngModel)]="product.productStock"
-          type="number"
-          required
-        />
-      </div>
-
-      <div>
-        <label for="fileInput">Product Images:</label>
-        <input
-          type="file"
-          id="fileInput"
-          (change)="handleFileInput($event)"
-          multiple
-        />
-      </div>
-
-      <div class="upload-loader" *ngIf="isUploading">
-        <mat-spinner diameter="40"></mat-spinner>
-        <span>Loading images...</span>
-      </div>
-
-      <div *ngIf="imagePreviews.length > 0">
-        <h4>Selected Images:</h4>
-        <div
-          *ngFor="let preview of imagePreviews; let i = index"
-          class="image-preview-container"
-        >
-          <img [src]="preview.url" class="image-preview" />
-          <button (click)="removeImage(i)" class="remove-button">X</button>
-        </div>
-      </div>
-
-      <button
-        type="button"
-        (click)="uploadFiles()"
-        [disabled]="imagePreviews.length === 0 || isUploading"
-      >
-        {{ isUploading ? "Adding Product..." : "Add Product" }}
-      </button>
-    </form>
+    </div>
   </div>
-</div>
 
+  <div class="product-list">
+    <div *ngIf="products.length > 0">
+      <table class="receipts-table">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Rate</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <td>{{ product.productName }}</td>
+            <td>{{ product.productPrice | currency }}</td>
+            <td>{{ product.productStock }}</td>
+            <td>{{ product.productRate }}</td>
+            <td class="actions">
+              <button class="btn btn-edit" (click)="startEditProduct(product)">Edit</button>
+              <button class="btn btn-delete" (click)="deleteProduct(product._id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-<div class="product-list">
-  <button (click)="fetchProducts()">Show Products</button>
-  <div *ngIf="products.length > 0">
-    <ul>
-      <li *ngFor="let product of products">
+  <!-- Edit Product Modal -->
+  <div class="modal" [ngClass]="{ open: showEditModal }">
+    <div class="modal-content">
+      <span class="close" (click)="closeEditModal()">&times;</span>
+
+      <form [formGroup]="editProductForm" (ngSubmit)="saveEditedProduct()">
+        <h2>Edit Product</h2>
+
         <div>
-          <span>{{ product.productName }} - ${{ product.productPrice }}</span>
-          <button (click)="startEditProduct(product)">Edit</button>
-          <button (click)="deleteProduct(product._id)">Delete</button>
+          <label for="editProductName">Product Name:</label>
+          <input
+            id="editProductName"
+            formControlName="productName"
+            type="text"
+            required
+          />
         </div>
-      </li>
-    </ul>
+
+        <div>
+          <label for="editCategoryId">Category ID:</label>
+          <select
+            id="editCategoryId"
+            formControlName="categoryId"
+            required
+          >
+            <option value="">All Categories</option>
+            <option value="6687cb2b42b33badb0a3aa4d">Controller</option>
+            <option value="6687cb3342b33badb0a3aa4f">Keyboard</option>
+            <option value="6687cb3942b33badb0a3aa51">Mouse</option>
+            <option value="6687cb4142b33badb0a3aa53">PC</option>
+            <option value="6687cb4642b33badb0a3aa55">Monitor</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="editProductPrice">Price:</label>
+          <input
+            id="editProductPrice"
+            formControlName="productPrice"
+            type="number"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="editProductColor">Color:</label>
+          <input
+            id="editProductColor"
+            formControlName="productColor"
+            type="text"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="editProductDescription">Description:</label>
+          <textarea
+            id="editProductDescription"
+            formControlName="productDescription"
+            required
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="editProductRate">Rate:</label>
+          <input
+            id="editProductRate"
+            formControlName="productRate"
+            type="number"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="editProductStock">Stock:</label>
+          <input
+            id="editProductStock"
+            formControlName="productStock"
+            type="number"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="btn"
+          [disabled]="!editProductForm.valid || isUploading"
+        >
+          {{ isUploading ? "Saving..." : "Save Changes" }}
+        </button>
+      </form>
+    </div>
   </div>
 </div>
-
-<div *ngIf="editingProduct">
-  <h2>Edit Product</h2>
-  <form [formGroup]="editProductForm" (ngSubmit)="save()">
-    <div>
-      <label>Product Name</label>
-      <input type="text" formControlName="productName" required>
-    </div>
-    <div>
-      <label>Product Price</label>
-      <input type="number" formControlName="productPrice" required>
-    </div>
-    <div>
-      <label>Select Category</label>
-      <select formControlName="productCategory" required>
-        <option value="6687cb2b42b33badb0a3aa4d">Controller</option>
-        <option value="6687cb3342b33badb0a3aa4f">Keyboard</option>
-        <option value="6687cb3942b33badb0a3aa51">Mouse</option>
-        <option value="6687cb4142b33badb0a3aa53">PC</option>
-        <option value="6687cb4642b33badb0a3aa55">Monitor</option>
-      </select>
-    </div>
-    <div>
-      <label>Product Rate</label>
-      <input type="number" formControlName="productRate" required>
-    </div>
-    <div>
-      <button type="button" (click)="cancelEdit()">Cancel</button>
-      <button type="submit" [disabled]="!editProductForm.valid">Save</button>
-    </div>
-  </form>
-</div>
-

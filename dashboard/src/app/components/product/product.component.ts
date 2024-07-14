@@ -86,8 +86,11 @@ export class ProductComponent implements OnInit {
     this.editProductForm = this.fb.group({
       productName: ['', Validators.required],
       productPrice: ['', [Validators.required, Validators.min(0)]],
-      productCategory: ['', Validators.required],
-      productRate: ['', Validators.required], // Add productRate field to form
+      categoryId: ['', Validators.required],
+      productColor: ['', Validators.required],
+      productDescription: ['', Validators.required],
+      productRate: ['', Validators.required],
+      productStock: ['', Validators.required],
     });
   }
 
@@ -96,6 +99,7 @@ export class ProductComponent implements OnInit {
   isLoading = false;
   isUploading = false;
   showModal = false;
+  showEditModal = false;
   imagePreviews: { file: File; url: string }[] = [];
   product: Producte = {
     productName: '',
@@ -127,48 +131,43 @@ export class ProductComponent implements OnInit {
     );
   }
 
+  openAddProductModal() {
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
+  }
+
   startEditProduct(product: Product): void {
     this.editingProduct = product;
     this.editProductForm.patchValue({
       productName: product.productName,
       productPrice: product.productPrice,
-      productCategory: product.categoryId,
-      productRate: product.productRate, // Update form with product rate
+      categoryId: product.categoryId,
+      productColor: product.productColor,
+      productDescription: product.productDescription,
+      productRate: product.productRate,
+      productStock: product.productStock,
     });
+    this.showEditModal = true;
   }
 
-  cancelEdit(): void {
+  closeEditModal() {
+    this.showEditModal = false;
     this.editingProduct = null;
-    this.editProductForm.reset();
   }
 
-  save(): void {
-    if (!this.editProductForm.valid) return;
+  saveEditedProduct() {
+    if (!this.editProductForm.valid || !this.editingProduct) return;
 
     const updatedProduct: Product = {
-      _id: this.editingProduct?._id || '',
-      productName: this.editProductForm.get('productName')?.value,
-      productPrice: this.editProductForm.get('productPrice')?.value,
-      categoryId: this.editProductForm.get('productCategory')?.value,
-      productPicture: this.editingProduct?.productPicture || [],
-      productColor: this.editingProduct?.productColor || '',
-      productDescription: this.editingProduct?.productDescription || '',
-      productRate: this.editProductForm.get('productRate')?.value, // Update product rate
-      productStock: this.editingProduct?.productStock || 0,
-      createdAt: this.editingProduct?.createdAt || '',
-      updatedAt: this.editingProduct?.updatedAt || '',
-      __v: this.editingProduct?.__v || 0,
+      ...this.editingProduct,
+      ...this.editProductForm.value,
     };
 
-    const productId = updatedProduct._id;
-
-    if (!productId) return; // Ensure productId exists
-
     this.http
-      .put<ApiResponse>(
-        `${this.updateProductApiUrl}/${productId}`,
-        updatedProduct
-      )
+      .put<ApiResponse>(`${this.updateProductApiUrl}/${updatedProduct._id}`, updatedProduct)
       .subscribe(
         (response) => {
           if (response.success) {
@@ -179,11 +178,13 @@ export class ProductComponent implements OnInit {
             if (index !== -1) {
               this.products[index] = updatedProduct;
             }
-            this.cancelEdit();
+            this.showSuccessMessage('Product updated successfully!');
+            this.closeEditModal();
           }
         },
         (error) => {
           console.error('Error updating product:', error);
+          this.showErrorMessage('Failed to update product. Please try again.');
         }
       );
   }
@@ -197,40 +198,14 @@ export class ProductComponent implements OnInit {
             this.products = this.products.filter(
               (product) => product._id !== productId
             );
+            this.showSuccessMessage('Product deleted successfully!');
           }
         },
         (error) => {
           console.error('Error deleting product:', error);
+          this.showErrorMessage('Failed to delete product. Please try again.');
         }
       );
-  }
-
-  openAddProductModal() {
-    this.showModal = true;
-  }
-
-  closeModal() {
-    this.showModal = false;
-  }
-
-  showSuccessMessage(message: string) {
-    const config: MatSnackBarConfig = {
-      duration: 3000,
-      panelClass: ['snackbar-success', 'larger-snack-bar'],
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-    };
-    this.snackBar.open(message, 'Close', config);
-  }
-
-  showErrorMessage(message: string) {
-    const config: MatSnackBarConfig = {
-      duration: 3000,
-      panelClass: ['snackbar-error', 'larger-snack-bar'],
-      horizontalPosition: 'center',
-      verticalPosition: 'top',
-    };
-    this.snackBar.open(message, 'Close', config);
   }
 
   handleFileInput(event: Event) {
@@ -314,6 +289,7 @@ export class ProductComponent implements OnInit {
           console.log('Product added successfully:', response);
           this.showSuccessMessage('Product added successfully!');
           this.closeModal();
+          this.fetchProducts(); // Refresh the product list after adding a new product
         },
         (error) => {
           console.error('Error adding product:', error);
@@ -334,5 +310,25 @@ export class ProductComponent implements OnInit {
           productStock: 0,
         };
       });
+  }
+
+  showSuccessMessage(message: string) {
+    const config: MatSnackBarConfig = {
+      duration: 3000,
+      panelClass: ['snackbar-success', 'larger-snack-bar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    };
+    this.snackBar.open(message, 'Close', config);
+  }
+
+  showErrorMessage(message: string) {
+    const config: MatSnackBarConfig = {
+      duration: 3000,
+      panelClass: ['snackbar-error', 'larger-snack-bar'],
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    };
+    this.snackBar.open(message, 'Close', config);
   }
 }
