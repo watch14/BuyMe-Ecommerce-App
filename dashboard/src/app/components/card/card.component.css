@@ -17,6 +17,9 @@
 /* Remove extra left and right margins, due to padding */
 .row {
     margin: 0 -5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Clear floats after the columns */
