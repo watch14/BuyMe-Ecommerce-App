@@ -7,19 +7,19 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from "../../app.component";
 import { OrdersComponent } from '../../components/orders/orders.component';
 import { ChartComponent } from '../../components/chart/chart.component';
+import { CardComponent } from "../../components/card/card.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [AdminComponent,
-            EditProductComponent,
-            UsersComponent,
-            ProductComponent,
-            RouterModule,
-            OrdersComponent,
-            ChartComponent,
-
-  ],
+    EditProductComponent,
+    UsersComponent,
+    ProductComponent,
+    RouterModule,
+    OrdersComponent,
+    ChartComponent,
+    CardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
