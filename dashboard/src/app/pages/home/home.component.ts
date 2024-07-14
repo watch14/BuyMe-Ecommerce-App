@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from "../../app.component";
 import { OrdersComponent } from '../../components/orders/orders.component';
 import { ChartComponent } from '../../components/chart/chart.component';
-import { AddProductComponent } from '../../components/add-product/add-product.component';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +18,6 @@ import { AddProductComponent } from '../../components/add-product/add-product.co
             RouterModule,
             OrdersComponent,
             ChartComponent,
-            AddProductComponent
 
   ],
   templateUrl: './home.component.html',
