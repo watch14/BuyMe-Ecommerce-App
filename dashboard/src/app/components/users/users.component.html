@@ -1,21 +1,58 @@
 <div class="user-dashboard">
-    <h2>User Dashboard</h2>
-    <div class="user-count">
-      <h3>Total Registered Users: {{ userCount }}</h3>
-    </div>
-    <div class="user-list">
-      <button (click)="toggleUserList()">Show Users</button>
-      <div *ngIf="showUsers">
-        <ul>
-          <li *ngFor="let user of users">
-            <div>
-              <span>{{ user.name }} - {{ user.email }}</span>
-              <button (click)="editUser(user)">Edit</button>
-              <button (click)="deleteUser(user._id)">Delete</button>
-            </div>
-          </li>
-        </ul>
-      </div>
+  <h2>Admin Dashboard</h2>
+
+  <div class="user-count">
+    <h3>Total Registered Users: {{ userCount }}</h3>
+  </div>
+
+  <div class="user-list">
+    <button (click)="toggleUserList()">{{ showUsers ? 'Hide Users' : 'Show Users' }}</button>
+
+    <div *ngIf="showUsers">
+      <table>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <ng-container *ngIf="!user.editing">
+              <td>{{ user.firstName }}</td>
+              <td>{{ user.lastName }}</td>
+              <td>{{ user.email }}</td>
+              <td>
+                <div *ngIf="!user.isAdmin">User</div>
+                <div *ngIf="user.isAdmin">Admin</div>
+              </td>
+              <td>
+                <button (click)="editUser(user)">Edit</button>
+                <!-- Implement delete functionality if needed -->
+              </td>
+            </ng-container>
+            <ng-container *ngIf="user.editing">
+              <td><input type="text" [(ngModel)]="user.firstName"></td>
+              <td><input type="text" [(ngModel)]="user.lastName"></td>
+              <td><input type="email" [(ngModel)]="user.email"></td>
+              <td>
+                <select [(ngModel)]="user.roles" multiple>
+                  <option value="6687caa842b33badb0a3aa49">User</option>
+                  <option value="6687caae42b33badb0a3aa4b">Admin</option>
+                </select>
+              </td>
+              <td>
+                <button (click)="saveUser(user)">Save</button>
+                <button (click)="editUser(user)">Cancel</button>
+                <!-- Implement delete functionality if needed -->
+              </td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  
+</div>
