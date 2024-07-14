@@ -95,10 +95,6 @@ export class UsersComponent implements OnInit {
     );
   }
 
-  toggleUserList(): void {
-    this.showUsers = !this.showUsers;
-  }
-
   editUser(user: User): void {
     user.editing = !user.editing;
   }

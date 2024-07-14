@@ -1,0 +1,97 @@
+.user-dashboard {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    margin-top: 20px;
+  }
+  
+  .user-dashboard h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .user-count {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .user-count h3 {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .user-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+  
+  .user-list th,
+  .user-list td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .user-list th {
+    background-color: #f2f2f2;
+    color: #333;
+  }
+  
+  .user-list td {
+    background-color: #fff;
+  }
+  
+  .user-list td button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .user-list td button:hover {
+    background-color: #0056b3;
+  }
+  
+  .user-list select {
+    width: 100%;
+    padding: 8px;
+  }
+  
+  .user-list select option {
+    padding: 8px;
+  }
+  
+  .user-list input[type="text"],
+  .user-list input[type="email"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  
+  .user-list input[type="text"]:focus,
+  .user-list input[type="email"]:focus,
+  .user-list select:focus {
+    outline: 2px solid #007bff;
+  }
+  
+  .user-list .editing {
+    background-color: #f2f2f2;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .user-list th,
+    .user-list td {
+      padding: 8px;
+    }
+  }
+  
