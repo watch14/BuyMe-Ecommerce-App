@@ -5,6 +5,30 @@ import { Component, OnInit } from '@angular/core';
 import { ReceiptService } from '../../service/receipt.service';
 import { ChartConfiguration, ChartType } from 'chart.js';
 
+
+interface Product {
+  productId: { _id: string };
+  quantity: number;
+  price: number;
+  productName?: string;
+}
+
+interface Receipt {
+  _id: string;
+  userId: { _id: string };
+  productList: Product[];
+  totalPrice: number;
+  createdAt: string;
+  userName?: string;
+}
+
+interface ApiResponse<T> {
+  success: boolean;
+  status: number;
+  message: string;
+  data: T;
+}
+
 @Component({
   selector: 'app-chart',
   standalone: true,
@@ -13,31 +37,70 @@ import { ChartConfiguration, ChartType } from 'chart.js';
   styleUrl: './chart.component.css'
 })
 export class ChartComponent implements OnInit {
-  receipts: any[] = [];
+  receipts: Receipt[] = [];
   salesChartData: ChartConfiguration['data'] = {
-    datasets: [{
-      data: [],
-      label: 'Sales',
-      backgroundColor: '#14B8A6',
-      borderColor: '#111827',
-      borderWidth: 1,
-    }],
+    datasets: [
+      {
+        data: [],
+        label: 'Sales',
+        backgroundColor: 'rgba(20, 184, 166, 0.5)',
+        borderColor: '#14B8A6',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4, // Curved lines
+      },
+      {
+        data: [],
+        label: 'Total Products Sold',
+        backgroundColor: 'rgba(209, 213, 219, 0.5)',
+        borderColor: '#D1D5DB',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4, // Curved lines
+      }
+    ],
     labels: []
   };
   salesChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     plugins: {
       legend: {
+        position: 'top',
         labels: {
           font: {
             family: 'Arial, sans-serif', // Set the font family here
           },
           color: '#111827' // Set the font color here
         }
+      },
+      title: {
+        display: true,
+        text: 'Sales and Products Sold by Date',
+        font: {
+          family: 'Arial, sans-serif', // Set the font family here
+          size: 18,
+        },
+        color: '#111827' // Set the title color here
+      },
+      tooltip: {
+        enabled: true,
+        backgroundColor: '#14B8A6',
+        titleColor: '#FFFFFF',
+        bodyColor: '#FFFFFF',
+        borderColor: '#111827',
+        borderWidth: 1
       }
     },
     scales: {
       x: {
+        title: {
+          display: true,
+          text: 'Date',
+          font: {
+            family: 'Arial, sans-serif', // Set the font family here
+          },
+          color: '#111827' // Set the title color here
+        },
         ticks: {
           font: {
             family: 'Arial, sans-serif', // Set the font family here
@@ -49,6 +112,14 @@ export class ChartComponent implements OnInit {
         }
       },
       y: {
+        title: {
+          display: true,
+          text: 'Total Amount',
+          font: {
+            family: 'Arial, sans-serif', // Set the font family here
+          },
+          color: '#111827' // Set the title color here
+        },
         ticks: {
           font: {
             family: 'Arial, sans-serif', // Set the font family here
@@ -61,7 +132,7 @@ export class ChartComponent implements OnInit {
       }
     }
   };
-  salesChartType: ChartType = 'bar';
+  salesChartType: ChartType = 'line';
 
   constructor(private receiptService: ReceiptService) {}
 
@@ -71,10 +142,10 @@ export class ChartComponent implements OnInit {
 
   getAllReceipts(): void {
     this.receiptService.getAllReceipts().subscribe(
-      async (response: any) => {
+      async (response: ApiResponse<Receipt[]>) => {
         if (response.success && Array.isArray(response.data)) {
           this.receipts = await Promise.all(
-            response.data.map(async (receipt: any) => {
+            response.data.map(async (receipt: Receipt) => {
               try {
                 const userResponse = await this.receiptService.getUserById(receipt.userId._id).toPromise();
                 const user = userResponse.data;
@@ -85,7 +156,7 @@ export class ChartComponent implements OnInit {
               }
 
               receipt.productList = await Promise.all(
-                receipt.productList.map(async (product: any) => {
+                receipt.productList.map(async (product: Product) => {
                   try {
                     const productDetails = await this.receiptService.getProductById(product.productId._id).toPromise();
                     product.productName = productDetails.data.productName;
@@ -115,18 +186,17 @@ export class ChartComponent implements OnInit {
     const salesData = this.receipts.reduce((acc, receipt) => {
       const date = new Date(receipt.createdAt).toLocaleDateString();
       if (!acc[date]) {
-        acc[date] = 0;
+        acc[date] = { totalSales: 0, totalProducts: 0 };
       }
-      acc[date] += receipt.totalPrice;
+      acc[date].totalSales += receipt.totalPrice;
+      acc[date].totalProducts += receipt.productList.reduce((sum, product) => sum + product.quantity, 0);
       return acc;
-    }, {});
+    }, {} as Record<string, { totalSales: number; totalProducts: number }>);
 
     this.salesChartData.labels = Object.keys(salesData);
-    this.salesChartData.datasets[0].data = Object.values(salesData);
+    this.salesChartData.datasets[0].data = Object.values(salesData).map(data => data.totalSales);
+    this.salesChartData.datasets[1].data = Object.values(salesData).map(data => data.totalProducts);
 
-    // Debugging output
-    console.log('Sales Data:', salesData);
-    console.log('Chart Labels:', this.salesChartData.labels);
-    console.log('Chart Data:', this.salesChartData.datasets[0].data);
+   
   }
 }

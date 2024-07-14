@@ -1,3 +1,11 @@
+.chart-block {
+  background-color: #eeeeee; /* White background */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  margin: 20px;
+}
+
 .chart-container {
   margin-bottom: 20px;
 }
