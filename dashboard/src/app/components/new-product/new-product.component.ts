@@ -56,7 +56,7 @@ export class NewProductComponent {
       (response) => {
         if (response.success) {
           // Navigate to the product list or success page
-          this.router.navigate(['/products']);
+          this.router.navigate(['/product']); // Ensure correct path is used
         }
       },
       (error) => {
