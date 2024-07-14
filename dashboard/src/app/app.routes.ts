@@ -6,7 +6,6 @@ import { ProductComponent } from './components/product/product.component';
 import { HomeComponent } from './pages/home/home.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { ChartComponent } from './components/chart/chart.component';
-import { NewProductComponent } from './components/new-product/new-product.component';
 
 export const routes: Routes = [
     {'path': '', component:HomeComponent},
@@ -14,7 +13,6 @@ export const routes: Routes = [
     {'path': 'edit-product', component:EditProductComponent},
     {'path': 'users', component:UsersComponent},
     {'path': 'product', component:ProductComponent},
-    {'path': 'new-product', component:NewProductComponent},
 
     {'path': 'order', component:OrdersComponent},
     {'path': 'chart', component:ChartComponent},
