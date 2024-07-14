@@ -1,4 +1,11 @@
 <div class="chart-block">
+        <div class="chart-summary">
+                <div class="total-sales">
+                        <p>{{ calculateTotalSales() | currency }}</p>
+                  <h3>Total Sales Amount</h3>
+                </div>
+        </div>
+              
         <div class="chart-container">
           <canvas baseChart 
                   [data]="salesChartData"
@@ -6,5 +13,5 @@
                   [type]="salesChartType">
           </canvas>
         </div>
-</div>
+      </div>
       

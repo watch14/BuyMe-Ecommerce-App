@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.order {
+  color: #ffffff;
+  text-decoration: none;
+  border: 1px solid #14b8a6;
+  padding: 8px 16px;
+
+  border-radius: 4px;
+  background-color: #14b8a6;
+  transition: background-color 0.3s, color 0.3s;
+  display: inline-block;
+}
+
+.order:hover {
+  background-color: #19c9b4; /* Background color on hover */
+  color: #ffffff; /* Text color on hover */
+}

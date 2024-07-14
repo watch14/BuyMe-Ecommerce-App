@@ -199,4 +199,8 @@ export class ChartComponent implements OnInit {
 
    
   }
+
+  calculateTotalSales(): number {
+    return this.receipts.reduce((total, receipt) => total + receipt.totalPrice, 0);
+  }
 }
