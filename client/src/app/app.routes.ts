@@ -17,6 +17,9 @@ import { FavouriteComponent } from './pages/favourite/favourite.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { SuccessComponent } from './components/success/success.component';
 import { CancelComponent } from './components/cancel/cancel.component';
+import { ReturnPolicyComponent } from './components/return-policy/return-policy.component';
+import { ShippingComponent } from './components/shipping/shipping.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 
 export const routes: Routes = [
     {'path': '', component:HomeComponent},
@@ -37,6 +40,10 @@ export const routes: Routes = [
 
     {'path': 'contact', component:ContactComponent},
     {'path': 'about-us', component:AboutUsComponent},
+
+    {'path': 'privacy-policy', component:PrivacyPolicyComponent},
+    {'path': 'return-policy', component:ReturnPolicyComponent},
+    {'path': 'shipping-info', component:ShippingComponent},
 
     {'path': 'not-found', component:NotFoundComponent},
 

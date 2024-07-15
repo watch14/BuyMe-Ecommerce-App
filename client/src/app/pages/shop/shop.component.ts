@@ -17,7 +17,7 @@ import { SliderModule } from './slider.module';
 })
 
 export class ShopComponent implements OnInit {
-  @Input() take: number = 8;
+  @Input() take: number = 12;
   baseUrl = apiUrls.productSearchApi;
   skip = 0;
   products: any[] = [];
