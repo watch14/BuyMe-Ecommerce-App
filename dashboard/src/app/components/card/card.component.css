@@ -72,6 +72,10 @@
 }
 
 .column:nth-child(3) .card {
+    background-color: #198754; /* Green */
+}
+
+.column:nth-child(4) .card {
     background-color: #dc3545; /* Green */
 }
 

@@ -15,9 +15,12 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     FormsModule,
     MatProgressSpinnerModule,
-  ],  templateUrl: './card.component.html',
-  styleUrl: './card.component.css'
+  ],  
+  templateUrl: './card.component.html',
+  styleUrls: ['./card.component.css']
 })
 export class CardComponent {
-
+  redirectTo(url: string) {
+    window.open(url, '_blank');
+  }
 }
