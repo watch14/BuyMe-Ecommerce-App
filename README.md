@@ -1,5 +1,3 @@
-"""
-
 # BuyMe
 
 BuyMe is an e-commerce platform dedicated to gamers and tech enthusiasts. Our website specializes in offering a wide range of gaming materials, including keyboards, mice, monitors, and PCs. Designed with a user-friendly interface, BuyMe aims to provide a seamless shopping experience for all gaming needs.
@@ -18,7 +16,7 @@ BuyMe is an e-commerce platform dedicated to gamers and tech enthusiasts. Our we
 
 BuyMe is built to cater to the needs of gamers and tech enthusiasts by providing a platform with a wide range of products. Our team includes:
 
-- **Maamoun Chebbi**: API development, authentication management, and error handling.
+- **Maamoun Chebbi**: API development, authentication management, and error handling. [GitHub](https://github.com/maamounchebbi)
 - **Iheb Chaoued**: Schema design, CRUD operations, and data integrity assurance.
 - **Seif Eddine Ben Othman**: Component development, API integration, and ensuring responsive design.
 
@@ -88,46 +86,53 @@ For more info: [Visit our project repository](https://github.com/watch14/E-Com-P
 ### Installation
 
 1. **Clone the Repository**
-   \`\`\`bash
+   ```bash
    git clone <repository_url>
-   \`\`\`
+   ```
 2. **Install Dependencies**
-   \`\`\`bash
+   ```bash
    cd api && npm i
    cd ../client && npm i
    cd ../dashboard && npm i
-   \`\`\`
+   ```
 
 ### Hosting Servers
 
 1. **Start Back-end**
-   \`\`\`bash
+
+   ```bash
    cd api
    npm start
-   \`\`\`
+   ```
 
    - Swagger API: [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
 
 2. **Start Front-end**
-   \`\`\`bash
+
+   ```bash
    cd client
    ng serve
-   \`\`\`
+   ```
 
    - Front-end: [http://localhost:4200](http://localhost:4200)
 
 3. **Start Admin Dashboard**
-   \`\`\`bash
+   ```bash
    cd dashboard
    npm run electron
-   \`\`\`
+   ```
    - To create the app extension:
-     \`\`\`bash
+     ```bash
      npm run dist
-     \`\`\`
+     ```
      - The build will be located at: \`dashboard/dist/win-unpacked\` (Password: 123)
    - To host on localhost:
-     \`\`\`bash
+     ```bash
      ng serve --port 5000
-     \`\`\`
-     """
+     ```
+
+## Contributors
+
+- **Maamoun Chebbi**: [GitHub](https://github.com/maamounchebbi)
+- **Iheb Chaoued**: [GitHub](https://github.com/ihebchaoued)
+- **Seif Eddine Ben Othman**: [GitHub](https://github.com/seifeddinebenothman)
