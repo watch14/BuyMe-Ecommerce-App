@@ -1,4 +1,6 @@
-# BuyMe
+<!-- # BuyMe -->
+
+![BuyMe Logo](BuyMe/Logo/logo-green-white.png)
 
 BuyMe is an e-commerce platform dedicated to gamers and tech enthusiasts. Our website specializes in offering a wide range of gaming materials, including keyboards, mice, monitors, and PCs. Designed with a user-friendly interface, BuyMe aims to provide a seamless shopping experience for all gaming needs.
 
@@ -61,9 +63,16 @@ Our project utilizes the following technologies:
 ## App Overview
 
 - **Home Page**: Overview of the platform and featured products.
+  ![BuyMe](screenshots/Main%20App/1.home.png)
+
 - **Shop Page**: Browse and search for products.
+  ![BuyMe](screenshots/Main%20App/2.Shop%20Page.png)
+
 - **Product Page**: Detailed view of individual products.
+  ![BuyMe](screenshots/Main%20App/4.Product%20Page.png)
+
 - **Cart Page**: Manage selected items before checkout.
+  ![BuyMe](screenshots/Main%20App/5.Cart%20Page.png)
 
 ## Conclusion
 

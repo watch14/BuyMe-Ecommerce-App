@@ -1,27 +1,14 @@
-<<<<<<< HEAD
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
-# Compiled output
-=======
-
->>>>>>> main
 /dist
 /tmp
 /out-tsc
 /bazel-out
 
-<<<<<<< HEAD
-# Node
-=======
->>>>>>> main
+
 /node_modules
 npm-debug.log
 yarn-error.log
 
-<<<<<<< HEAD
-# IDEs and editors
-=======
->>>>>>> main
+
 .idea/
 .project
 .classpath
@@ -30,10 +17,7 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 
-<<<<<<< HEAD
-# Visual Studio Code
-=======
->>>>>>> main
+
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -41,10 +25,8 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
-<<<<<<< HEAD
 # Miscellaneous
-=======
->>>>>>> main
+
 /.angular/cache
 .sass-cache/
 /connect.lock
@@ -53,11 +35,9 @@ yarn-error.log
 testem.log
 /typings
 
-<<<<<<< HEAD
 # System files
-.DS_Store
-Thumbs.db
-=======
+
+
 .DS_Store
 Thumbs.db
 
@@ -65,7 +45,8 @@ Thumbs.db
 .firebase
 *-debug.log
 .runtimeconfig.json
->>>>>>> main
 
 
-.env
+
+# .env
+/dist
