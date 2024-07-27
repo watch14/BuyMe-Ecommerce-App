@@ -142,6 +142,6 @@ For more info: [Visit our project repository](https://github.com/watch14/E-Com-P
 
 ## Contributors
 
-- **Maamoun Chebbi**: [GitHub](https://github.com/maamounchebbi)
+- **Maamoun Chebbi**: [GitHub](https://github.com/maamounchebbi) <<Chebbimaamoun@gmail.com>>
 - **Iheb Chaoued**: [GitHub](https://github.com/ihebchaoued)
 - **Seif Eddine Ben Othman**: [GitHub](https://github.com/seifeddinebenothman)
