@@ -126,19 +126,24 @@ For more info: [Visit our project repository](https://github.com/watch14/E-Com-P
    - Front-end: [http://localhost:4200](http://localhost:4200)
 
 3. **Start Admin Dashboard**
+
    ```bash
    cd dashboard
    npm run electron
    ```
+
    - To create the app extension:
      ```bash
      npm run dist
      ```
      - The build will be located at: \`dashboard/dist/win-unpacked\` (Password: 123)
    - To host on localhost:
+
      ```bash
      ng serve --port 5000
      ```
+
+     - Admin Dashboard : http://localhost:5000
 
 ## Contributors
 
