@@ -63,16 +63,16 @@ Our project utilizes the following technologies:
 ## App Overview
 
 - **Home Page**: Overview of the platform and featured products.
-  ![BuyMe](screenshots/Main%20App/1.home.png)
+  ![BuyMe](screenshots/MainApp/1.home.png)
 
 - **Shop Page**: Browse and search for products.
-  ![BuyMe](screenshots/Main%20App/2.Shop%20Page.png)
+  ![BuyMe](screenshots/MainApp/2.ShopPage.png)
 
 - **Product Page**: Detailed view of individual products.
-  ![BuyMe](screenshots/Main%20App/4.Product%20Page.png)
+  ![BuyMe](screenshots/MainApp/4.ProductPage.png)
 
 - **Cart Page**: Manage selected items before checkout.
-  ![BuyMe](screenshots/Main%20App/5.Cart%20Page.png)
+  ![BuyMe](screenshots/MainApp/5.CartPage.png)
 
 ## Conclusion
 
