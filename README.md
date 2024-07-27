@@ -1,6 +1,4 @@
-# Creating the README.md content based on the user's specifications
-
-readme_content = """
+"""
 
 # BuyMe
 
@@ -133,8 +131,3 @@ For more info: [Visit our project repository](https://github.com/watch14/E-Com-P
      ng serve --port 5000
      \`\`\`
      """
-
-# Writing the content to a README.md file
-
-with open("/mnt/data/README.md", "w") as file:
-file.write(readme_content)
